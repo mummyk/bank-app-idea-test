@@ -93,14 +93,10 @@ INSTALLED_APPS = [
     'home',
     'dashboard',
     'users',
-    'channels',
-
     # 'wallet',
     'tailwind',
     'theme',
 ]
-
-ASGI_APPLICATION = 'core.asgi.application'
 
 MIDDLEWARE = [
     'core.middlewares.user_activity_middleware.LogUserIPMiddleware',
