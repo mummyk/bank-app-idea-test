@@ -1,0 +1,543 @@
+{% extends "home/base-home.html" %}
+{% load static %}
+
+{% block content %}
+
+          <section class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url({% static 'images/score-bg.jpg' %});">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12">
+                        <div class="breadcrumb-content">
+                            <h2>loans</h2>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="{% url 'home' %}">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">Loan</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ##### Features Area Start ###### -->
+        <section class="features-area section-padding-100-0">
+            <div class="container">
+                <div class="row align-items-end">
+                    <div class="col-12 col-sm-6 col-lg-6">
+                        <div class="single-features-area mb-100 wow fadeInUp" data-wow-delay="100ms">
+                            <!-- Section Heading -->
+                            <div class="section-heading">
+                                <div class="line"></div>
+                                <h2>Fill the form below to apply for a loan</h2>
+                            </div>
+                            <h6>A representative will get in touch with you via the channels provided on the proceedings of your
+                        loan
+                        request.
+                    </h6>
+                            <form class="mt-5" id="loan_form">
+                                <div class="form-row">
+                                    <fieldset class="form-group col-md-6">
+                                        <label for="first_name">First Name</label>
+                                        <input type="text" class="form-control" id="first_name" name="first_name">
+                                        <span class="invalid-feedback"></span>
+                                    </fieldset>
+                                    <fieldset class="form-group col-md-6">
+                                        <label for="last_name">Last Name</label>
+                                        <input type="text" class="form-control" id="last_name" name="last_name">
+                                        <span class="invalid-feedback"></span>
+                                    </fieldset>
+                                </div>
+                                <fieldset class="form-group">
+                                    <label for="phone_number">Phone Number</label>
+                                    <input type="text" class="form-control" id="phone_number" name="phone_number">
+                                    <span class="invalid-feedback"></span>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email">
+                                    <span class="invalid-feedback"></span>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <label for="country_code">
+                                        <sup>*</sup>
+                                        Country
+                                    </label>
+                                    <div class="input-group">
+                                        <select id="country_code" name="country_code" class="form-control">
+                                            <option></option>
+                                            <option value="AFG" data-flag="https://restcountries.eu/data/afg.svg">Afghanistan</option>
+                                            <option value="ALA" data-flag="https://restcountries.eu/data/ala.svg">Åland Islands</option>
+                                            <option value="ALB" data-flag="https://restcountries.eu/data/alb.svg">Albania</option>
+                                            <option value="DZA" data-flag="https://restcountries.eu/data/dza.svg">Algeria</option>
+                                            <option value="ASM" data-flag="https://restcountries.eu/data/asm.svg">American Samoa</option>
+                                            <option value="AND" data-flag="https://restcountries.eu/data/and.svg">Andorra</option>
+                                            <option value="AGO" data-flag="https://restcountries.eu/data/ago.svg">Angola</option>
+                                            <option value="AIA" data-flag="https://restcountries.eu/data/aia.svg">Anguilla</option>
+                                            <option value="ATA" data-flag="https://restcountries.eu/data/ata.svg">Antarctica</option>
+                                            <option value="ATG" data-flag="https://restcountries.eu/data/atg.svg">Antigua and Barbuda</option>
+                                            <option value="ARG" data-flag="https://restcountries.eu/data/arg.svg">Argentina</option>
+                                            <option value="ARM" data-flag="https://restcountries.eu/data/arm.svg">Armenia</option>
+                                            <option value="ABW" data-flag="https://restcountries.eu/data/abw.svg">Aruba</option>
+                                            <option value="AUS" data-flag="https://restcountries.eu/data/aus.svg">Australia</option>
+                                            <option value="AUT" data-flag="https://restcountries.eu/data/aut.svg">Austria</option>
+                                            <option value="AZE" data-flag="https://restcountries.eu/data/aze.svg">Azerbaijan</option>
+                                            <option value="BHS" data-flag="https://restcountries.eu/data/bhs.svg">Bahamas</option>
+                                            <option value="BHR" data-flag="https://restcountries.eu/data/bhr.svg">Bahrain</option>
+                                            <option value="BGD" data-flag="https://restcountries.eu/data/bgd.svg">Bangladesh</option>
+                                            <option value="BRB" data-flag="https://restcountries.eu/data/brb.svg">Barbados</option>
+                                            <option value="BLR" data-flag="https://restcountries.eu/data/blr.svg">Belarus</option>
+                                            <option value="BEL" data-flag="https://restcountries.eu/data/bel.svg">Belgium</option>
+                                            <option value="BLZ" data-flag="https://restcountries.eu/data/blz.svg">Belize</option>
+                                            <option value="BEN" data-flag="https://restcountries.eu/data/ben.svg">Benin</option>
+                                            <option value="BMU" data-flag="https://restcountries.eu/data/bmu.svg">Bermuda</option>
+                                            <option value="BTN" data-flag="https://restcountries.eu/data/btn.svg">Bhutan</option>
+                                            <option value="BOL" data-flag="https://restcountries.eu/data/bol.svg">Bolivia (Plurinational State of)</option>
+                                            <option value="BES" data-flag="https://restcountries.eu/data/bes.svg">Bonaire, Sint Eustatius and Saba</option>
+                                            <option value="BIH" data-flag="https://restcountries.eu/data/bih.svg">Bosnia and Herzegovina</option>
+                                            <option value="BWA" data-flag="https://restcountries.eu/data/bwa.svg">Botswana</option>
+                                            <option value="BVT" data-flag="https://restcountries.eu/data/bvt.svg">Bouvet Island</option>
+                                            <option value="BRA" data-flag="https://restcountries.eu/data/bra.svg">Brazil</option>
+                                            <option value="IOT" data-flag="https://restcountries.eu/data/iot.svg">British Indian Ocean Territory</option>
+                                            <option value="UMI" data-flag="https://restcountries.eu/data/umi.svg">United States Minor Outlying Islands</option>
+                                            <option value="VGB" data-flag="https://restcountries.eu/data/vgb.svg">Virgin Islands (British)</option>
+                                            <option value="VIR" data-flag="https://restcountries.eu/data/vir.svg">Virgin Islands (U.S.)</option>
+                                            <option value="BRN" data-flag="https://restcountries.eu/data/brn.svg">Brunei Darussalam</option>
+                                            <option value="BGR" data-flag="https://restcountries.eu/data/bgr.svg">Bulgaria</option>
+                                            <option value="BFA" data-flag="https://restcountries.eu/data/bfa.svg">Burkina Faso</option>
+                                            <option value="BDI" data-flag="https://restcountries.eu/data/bdi.svg">Burundi</option>
+                                            <option value="KHM" data-flag="https://restcountries.eu/data/khm.svg">Cambodia</option>
+                                            <option value="CMR" data-flag="https://restcountries.eu/data/cmr.svg">Cameroon</option>
+                                            <option value="CAN" data-flag="https://restcountries.eu/data/can.svg">Canada</option>
+                                            <option value="CPV" data-flag="https://restcountries.eu/data/cpv.svg">Cabo Verde</option>
+                                            <option value="CYM" data-flag="https://restcountries.eu/data/cym.svg">Cayman Islands</option>
+                                            <option value="CAF" data-flag="https://restcountries.eu/data/caf.svg">Central African Republic</option>
+                                            <option value="TCD" data-flag="https://restcountries.eu/data/tcd.svg">Chad</option>
+                                            <option value="CHL" data-flag="https://restcountries.eu/data/chl.svg">Chile</option>
+                                            <option value="CHN" data-flag="https://restcountries.eu/data/chn.svg">China</option>
+                                            <option value="CXR" data-flag="https://restcountries.eu/data/cxr.svg">Christmas Island</option>
+                                            <option value="CCK" data-flag="https://restcountries.eu/data/cck.svg">Cocos (Keeling) Islands</option>
+                                            <option value="COL" data-flag="https://restcountries.eu/data/col.svg">Colombia</option>
+                                            <option value="COM" data-flag="https://restcountries.eu/data/com.svg">Comoros</option>
+                                            <option value="COG" data-flag="https://restcountries.eu/data/cog.svg">Congo</option>
+                                            <option value="COD" data-flag="https://restcountries.eu/data/cod.svg">Congo (Democratic Republic of the)</option>
+                                            <option value="COK" data-flag="https://restcountries.eu/data/cok.svg">Cook Islands</option>
+                                            <option value="CRI" data-flag="https://restcountries.eu/data/cri.svg">Costa Rica</option>
+                                            <option value="HRV" data-flag="https://restcountries.eu/data/hrv.svg">Croatia</option>
+                                            <option value="CUB" data-flag="https://restcountries.eu/data/cub.svg">Cuba</option>
+                                            <option value="CUW" data-flag="https://restcountries.eu/data/cuw.svg">Curaçao</option>
+                                            <option value="CYP" data-flag="https://restcountries.eu/data/cyp.svg">Cyprus</option>
+                                            <option value="CZE" data-flag="https://restcountries.eu/data/cze.svg">Czech Republic</option>
+                                            <option value="DNK" data-flag="https://restcountries.eu/data/dnk.svg">Denmark</option>
+                                            <option value="DJI" data-flag="https://restcountries.eu/data/dji.svg">Djibouti</option>
+                                            <option value="DMA" data-flag="https://restcountries.eu/data/dma.svg">Dominica</option>
+                                            <option value="DOM" data-flag="https://restcountries.eu/data/dom.svg">Dominican Republic</option>
+                                            <option value="ECU" data-flag="https://restcountries.eu/data/ecu.svg">Ecuador</option>
+                                            <option value="EGY" data-flag="https://restcountries.eu/data/egy.svg">Egypt</option>
+                                            <option value="SLV" data-flag="https://restcountries.eu/data/slv.svg">El Salvador</option>
+                                            <option value="GNQ" data-flag="https://restcountries.eu/data/gnq.svg">Equatorial Guinea</option>
+                                            <option value="ERI" data-flag="https://restcountries.eu/data/eri.svg">Eritrea</option>
+                                            <option value="EST" data-flag="https://restcountries.eu/data/est.svg">Estonia</option>
+                                            <option value="ETH" data-flag="https://restcountries.eu/data/eth.svg">Ethiopia</option>
+                                            <option value="FLK" data-flag="https://restcountries.eu/data/flk.svg">Falkland Islands (Malvinas)</option>
+                                            <option value="FRO" data-flag="https://restcountries.eu/data/fro.svg">Faroe Islands</option>
+                                            <option value="FJI" data-flag="https://restcountries.eu/data/fji.svg">Fiji</option>
+                                            <option value="FIN" data-flag="https://restcountries.eu/data/fin.svg">Finland</option>
+                                            <option value="FRA" data-flag="https://restcountries.eu/data/fra.svg">France</option>
+                                            <option value="GUF" data-flag="https://restcountries.eu/data/guf.svg">French Guiana</option>
+                                            <option value="PYF" data-flag="https://restcountries.eu/data/pyf.svg">French Polynesia</option>
+                                            <option value="ATF" data-flag="https://restcountries.eu/data/atf.svg">French Southern Territories</option>
+                                            <option value="GAB" data-flag="https://restcountries.eu/data/gab.svg">Gabon</option>
+                                            <option value="GMB" data-flag="https://restcountries.eu/data/gmb.svg">Gambia</option>
+                                            <option value="GEO" data-flag="https://restcountries.eu/data/geo.svg">Georgia</option>
+                                            <option value="DEU" data-flag="https://restcountries.eu/data/deu.svg">Germany</option>
+                                            <option value="GHA" data-flag="https://restcountries.eu/data/gha.svg">Ghana</option>
+                                            <option value="GIB" data-flag="https://restcountries.eu/data/gib.svg">Gibraltar</option>
+                                            <option value="GRC" data-flag="https://restcountries.eu/data/grc.svg">Greece</option>
+                                            <option value="GRL" data-flag="https://restcountries.eu/data/grl.svg">Greenland</option>
+                                            <option value="GRD" data-flag="https://restcountries.eu/data/grd.svg">Grenada</option>
+                                            <option value="GLP" data-flag="https://restcountries.eu/data/glp.svg">Guadeloupe</option>
+                                            <option value="GUM" data-flag="https://restcountries.eu/data/gum.svg">Guam</option>
+                                            <option value="GTM" data-flag="https://restcountries.eu/data/gtm.svg">Guatemala</option>
+                                            <option value="GGY" data-flag="https://restcountries.eu/data/ggy.svg">Guernsey</option>
+                                            <option value="GIN" data-flag="https://restcountries.eu/data/gin.svg">Guinea</option>
+                                            <option value="GNB" data-flag="https://restcountries.eu/data/gnb.svg">Guinea-Bissau</option>
+                                            <option value="GUY" data-flag="https://restcountries.eu/data/guy.svg">Guyana</option>
+                                            <option value="HTI" data-flag="https://restcountries.eu/data/hti.svg">Haiti</option>
+                                            <option value="HMD" data-flag="https://restcountries.eu/data/hmd.svg">Heard Island and McDonald Islands</option>
+                                            <option value="VAT" data-flag="https://restcountries.eu/data/vat.svg">Holy See</option>
+                                            <option value="HND" data-flag="https://restcountries.eu/data/hnd.svg">Honduras</option>
+                                            <option value="HKG" data-flag="https://restcountries.eu/data/hkg.svg">Hong Kong</option>
+                                            <option value="HUN" data-flag="https://restcountries.eu/data/hun.svg">Hungary</option>
+                                            <option value="ISL" data-flag="https://restcountries.eu/data/isl.svg">Iceland</option>
+                                            <option value="IND" data-flag="https://restcountries.eu/data/ind.svg">India</option>
+                                            <option value="IDN" data-flag="https://restcountries.eu/data/idn.svg">Indonesia</option>
+                                            <option value="CIV" data-flag="https://restcountries.eu/data/civ.svg">Côte d'Ivoire</option>
+                                            <option value="IRN" data-flag="https://restcountries.eu/data/irn.svg">Iran (Islamic Republic of)</option>
+                                            <option value="IRQ" data-flag="https://restcountries.eu/data/irq.svg">Iraq</option>
+                                            <option value="IRL" data-flag="https://restcountries.eu/data/irl.svg">Ireland</option>
+                                            <option value="IMN" data-flag="https://restcountries.eu/data/imn.svg">Isle of Man</option>
+                                            <option value="ISR" data-flag="https://restcountries.eu/data/isr.svg">Israel</option>
+                                            <option value="ITA" data-flag="https://restcountries.eu/data/ita.svg">Italy</option>
+                                            <option value="JAM" data-flag="https://restcountries.eu/data/jam.svg">Jamaica</option>
+                                            <option value="JPN" data-flag="https://restcountries.eu/data/jpn.svg">Japan</option>
+                                            <option value="JEY" data-flag="https://restcountries.eu/data/jey.svg">Jersey</option>
+                                            <option value="JOR" data-flag="https://restcountries.eu/data/jor.svg">Jordan</option>
+                                            <option value="KAZ" data-flag="https://restcountries.eu/data/kaz.svg">Kazakhstan</option>
+                                            <option value="KEN" data-flag="https://restcountries.eu/data/ken.svg">Kenya</option>
+                                            <option value="KIR" data-flag="https://restcountries.eu/data/kir.svg">Kiribati</option>
+                                            <option value="KWT" data-flag="https://restcountries.eu/data/kwt.svg">Kuwait</option>
+                                            <option value="KGZ" data-flag="https://restcountries.eu/data/kgz.svg">Kyrgyzstan</option>
+                                            <option value="LAO" data-flag="https://restcountries.eu/data/lao.svg">Lao People's Democratic Republic</option>
+                                            <option value="LVA" data-flag="https://restcountries.eu/data/lva.svg">Latvia</option>
+                                            <option value="LBN" data-flag="https://restcountries.eu/data/lbn.svg">Lebanon</option>
+                                            <option value="LSO" data-flag="https://restcountries.eu/data/lso.svg">Lesotho</option>
+                                            <option value="LBR" data-flag="https://restcountries.eu/data/lbr.svg">Liberia</option>
+                                            <option value="LBY" data-flag="https://restcountries.eu/data/lby.svg">Libya</option>
+                                            <option value="LIE" data-flag="https://restcountries.eu/data/lie.svg">Liechtenstein</option>
+                                            <option value="LTU" data-flag="https://restcountries.eu/data/ltu.svg">Lithuania</option>
+                                            <option value="LUX" data-flag="https://restcountries.eu/data/lux.svg">Luxembourg</option>
+                                            <option value="MAC" data-flag="https://restcountries.eu/data/mac.svg">Macao</option>
+                                            <option value="MKD" data-flag="https://restcountries.eu/data/mkd.svg">Macedonia (the former Yugoslav Republic of)</option>
+                                            <option value="MDG" data-flag="https://restcountries.eu/data/mdg.svg">Madagascar</option>
+                                            <option value="MWI" data-flag="https://restcountries.eu/data/mwi.svg">Malawi</option>
+                                            <option value="MYS" data-flag="https://restcountries.eu/data/mys.svg">Malaysia</option>
+                                            <option value="MDV" data-flag="https://restcountries.eu/data/mdv.svg">Maldives</option>
+                                            <option value="MLI" data-flag="https://restcountries.eu/data/mli.svg">Mali</option>
+                                            <option value="MLT" data-flag="https://restcountries.eu/data/mlt.svg">Malta</option>
+                                            <option value="MHL" data-flag="https://restcountries.eu/data/mhl.svg">Marshall Islands</option>
+                                            <option value="MTQ" data-flag="https://restcountries.eu/data/mtq.svg">Martinique</option>
+                                            <option value="MRT" data-flag="https://restcountries.eu/data/mrt.svg">Mauritania</option>
+                                            <option value="MUS" data-flag="https://restcountries.eu/data/mus.svg">Mauritius</option>
+                                            <option value="MYT" data-flag="https://restcountries.eu/data/myt.svg">Mayotte</option>
+                                            <option value="MEX" data-flag="https://restcountries.eu/data/mex.svg">Mexico</option>
+                                            <option value="FSM" data-flag="https://restcountries.eu/data/fsm.svg">Micronesia (Federated States of)</option>
+                                            <option value="MDA" data-flag="https://restcountries.eu/data/mda.svg">Moldova (Republic of)</option>
+                                            <option value="MCO" data-flag="https://restcountries.eu/data/mco.svg">Monaco</option>
+                                            <option value="MNG" data-flag="https://restcountries.eu/data/mng.svg">Mongolia</option>
+                                            <option value="MNE" data-flag="https://restcountries.eu/data/mne.svg">Montenegro</option>
+                                            <option value="MSR" data-flag="https://restcountries.eu/data/msr.svg">Montserrat</option>
+                                            <option value="MAR" data-flag="https://restcountries.eu/data/mar.svg">Morocco</option>
+                                            <option value="MOZ" data-flag="https://restcountries.eu/data/moz.svg">Mozambique</option>
+                                            <option value="MMR" data-flag="https://restcountries.eu/data/mmr.svg">Myanmar</option>
+                                            <option value="NAM" data-flag="https://restcountries.eu/data/nam.svg">Namibia</option>
+                                            <option value="NRU" data-flag="https://restcountries.eu/data/nru.svg">Nauru</option>
+                                            <option value="NPL" data-flag="https://restcountries.eu/data/npl.svg">Nepal</option>
+                                            <option value="NLD" data-flag="https://restcountries.eu/data/nld.svg">Netherlands</option>
+                                            <option value="NCL" data-flag="https://restcountries.eu/data/ncl.svg">New Caledonia</option>
+                                            <option value="NZL" data-flag="https://restcountries.eu/data/nzl.svg">New Zealand</option>
+                                            <option value="NIC" data-flag="https://restcountries.eu/data/nic.svg">Nicaragua</option>
+                                            <option value="NER" data-flag="https://restcountries.eu/data/ner.svg">Niger</option>
+                                            <option value="NGA" data-flag="https://restcountries.eu/data/nga.svg">Nigeria</option>
+                                            <option value="NIU" data-flag="https://restcountries.eu/data/niu.svg">Niue</option>
+                                            <option value="NFK" data-flag="https://restcountries.eu/data/nfk.svg">Norfolk Island</option>
+                                            <option value="PRK" data-flag="https://restcountries.eu/data/prk.svg">Korea (Democratic People's Republic of)</option>
+                                            <option value="MNP" data-flag="https://restcountries.eu/data/mnp.svg">Northern Mariana Islands</option>
+                                            <option value="NOR" data-flag="https://restcountries.eu/data/nor.svg">Norway</option>
+                                            <option value="OMN" data-flag="https://restcountries.eu/data/omn.svg">Oman</option>
+                                            <option value="PAK" data-flag="https://restcountries.eu/data/pak.svg">Pakistan</option>
+                                            <option value="PLW" data-flag="https://restcountries.eu/data/plw.svg">Palau</option>
+                                            <option value="PSE" data-flag="https://restcountries.eu/data/pse.svg">Palestine, State of</option>
+                                            <option value="PAN" data-flag="https://restcountries.eu/data/pan.svg">Panama</option>
+                                            <option value="PNG" data-flag="https://restcountries.eu/data/png.svg">Papua New Guinea</option>
+                                            <option value="PRY" data-flag="https://restcountries.eu/data/pry.svg">Paraguay</option>
+                                            <option value="PER" data-flag="https://restcountries.eu/data/per.svg">Peru</option>
+                                            <option value="PHL" data-flag="https://restcountries.eu/data/phl.svg">Philippines</option>
+                                            <option value="PCN" data-flag="https://restcountries.eu/data/pcn.svg">Pitcairn</option>
+                                            <option value="POL" data-flag="https://restcountries.eu/data/pol.svg">Poland</option>
+                                            <option value="PRT" data-flag="https://restcountries.eu/data/prt.svg">Portugal</option>
+                                            <option value="PRI" data-flag="https://restcountries.eu/data/pri.svg">Puerto Rico</option>
+                                            <option value="QAT" data-flag="https://restcountries.eu/data/qat.svg">Qatar</option>
+                                            <option value="KOS" data-flag="https://restcountries.eu/data/kos.svg">Republic of Kosovo</option>
+                                            <option value="REU" data-flag="https://restcountries.eu/data/reu.svg">Réunion</option>
+                                            <option value="ROU" data-flag="https://restcountries.eu/data/rou.svg">Romania</option>
+                                            <option value="RUS" data-flag="https://restcountries.eu/data/rus.svg">Russian Federation</option>
+                                            <option value="RWA" data-flag="https://restcountries.eu/data/rwa.svg">Rwanda</option>
+                                            <option value="BLM" data-flag="https://restcountries.eu/data/blm.svg">Saint Barthélemy</option>
+                                            <option value="SHN" data-flag="https://restcountries.eu/data/shn.svg">Saint Helena, Ascension and Tristan da Cunha</option>
+                                            <option value="KNA" data-flag="https://restcountries.eu/data/kna.svg">Saint Kitts and Nevis</option>
+                                            <option value="LCA" data-flag="https://restcountries.eu/data/lca.svg">Saint Lucia</option>
+                                            <option value="MAF" data-flag="https://restcountries.eu/data/maf.svg">Saint Martin (French part)</option>
+                                            <option value="SPM" data-flag="https://restcountries.eu/data/spm.svg">Saint Pierre and Miquelon</option>
+                                            <option value="VCT" data-flag="https://restcountries.eu/data/vct.svg">Saint Vincent and the Grenadines</option>
+                                            <option value="WSM" data-flag="https://restcountries.eu/data/wsm.svg">Samoa</option>
+                                            <option value="SMR" data-flag="https://restcountries.eu/data/smr.svg">San Marino</option>
+                                            <option value="STP" data-flag="https://restcountries.eu/data/stp.svg">Sao Tome and Principe</option>
+                                            <option value="SAU" data-flag="https://restcountries.eu/data/sau.svg">Saudi Arabia</option>
+                                            <option value="SEN" data-flag="https://restcountries.eu/data/sen.svg">Senegal</option>
+                                            <option value="SRB" data-flag="https://restcountries.eu/data/srb.svg">Serbia</option>
+                                            <option value="SYC" data-flag="https://restcountries.eu/data/syc.svg">Seychelles</option>
+                                            <option value="SLE" data-flag="https://restcountries.eu/data/sle.svg">Sierra Leone</option>
+                                            <option value="SGP" data-flag="https://restcountries.eu/data/sgp.svg">Singapore</option>
+                                            <option value="SXM" data-flag="https://restcountries.eu/data/sxm.svg">Sint Maarten (Dutch part)</option>
+                                            <option value="SVK" data-flag="https://restcountries.eu/data/svk.svg">Slovakia</option>
+                                            <option value="SVN" data-flag="https://restcountries.eu/data/svn.svg">Slovenia</option>
+                                            <option value="SLB" data-flag="https://restcountries.eu/data/slb.svg">Solomon Islands</option>
+                                            <option value="SOM" data-flag="https://restcountries.eu/data/som.svg">Somalia</option>
+                                            <option value="ZAF" data-flag="https://restcountries.eu/data/zaf.svg">South Africa</option>
+                                            <option value="SGS" data-flag="https://restcountries.eu/data/sgs.svg">South Georgia and the South Sandwich Islands</option>
+                                            <option value="KOR" data-flag="https://restcountries.eu/data/kor.svg">Korea (Republic of)</option>
+                                            <option value="SSD" data-flag="https://restcountries.eu/data/ssd.svg">South Sudan</option>
+                                            <option value="ESP" data-flag="https://restcountries.eu/data/esp.svg">Spain</option>
+                                            <option value="LKA" data-flag="https://restcountries.eu/data/lka.svg">Sri Lanka</option>
+                                            <option value="SDN" data-flag="https://restcountries.eu/data/sdn.svg">Sudan</option>
+                                            <option value="SUR" data-flag="https://restcountries.eu/data/sur.svg">Suriname</option>
+                                            <option value="SJM" data-flag="https://restcountries.eu/data/sjm.svg">Svalbard and Jan Mayen</option>
+                                            <option value="SWZ" data-flag="https://restcountries.eu/data/swz.svg">Swaziland</option>
+                                            <option value="SWE" data-flag="https://restcountries.eu/data/swe.svg">Sweden</option>
+                                            <option value="CHE" data-flag="https://restcountries.eu/data/che.svg">Switzerland</option>
+                                            <option value="SYR" data-flag="https://restcountries.eu/data/syr.svg">Syrian Arab Republic</option>
+                                            <option value="TWN" data-flag="https://restcountries.eu/data/twn.svg">Taiwan</option>
+                                            <option value="TJK" data-flag="https://restcountries.eu/data/tjk.svg">Tajikistan</option>
+                                            <option value="TZA" data-flag="https://restcountries.eu/data/tza.svg">Tanzania, United Republic of</option>
+                                            <option value="THA" data-flag="https://restcountries.eu/data/tha.svg">Thailand</option>
+                                            <option value="TLS" data-flag="https://restcountries.eu/data/tls.svg">Timor-Leste</option>
+                                            <option value="TGO" data-flag="https://restcountries.eu/data/tgo.svg">Togo</option>
+                                            <option value="TKL" data-flag="https://restcountries.eu/data/tkl.svg">Tokelau</option>
+                                            <option value="TON" data-flag="https://restcountries.eu/data/ton.svg">Tonga</option>
+                                            <option value="TTO" data-flag="https://restcountries.eu/data/tto.svg">Trinidad and Tobago</option>
+                                            <option value="TUN" data-flag="https://restcountries.eu/data/tun.svg">Tunisia</option>
+                                            <option value="TUR" data-flag="https://restcountries.eu/data/tur.svg">Turkey</option>
+                                            <option value="TKM" data-flag="https://restcountries.eu/data/tkm.svg">Turkmenistan</option>
+                                            <option value="TCA" data-flag="https://restcountries.eu/data/tca.svg">Turks and Caicos Islands</option>
+                                            <option value="TUV" data-flag="https://restcountries.eu/data/tuv.svg">Tuvalu</option>
+                                            <option value="UGA" data-flag="https://restcountries.eu/data/uga.svg">Uganda</option>
+                                            <option value="UKR" data-flag="https://restcountries.eu/data/ukr.svg">Ukraine</option>
+                                            <option value="ARE" data-flag="https://restcountries.eu/data/are.svg">United Arab Emirates</option>
+                                            <option value="GBR" data-flag="https://restcountries.eu/data/gbr.svg">United Kingdom of Great Britain and Northern Ireland</option>
+                                            <option value="USA" data-flag="https://restcountries.eu/data/usa.svg">United States of America</option>
+                                            <option value="URY" data-flag="https://restcountries.eu/data/ury.svg">Uruguay</option>
+                                            <option value="UZB" data-flag="https://restcountries.eu/data/uzb.svg">Uzbekistan</option>
+                                            <option value="VUT" data-flag="https://restcountries.eu/data/vut.svg">Vanuatu</option>
+                                            <option value="VEN" data-flag="https://restcountries.eu/data/ven.svg">Venezuela (Bolivarian Republic of)</option>
+                                            <option value="VNM" data-flag="https://restcountries.eu/data/vnm.svg">Viet Nam</option>
+                                            <option value="WLF" data-flag="https://restcountries.eu/data/wlf.svg">Wallis and Futuna</option>
+                                            <option value="ESH" data-flag="https://restcountries.eu/data/esh.svg">Western Sahara</option>
+                                            <option value="YEM" data-flag="https://restcountries.eu/data/yem.svg">Yemen</option>
+                                            <option value="ZMB" data-flag="https://restcountries.eu/data/zmb.svg">Zambia</option>
+                                            <option value="ZWE" data-flag="https://restcountries.eu/data/zwe.svg">Zimbabwe</option>
+                                        </select>
+                                        <div class="input-group-append" id="country_append" hidden>
+                                            <div class="input-group-text bg-light">
+                                                <img id="flag_img" class="d-inline-block h-100 p-0" style="width:1.4rem">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <small id="country_error" class="text-danger"></small>
+                                </fieldset>
+                                <div class="form-row">
+                                    <fieldset class="form-group col-md-3">
+                                        <label for="currency_code">Currency</label>
+                                        <select id="currency_code" name="currency_code" class="form-control">
+                                            <option></option>
+                                            <option value="USD">USD - $</option>
+                                            <option value="CAD">CAD - CA$</option>
+                                            <option value="EUR">EUR - €</option>
+                                            <option value="AED">AED - AED</option>
+                                            <option value="AFN">AFN - Af</option>
+                                            <option value="ALL">ALL - ALL</option>
+                                            <option value="AMD">AMD - AMD</option>
+                                            <option value="ARS">ARS - AR$</option>
+                                            <option value="AUD">AUD - AU$</option>
+                                            <option value="AZN">AZN - man.</option>
+                                            <option value="BAM">BAM - KM</option>
+                                            <option value="BDT">BDT - Tk</option>
+                                            <option value="BGN">BGN - BGN</option>
+                                            <option value="BHD">BHD - BD</option>
+                                            <option value="BIF">BIF - FBu</option>
+                                            <option value="BND">BND - BN$</option>
+                                            <option value="BOB">BOB - Bs</option>
+                                            <option value="BRL">BRL - R$</option>
+                                            <option value="BWP">BWP - BWP</option>
+                                            <option value="BYN">BYN - Br</option>
+                                            <option value="BZD">BZD - BZ$</option>
+                                            <option value="CDF">CDF - CDF</option>
+                                            <option value="CHF">CHF - CHF</option>
+                                            <option value="CLP">CLP - CL$</option>
+                                            <option value="CNY">CNY - CN¥</option>
+                                            <option value="COP">COP - CO$</option>
+                                            <option value="CRC">CRC - ₡</option>
+                                            <option value="CVE">CVE - CV$</option>
+                                            <option value="CZK">CZK - Kč</option>
+                                            <option value="DJF">DJF - Fdj</option>
+                                            <option value="DKK">DKK - Dkr</option>
+                                            <option value="DOP">DOP - RD$</option>
+                                            <option value="DZD">DZD - DA</option>
+                                            <option value="EEK">EEK - Ekr</option>
+                                            <option value="EGP">EGP - EGP</option>
+                                            <option value="ERN">ERN - Nfk</option>
+                                            <option value="ETB">ETB - Br</option>
+                                            <option value="GBP">GBP - £</option>
+                                            <option value="GEL">GEL - GEL</option>
+                                            <option value="GHS">GHS - GH₵</option>
+                                            <option value="GNF">GNF - FG</option>
+                                            <option value="GTQ">GTQ - GTQ</option>
+                                            <option value="HKD">HKD - HK$</option>
+                                            <option value="HNL">HNL - HNL</option>
+                                            <option value="HRK">HRK - kn</option>
+                                            <option value="HUF">HUF - Ft</option>
+                                            <option value="IDR">IDR - Rp</option>
+                                            <option value="ILS">ILS - ₪</option>
+                                            <option value="INR">INR - Rs</option>
+                                            <option value="IQD">IQD - IQD</option>
+                                            <option value="IRR">IRR - IRR</option>
+                                            <option value="ISK">ISK - Ikr</option>
+                                            <option value="JMD">JMD - J$</option>
+                                            <option value="JOD">JOD - JD</option>
+                                            <option value="JPY">JPY - ¥</option>
+                                            <option value="KES">KES - Ksh</option>
+                                            <option value="KHR">KHR - KHR</option>
+                                            <option value="KMF">KMF - CF</option>
+                                            <option value="KRW">KRW - ₩</option>
+                                            <option value="KWD">KWD - KD</option>
+                                            <option value="KZT">KZT - KZT</option>
+                                            <option value="LBP">LBP - LB£</option>
+                                            <option value="LKR">LKR - SLRs</option>
+                                            <option value="LTL">LTL - Lt</option>
+                                            <option value="LVL">LVL - Ls</option>
+                                            <option value="LYD">LYD - LD</option>
+                                            <option value="MAD">MAD - MAD</option>
+                                            <option value="MDL">MDL - MDL</option>
+                                            <option value="MGA">MGA - MGA</option>
+                                            <option value="MKD">MKD - MKD</option>
+                                            <option value="MMK">MMK - MMK</option>
+                                            <option value="MOP">MOP - MOP$</option>
+                                            <option value="MUR">MUR - MURs</option>
+                                            <option value="MXN">MXN - MX$</option>
+                                            <option value="MYR">MYR - RM</option>
+                                            <option value="MZN">MZN - MTn</option>
+                                            <option value="NAD">NAD - N$</option>
+                                            <option value="NGN">NGN - ₦</option>
+                                            <option value="NIO">NIO - C$</option>
+                                            <option value="NOK">NOK - Nkr</option>
+                                            <option value="NPR">NPR - NPRs</option>
+                                            <option value="NZD">NZD - NZ$</option>
+                                            <option value="OMR">OMR - OMR</option>
+                                            <option value="PAB">PAB - B/.</option>
+                                            <option value="PEN">PEN - S/.</option>
+                                            <option value="PHP">PHP - ₱</option>
+                                            <option value="PKR">PKR - PKRs</option>
+                                            <option value="PLN">PLN - zł</option>
+                                            <option value="PYG">PYG - ₲</option>
+                                            <option value="QAR">QAR - QR</option>
+                                            <option value="RON">RON - RON</option>
+                                            <option value="RSD">RSD - din.</option>
+                                            <option value="RUB">RUB - RUB</option>
+                                            <option value="RWF">RWF - RWF</option>
+                                            <option value="SAR">SAR - SR</option>
+                                            <option value="SDG">SDG - SDG</option>
+                                            <option value="SEK">SEK - Skr</option>
+                                            <option value="SGD">SGD - S$</option>
+                                            <option value="SOS">SOS - Ssh</option>
+                                            <option value="SYP">SYP - SY£</option>
+                                            <option value="THB">THB - ฿</option>
+                                            <option value="TND">TND - DT</option>
+                                            <option value="TOP">TOP - T$</option>
+                                            <option value="TRY">TRY - TL</option>
+                                            <option value="TTD">TTD - TT$</option>
+                                            <option value="TWD">TWD - NT$</option>
+                                            <option value="TZS">TZS - TSh</option>
+                                            <option value="UAH">UAH - ₴</option>
+                                            <option value="UGX">UGX - USh</option>
+                                            <option value="UYU">UYU - $U</option>
+                                            <option value="UZS">UZS - UZS</option>
+                                            <option value="VEF">VEF - Bs.F.</option>
+                                            <option value="VND">VND - ₫</option>
+                                            <option value="XAF">XAF - FCFA</option>
+                                            <option value="XOF">XOF - CFA</option>
+                                            <option value="YER">YER - YR</option>
+                                            <option value="ZAR">ZAR - R</option>
+                                            <option value="ZMK">ZMK - ZK</option>
+                                            <option value="ZWL">ZWL - ZWL$</option>
+                                        </select>
+                                        <small id="currency_error" class="text-danger"></small>
+                                    </fieldset>
+                                    <fieldset class="form-group col-md-9">
+                                        <label for="amount">Requested Amount</label>
+                                        <input type="number" class="form-control" id="amount" name="amount">
+                                        <span class="invalid-feedback"></span>
+                                    </fieldset>
+                                </div>
+                                <fieldset class="form-group">
+                                    <button type="submit" class="btn credit-btn btn-block" id="loan_button">Start Application
+                            </button>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="single-features-area mb-100 wow fadeInUp" data-wow-delay="500ms">
+                            <img src="{% static 'img/bg-img/3.jpg' %}" alt="No documents needed">
+                            <h5>No documents needed</h5>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="single-features-area mb-100 wow fadeInUp" data-wow-delay="700ms">
+                            <img src="{% static 'img/bg-img/4.jpg' %}" alt="Fast and easy loan">
+                            <h5>Fast &amp;easy loans</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ##### Features Area End ###### -->
+        <!-- ##### Miscellaneous Area Start ###### -->
+        <section class="miscellaneous-area bg-gray section-padding-100-0">
+            <div class="container">
+                <div class="row align-items-end justify-content-center">
+                    <!-- Add Area -->
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="add-area mb-100 wow fadeInUp" data-wow-delay="100ms">
+                            <a href="#">
+                                <img src="{% static 'img/bg-img/add.png' %}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Contact Area -->
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <div class="contact--area mb-100 wow fadeInUp" data-wow-delay="300ms">
+                            <!-- Section Heading -->
+                            <div class="section-heading mb-50">
+                                <div class="line"></div>
+                                <h2>Get in touch</h2>
+                            </div>
+                            <!-- Contact Content -->
+                            <div class="contact-content">
+                                <!-- Single Contact Content -->
+                                <div class="single-contact-content d-flex align-items-center">
+                                    <div class="icon">
+                                        <img src="{% static 'img/core-img/location.png' %}" alt="">
+                                    </div>
+                                    <div class="text">
+                                        <p>1122 Lyndon Buckner Blvd Ste 109, Dallas, TX 75302</p>
+                                    </div>
+                                </div>
+                                <!-- Single Contact Content -->
+                                <div class="single-contact-content d-flex align-items-center">
+                                    <div class="icon">
+                                        <img src="{% static 'img/core-img/call.png' %}" alt="">
+                                    </div>
+                                    <div class="text">
+                                        <span>mon-fri , 08.00am - 17.00pm</span>
+                                    </div>
+                                </div>
+                                <!-- Single Contact Content -->
+                                <div class="single-contact-content d-flex align-items-center">
+                                    <div class="icon">
+                                        <img src="{% static 'img/core-img/message2.png' %}" alt="">
+                                    </div>
+                                    <div class="text">
+                                        <p>Support@unionwesternglobalinc.com </p>
+                                        <span>we reply in 24 hrs</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- News Area -->
+        </section>
+   
+{% endblock content %}
+   

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load allauth i18n %}
+{% block head_title %}
+    {% trans "Sign Out" %}
+{% endblock head_title %}
+
+{% block content %}
+{% include 'partials/theme-toggler.html' %}
+    <div class="flex justify-center items-center h-screen">
+        <button id="openModal" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+            {% trans "Sign Out" %}
+        </button>
+    </div>
+
+    <!-- Modal -->
+    <div id="signOutModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white rounded-lg p-6 w-1/3">
+            <h1 class="text-lg font-semibold mb-4">{% trans "Sign Out" %}</h1>
+            <p class="mb-4">{% trans 'Are you sure you want to sign out?' %}</p>
+            <form method="post" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                {{ redirect_field }}
+                <div class="flex justify-end">
+                    <button type="button" id="closeModal" class="px-4 py-2 mr-2 bg-gray-300 rounded hover:bg-gray-400">
+                        {% trans "No" %}
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+                        {% trans 'Yes' %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript to handle modal -->
+    <script>
+        document.getElementById('openModal').addEventListener('click', function() {
+            document.getElementById('signOutModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('signOutModal').classList.add('hidden');
+        });
+    </script>
+{% endblock content %}

@@ -1,0 +1,38 @@
+{% load static %}
+{% if messages %}
+<div class="fixed z-20 bottom-10 inset-x-0 flex justify-center mb-4 animate-slide-up">
+  <div class="p-6">
+    {% for message in messages %}
+      <div class="relative p-4 pr-10 text-white text-center rounded-lg shadow-lg 
+                  {% if message.tags == 'error' %}bg-red-500 dark:bg-red-600
+                  {% elif message.tags == 'success' %}bg-green-600 dark:bg-green-600
+                  {% elif message.tags == 'warning' %}bg-yellow-500 dark:bg-yellow-600
+                  {% elif message.tags == 'info' %}bg-blue-500 dark:bg-blue-600
+                  {% else %}bg-gray-500 dark:bg-gray-600{% endif %}">
+
+        <button onclick="this.parentElement.style.display='none'"
+                class="absolute top-2 right-2 text-white text-lg font-bold leading-none">&times;</button>
+
+        <span class="block">{{ message }}</span>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<style>
+@keyframes slide-up {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out;
+}
+</style>

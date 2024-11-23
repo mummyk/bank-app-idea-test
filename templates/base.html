@@ -1,0 +1,102 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>{% block head_title %} {{title}} {% endblock %}</title>
+		<meta name="description" content="" />
+      <meta content="" name="keywords">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+      <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+		<script src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.js" integrity="sha384-BBDmZzVt6vjz5YbQqZPtFZW82o8QotoM7RUp5xOxV3nSJ8u2pSdtzFAbGKzTlKtg" crossorigin="anonymous"></script>
+         <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+        <!-- Favicon -->
+        <link rel="icon" href="{% static 'images/logo/favicon.png' %}">
+         <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+
+        <!-- Libraries Stylesheet -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+        <!-- Template Stylesheet -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+   
+
+    
+    {% tailwind_css %}
+		
+    {% block extra_head %} {% endblock %} 
+    <script>
+    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+      if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+         document.documentElement.classList.add('dark');
+      } else {
+         document.documentElement.classList.remove('dark')
+      }
+   </script>
+</head>
+<body class="leading-normal tracking-normal bg-green-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+    {% include 'partials/messages-dashboard.html' %}
+
+   <!--[if lt IE 7]>
+			<p class="browsehappy">
+				You are using an <strong>outdated</strong> browser. Please
+				<a href="#">upgrade your browser</a> to improve your experience.
+			</p>
+		<![endif]-->
+
+    <!-- Loading Screen -->
+   <div id="loadingScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+    <div class="text-center" style="animation: myAnim 3s ease-in-out infinite;">
+        <img src="{% static 'images/logo/logo.png' %}" alt="Logo" class="h-32 w-auto mb-4" />
+    </div>
+</div>
+
+
+    <!-- Main Content -->
+    <div id="mainContent" class="hidden">
+        <div class="container mx-auto">{% block content %} {% endblock %}</div>
+    </div>
+
+    <script>
+        // Show loading screen on page load
+        window.onload = function() {
+            document.getElementById('loadingScreen').style.display = 'none'; // Hide loading screen
+            document.getElementById('mainContent').classList.remove('hidden'); // Show main content
+        };
+    </script>
+    <!-- Smartsupp Live Chat script -->
+        <script type="text/javascript">
+        var _smartsupp = _smartsupp || {};
+        _smartsupp.key = '63efff4d61fd299f77449f0e74d72c0693f7cefe';
+        window.smartsupp||(function(d) {
+        var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+        s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+        c.type='text/javascript';c.charset='utf-8';c.async=true;
+        c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+        })(document);
+        </script>
+        <noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
+    
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      <script src="{% static 'js/app.bundle.js' %}" async defer></script>
+      <script src="{% static 'js/datepicker.min.js' %}" async defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/datepicker.min.js"></script>
+</body>
+</html>

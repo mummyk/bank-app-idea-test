@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+{% load allauth i18n %}
+{% block head_title %}
+    {% trans "Signup" %}
+{% endblock head_title %}
+{% block content %}
+{% include 'partials/theme-toggler.html' %}
+    <div class="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900">
+        <a href="" class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
+        <img src="{% static 'img/logo.png' %}" class="mr-4 h-11" alt="Logo">
+        <span></span>  
+    </a>
+     
+     <!-- Main Content with Box Shadow -->
+    <div class="w-full max-w-xl p-6 space-y-8 sm:p-8 rounded-lg shadow dark:bg-gray-800">
+    <h1  class="text-2xl font-bold text-gray-900 dark:text-white">
+        {% trans "Sign Up" %}
+    </h1>
+    {% setvar link %}
+        <a href="{{ login_url }}">
+        {% endsetvar %}
+        {% setvar end_link %}
+        </a>
+    {% endsetvar %}
+     <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
+       {% blocktranslate %} Already have an account? <strong class="text-primary-700 hover:underline dark:text-primary-500">
+            {{ link }} Log in here{{ end_link }} </strong>{% endblocktranslate %}
+            </div>
+    {% if not SOCIALACCOUNT_ONLY %}
+        {% url 'account_signup' as action_url %}
+        <form method="POST" action="{% url 'account_signup' %}" class="mt-8 space-y-2">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="form-group">
+            {{ field }} <br> <!-- This will include your custom attributes -->
+            {% if field.errors %}
+                <div class="text-error">
+                    {% for error in field.errors %}
+                        <strong>{{ error|escape }}</strong>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    {% if form.errors %}
+        <div class="text-error">
+            {% for error in form.non_field_errors %}
+                <strong>{{ error|escape }}</strong>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="flex items-start">
+                <div class="flex items-center h-5">
+                    <input id="remember" aria-describedby="remember" name="remember" type="checkbox" class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" required>
+                </div>
+                <div class="ml-3 text-sm">
+                    <label for="remember" class="font-medium text-gray-900 dark:text-white">I accept the <a href="#" class="text-primary-700 hover:underline dark:text-primary-500">Terms and Conditions</a></label>
+                </div>
+            </div>
+
+    <button class="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" type="submit" class="btn signup">{% trans "Sign Up" %}</button>
+</form>
+    {% endif %}
+    </div>
+    {% if PASSKEY_SIGNUP_ENABLED %}
+        {% element hr %}
+        {% endelement %}
+        {% element button href=signup_by_passkey_url tags="prominent,signup,outline,primary" %}
+            {% trans "Sign up using a passkey" %}
+        {% endelement %}
+    {% endif %}
+    {% if SOCIALACCOUNT_ENABLED %}
+        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+    {% endif %}
+</div>
+{% endblock content %}

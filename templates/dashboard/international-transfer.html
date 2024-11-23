@@ -1,0 +1,58 @@
+{% extends "dashboard/dashboard-base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+{% include 'partials/appbar.html' %}
+<div class="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
+    {% include 'partials/sidebar.html' %}
+
+    <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900 p-2">
+        {% include 'partials/messages-dashboard.html' %}
+        <main>
+            <div class="grid grid-cols-1 px-2 pt-6 xl:grid-cols-3 xl:p-2 xl:gap-4 dark:bg-gray-900">
+                <div class="mb-4 col-span-full xl:mb-2">
+                    <nav class="flex mb-5" aria-label="Breadcrumb">
+                        <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+                            <li class="inline-flex items-center">
+                                <a href="{% url 'home' %}" class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-500">
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <span class="ml-1 text-gray-700 md:ml-2 dark:text-gray-300">Transfer</span>
+                            </li>
+                            <li>
+                                <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">International Transfer</span>
+                            </li>
+                        </ol>
+                    </nav>
+                    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Send an International Transfer</h1>
+                </div>
+            </div>
+            <div class="flex flex-col lg:flex-row min-h-screen w-screen">
+                <div class="lg:w-screen w-full p-2">
+                    <div class="rounded-lg p-8 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                        <form method="post" enctype="multipart/form-data" class="space-y-4">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                <div>
+                                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        {{ field.label }}
+                                    </label>
+                                    {% render_field field class+="bg-gray-50 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" %}
+                                    {% if field.errors %}
+                                        <span class="text-red-500 text-sm">{{ field.errors }}</span>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                            <button type="submit" class="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                Send
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
