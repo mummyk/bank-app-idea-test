@@ -95,7 +95,7 @@ INSTALLED_APPS = [
     'users',
     # 'wallet',
     'tailwind',
-    # 'theme',
+    'theme',
 ]
 
 MIDDLEWARE = [

@@ -17,11 +17,13 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="stylesheet" href="{% static 'css/darkel.css' %}">
-  <link href="{% static 'vendor/animate.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/owl.carousel.min.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/font-awesome.min.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/classy-nav.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/credit-icon.min.css' %}" rel="stylesheet">
+  <!-- Libraries Stylesheet -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link href="{% static 'css/vendor/animate.css' %}" rel="stylesheet">
+  <link href="{% static 'css/vendor/owl.carousel.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/vendor/font-awesome.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/vendor/classy-nav.css' %}" rel="stylesheet">
+  <link href="{% static 'css/vendor/credit-icon.css' %}" rel="stylesheet">
         
 
         <!-- Google Web Fonts -->
@@ -70,10 +72,10 @@
     <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <!-- for ladda -->
-    <script src="{% static 'ladda/ladda.jquery.min.js' %}"></script>
-    <script src="{% static 'ladda/spin.min.js' %}"></script>
-    <script src="{% static 'ladda/ladda.min.js' %}"></script>
-    <script src="{% static 'ladda/ladda.jquery.min.js' %}"></script>
+    <script src="{% static 'js/ladda/ladda.jquery.min.js' %}"></script>
+    <script src="{% static 'js/ladda/spin.min.js' %}"></script>
+    <script src="{% static 'js/ladda/ladda.min.js' %}"></script>
+    <script src="{% static 'js/ladda/ladda.jquery.min.js' %}"></script>
     <!-- ##### All Javascript Script ##### -->
     <!-- jQuery-2.2.4 js -->
     <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
@@ -105,7 +107,7 @@
 
     
     <!-- Main Javascript File -->
-    <script src="{% static 'js/main.js' %}"></script>
+    {% comment %} <script src="{% static 'js/main.js' %}"></script> {% endcomment %}
     </body>
 
 </html>
