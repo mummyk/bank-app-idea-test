@@ -21,3 +21,5 @@ gunicorn
 dj-database-url
 requests
 django-widget-tweaks
+whitenoise
+whitenoise[brotli]

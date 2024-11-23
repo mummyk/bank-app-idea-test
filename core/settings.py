@@ -61,14 +61,14 @@ if not DEBUG:
     if allowed_hosts_env:
         ALLOWED_HOSTS = allowed_hosts_env.split(',')
     else:
-        ALLOWED_HOSTS = ['51.24.26.102']
+        ALLOWED_HOSTS = ['51.24.26.102', '127.0.0.1']
 else:
     print("""
 ==========================
 === Development server ===
 ==========================
 """)
-    ALLOWED_HOSTS = ['51.24.26.102']
+    ALLOWED_HOSTS = ['51.24.26.102', '127.0.0.1']
 
 
 # Application definition
@@ -101,6 +101,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'core.middlewares.user_activity_middleware.LogUserIPMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -185,6 +186,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     os.path.join(BASE_DIR, 'theme/static'),
 ]
+# Enable WhiteNoise for serving compressed and cached static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
