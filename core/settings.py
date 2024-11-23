@@ -95,7 +95,7 @@ INSTALLED_APPS = [
     'users',
     # 'wallet',
     'tailwind',
-    'theme',
+    # 'theme',
 ]
 
 MIDDLEWARE = [
@@ -184,7 +184,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     # Adjust this path for your app's static files
     os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'theme/static'),
+    # os.path.join(BASE_DIR, 'theme/static'),
 ]
 # Enable WhiteNoise for serving compressed and cached static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
