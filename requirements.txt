@@ -19,14 +19,5 @@ django-compressor
 django-tailwind
 gunicorn
 dj-database-url
-whitenoise
-whitenoise[brotli]
-celery
 requests
-opencv-python
-pyzbar
-numpy
-keyboard
 django-widget-tweaks
-channels
-daphne
