@@ -12,7 +12,8 @@ logger = logging.getLogger(__name__)
 
 @receiver(user_signed_up)
 def assign_user_to_member_group(request, user, **kwargs):
-    logger.info(f"Signal received: user_signed_up for user {user.username}")
+    logger.info(f"""Signal received: user_signed_up for user {
+                user.username}""")
 
     try:
         with transaction.atomic():
@@ -20,8 +21,8 @@ def assign_user_to_member_group(request, user, **kwargs):
             account_number_obj, created = AccountNumber.objects.get_or_create(
                 user=user)
             if created:
-                logger.info(f"Account number {
-                            account_number_obj.account_number} created for user {user.username}")
+                logger.info(f"""Account number {
+                            account_number_obj.account_number} created for user {user.username}""")
 
             # Create or get the 'Member' group
             group_name = "Member"
@@ -42,9 +43,9 @@ def assign_user_to_member_group(request, user, **kwargs):
             # Add the user to the 'Member' group
             user.groups.add(member_group)
 
-            logger.info(f"User {user.username} added to 'Member' group with account number {
-                        account_number_obj.account_number}")
+            logger.info(f"""User {user.username} added to 'Member' group with account number {
+                        account_number_obj.account_number}""")
 
     except Exception as e:
-        logger.error(f"Error in assign_user_to_member_group for user {
-                     user.username}: {str(e)}")
+        logger.error(f"""Error in assign_user_to_member_group for user {
+                     user.username}: {str(e)}""")

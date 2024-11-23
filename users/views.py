@@ -50,7 +50,7 @@ def domesticTransaction(request):
 
                     if account.locked:
                         messages.warning(
-                            request, "your account has been locked, please contact customer support or use the live chat below."
+                            request, """your account has been locked, please contact customer support or use the live chat below."""
                         )
                         # Redirect to the password setup page
                         return redirect(reverse('domestic_transaction'))
