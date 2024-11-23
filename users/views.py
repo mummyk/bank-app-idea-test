@@ -351,15 +351,3 @@ def account_statement(request):
     }
 
     return render(request, 'dashboard/account_statement.html', context)
-
-
-@login_required
-def chat_room(request, room_name):
-    # Check if the room is for chatting with the superuser
-    if room_name != 'superuser_chat':
-        # Redirect to home or an error page if not chatting with superuser
-        return redirect('home')
-
-    return render(request, 'dashboard/chat.html', {
-        'room_name': room_name  # Pass the room name to the template
-    })

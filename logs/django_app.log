@@ -20181,3 +20181,8 @@ INFO    2024-11-23 08:56:26,339 [django.server:212] "GET /static/admin/img/icon-
 INFO    2024-11-23 08:59:58,335 [core.middlewares.user_activity_middleware:14] User IP: 127.0.0.1
 INFO    2024-11-23 08:59:58,393 [django.server:212] "GET /dashboard/ HTTP/1.1" 200 33407
 INFO    2024-11-23 08:59:58,514 [django.server:212] "GET /static/css/dist/styles.css?v=1732348798 HTTP/1.1" 200 39991
+INFO    2024-11-23 09:03:44,307 [django.utils.autoreload:266] C:\Users\HP\Documents\banksites\users\urls.py changed, reloading.
+INFO    2024-11-23 09:03:48,477 [django.utils.autoreload:668] Watching for file changes with StatReloader
+INFO    2024-11-23 09:04:07,090 [django.utils.autoreload:266] C:\Users\HP\Documents\banksites\users\views.py changed, reloading.
+INFO    2024-11-23 09:04:11,017 [django.utils.autoreload:668] Watching for file changes with StatReloader
+INFO    2024-11-23 09:04:19,893 [django.utils.autoreload:266] C:\Users\HP\Documents\banksites\users\urls.py changed, reloading.

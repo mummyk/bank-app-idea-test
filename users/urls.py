@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import domesticTransaction, set_password, localTransaction, internationalTransaction, transaction_history, account_statement, chat_room
+from .views import domesticTransaction, set_password, localTransaction, internationalTransaction, transaction_history, account_statement
 
 
 urlpatterns = [
@@ -12,5 +12,4 @@ urlpatterns = [
          name='transaction_history'),
     path('transaction/statement/', account_statement,
          name='account_statement'),
-    path('chat/<str:room_name>/', chat_room, name='chat_room'),
 ]
