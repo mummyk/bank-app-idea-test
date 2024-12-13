@@ -61,14 +61,14 @@ if not DEBUG:
     if allowed_hosts_env:
         ALLOWED_HOSTS = allowed_hosts_env.split(',')
     else:
-        ALLOWED_HOSTS = ['51.24.26.102', '127.0.0.1']
+        ALLOWED_HOSTS = ['51.24.26.102', '127.0.0.1', 'primevaultbank.com']
 else:
     print("""
 ==========================
 === Development server ===
 ==========================
 """)
-    ALLOWED_HOSTS = ['51.24.26.102', '127.0.0.1']
+    ALLOWED_HOSTS = ['51.24.26.102', '127.0.0.1', 'primevaultbank.com']
 
 
 # Application definition
