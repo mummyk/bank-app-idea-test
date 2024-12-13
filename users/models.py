@@ -61,7 +61,7 @@ class AccountNumber(models.Model):
         max_length=128, null=True, blank=True)  # Hashed password field
     # New field to lock the account
     locked = models.BooleanField(default=False)
-    updated = models.DateTimeField()
+    updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -204,9 +204,13 @@ class DomesticTransfer(models.Model):
         return f"{self.beneficiary} of {self.amount} on {self.timestamp}"
 
     def transfer(self, amount, password):
-        if self.locked:
+        # Access the user's account through the correct related name
+        user_account = self.user.account_number
+
+        if user_account.locked:
             raise ValidationError(
-                "This account is locked. Transfers are not allowed.")
+                "This account is locked. Transfers are not allowed."
+            )
 
         try:
             amount = Decimal(amount)
@@ -256,6 +260,14 @@ class LocalTransfer(models.Model):
         return f"{self.beneficiary_bank} of {self.amount} on {self.timestamp}"
 
     def transfer(self, amount, password):
+        # Access the user's account through the correct related name
+        user_account = self.user.account_number
+
+        if user_account.locked:
+            raise ValidationError(
+                "This account is locked. Transfers are not allowed."
+            )
+
         try:
             amount = Decimal(amount)
 
@@ -310,6 +322,14 @@ class InternationalTransfer(models.Model):
         return f"{self.beneficiary_name} of {self.amount} on {self.timestamp}"
 
     def transfer(self, amount, password):
+        # Access the user's account through the correct related name
+        user_account = self.user.account_number
+
+        if user_account.locked:
+            raise ValidationError(
+                "This account is locked. Transfers are not allowed."
+            )
+
         try:
             amount = Decimal(amount)
 

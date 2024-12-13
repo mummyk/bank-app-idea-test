@@ -12,7 +12,7 @@ from users.models import Transaction
 @login_required
 def dashboard(request):
     # assuming AccountNumber model has user field
-    account = AccountNumber.objects.get(user=request.user)
+    account, created = AccountNumber.objects.get_or_create(user=request.user)
     # Filter transactions by logged-in user's wallet
     transactions = Transaction.objects.filter(wallet__user=request.user)
 
