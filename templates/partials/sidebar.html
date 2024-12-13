@@ -1,20 +1,20 @@
 {% load static %}
 {% load i18n %}
 <aside id="sidebar" class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 hidden w-64 h-full pt-16 font-normal duration-75 lg:flex transition-width" aria-label="Sidebar">
-  <div class="relative flex flex-col flex-1 min-h-0 pt-0  border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+  <div class="relative flex flex-col flex-1 min-h-0 pt-0  border-r border-gray-200 bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
     <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
       <div class="flex-1 px-3 space-y-1  divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
         <ul class="pb-2 space-y-2">
          
           <li>
-            <a href="{% url 'dashboard' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/dashboard/' %} bg-gray-100 dark:bg-gray-700 {% endif %}">
+            <a href="{% url 'dashboard' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/dashboard/' %} bg-gray-300 dark:bg-gray-700 {% endif %}">
                 <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
                 <span class="ml-3" sidebar-toggle-item>Dashboard</span>
             </a>
           </li>
            
            <li>
-            <a href="{% url 'domestic_transaction' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/domestic/transfer/' %} bg-gray-100 dark:bg-gray-700 {% endif %}">
+            <a href="{% url 'domestic_transaction' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/domestic/transfer/' %} bg-gray-300 dark:bg-gray-700 {% endif %}">
           <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M4.293 9.293a1 1 0 011.414 0L10 13.586l4.293-4.293a1 1 0 011.414 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414z" clip-rule="evenodd"></path>
             <path fill-rule="evenodd" d="M10 2a7 7 0 00-6.985 6.39 1 1 0 11-1.992-.218A9 9 0 1119 10a1 1 0 01-2 0A7 7 0 0010 2z" clip-rule="evenodd"></path>
@@ -24,7 +24,7 @@
             </a>
           </li>
           <li>
-            <a href="{% url 'local_transaction' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/tenant/' %} bg-gray-100 dark:bg-gray-700 {% endif %}">
+            <a href="{% url 'local_transaction' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/local/transfer/' %} bg-gray-300 dark:bg-gray-700 {% endif %}">
           <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zm-1.707 8.707a1 1 0 010-1.414l2-2a1 1 0 011.414 1.414L10.414 9H13a1 1 0 110 2h-2.586l1.293 1.293a1 1 0 01-1.414 1.414l-2-2zm3.414 0l2 2a1 1 0 001.414-1.414L13.414 11H11a1 1 0 110-2h2.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2z" clip-rule="evenodd"></path>
           </svg>
@@ -33,7 +33,7 @@
             </a>
           </li>
           <li>
-            <a href="{% url 'international_transaction' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/tenant/' %} bg-gray-100 dark:bg-gray-700 {% endif %}">
+            <a href="{% url 'international_transaction' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/international/transfer/' %} bg-gray-300 dark:bg-gray-700 {% endif %}">
           <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M12 2a10 10 0 100 20 10 10 0 000-20zm1.5 3.25c.9.32 1.64.78 2.2 1.35-.33.46-.8.93-1.35 1.35-1.42-.6-2.53-.6-3.95 0-.55-.42-1.02-.89-1.35-1.35.56-.57 1.3-1.03 2.2-1.35.45-.16.9-.25 1.45-.25.55 0 1 .09 1.45.25zm-.5 12.15c-.9-.32-1.64-.78-2.2-1.35.33-.46.8-.93 1.35-1.35 1.42.6 2.53.6 3.95 0 .55.42 1.02.89 1.35 1.35-.56.57-1.3 1.03-2.2 1.35-.45.16-.9.25-1.45.25-.55 0-1-.09-1.45-.25zM6.25 12a5.99 5.99 0 011.25-3.95c.43.53.9 1 1.35 1.35-1.03.8-1.56 1.65-1.9 2.6h-1.6zm11.5 0h1.6c-.34.95-.87 1.8-1.9 2.6-.45-.35-.92-.82-1.35-1.35A5.99 5.99 0 0117.75 12zM12 7.75c-.66 0-1.25.26-1.75.75s-.75 1.09-.75 1.75.26 1.25.75 1.75c.5.5 1.09.75 1.75.75s1.25-.26 1.75-.75c.5-.5.75-1.09.75-1.75s-.26-1.25-.75-1.75c-.5-.5-1.09-.75-1.75-.75z" clip-rule="evenodd"></path>
             <path d="M16.95 6.05c.3.3.58.6.85.95-.3.3-.58.6-.85.95-.6-.4-1.1-.9-1.6-1.35.3-.35.7-.7 1.6-1.55zM6.05 16.95c-.3-.3-.58-.6-.85-.95.3-.3.58-.6.85-.95.6.4 1.1.9 1.6 1.35-.3.35-.7.7-1.6 1.55z"></path>
@@ -43,7 +43,7 @@
             </a>
           </li>
           <li>
-            <a href="{% url 'transaction_history' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/tenant/' %} bg-gray-100 dark:bg-gray-700 {% endif %}">
+            <a href="{% url 'transaction_history' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/transaction/history/' %} bg-gray-300 dark:bg-gray-700 {% endif %}">
            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M12 4a8 8 0 100 16 8 8 0 000-16zm1 11a1 1 0 11-2 0V10a1 1 0 011-1h3a1 1 0 110 2h-2v4z" clip-rule="evenodd"></path>
           </svg>
@@ -51,7 +51,7 @@
             </a>
           </li>
           <li>
-            <a href="{% url 'account_statement' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/tenant/' %} bg-gray-100 dark:bg-gray-700 {% endif %}">
+            <a href="{% url 'account_statement' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/transaction/statement/' %} bg-gray-300 dark:bg-gray-700 {% endif %}">
           <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm4 4h10a1 1 0 100-2H7a1 1 0 100 2zm0 4h10a1 1 0 100-2H7a1 1 0 100 2zm0 4h6a1 1 0 100-2H7a1 1 0 100 2z"></path>
           </svg>

@@ -43,11 +43,11 @@
                     <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Send a Local Transfer</h1>
                 </div>
             </div>
-            <div class="flex flex-col lg:flex-row min-h-screen w-screen">
-                <!-- Form Section -->
-                <div class="lg:w-screen w-full p-2">
-                    <div class="rounded-lg p-8 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-                        <form method="post" enctype="multipart/form-data" class="space-y-2 m-3 py-3">
+            <div class="flex flex-col lg:flex-row min-h-screen w-full">
+                    <!-- Form Section -->
+                    <div class="w-full mx-auto p-1">
+                        <div class="rounded-lg p-4 bg-gray-100 border border-gray-300 dark:border-gray-700 dark:bg-gray-800">
+                            <form method="post" enctype="multipart/form-data" class="space-y-4">
                             {% csrf_token %}
 
                             {% for field in form %}

@@ -43,7 +43,7 @@
       }
    </script>
 </head>
-<body class="leading-normal tracking-normal bg-green-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+<body class="leading-normal tracking-normal bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
     
     {% comment %} {% include 'partials/theme-toggler.html' %} {% endcomment %}
 
@@ -56,10 +56,12 @@
 
     <!-- Loading Screen -->
    <div id="loadingScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-    <div class="text-center" style="animation: myAnim 3s ease-in-out infinite;">
-        <img src="{% static 'img/logo.png' %}" alt="Logo" class="h-32 w-auto mb-4" />
+    <div class="flex flex-col items-center justify-center animate-pulse">
+        <img src="{% static 'img/logo.png' %}" alt="Logo" 
+             class="h-16 w-auto sm:h-12 md:h-10 lg:h-8 xl:h-6 max-w-full" />
     </div>
 </div>
+
 
 
     <!-- Main Content -->
