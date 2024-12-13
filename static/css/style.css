@@ -159,7 +159,7 @@ img {
       width: 11px;
       height: 11px;
       border-radius: 50%;
-      background: #F44004;
+      background: #53AAF2;
       animation-timing-function: cubic-bezier(0, 1, 1, 0); }
       .preloader .lds-ellipsis div:nth-child(1) {
         left: 6px;
@@ -243,7 +243,7 @@ img {
     width: 25px;
     height: 5px;
     border-radius: 3px;
-    background-color: #F44004;
+    background-color: #53AAF2;
     margin-bottom: 20px; }
   .section-heading p {
     font-size: 12px;
@@ -281,11 +281,11 @@ img {
     box-shadow: 0 0 24px rgba(0, 0, 0, 0.2); }
 
 .tooltip-inner {
-  background-color: #F44004;
+  background-color: #53AAF2;
   box-shadow: 0 0 24px rgba(0, 0, 0, 0.2); }
 
 .tooltip .arrow::before {
-  border-bottom-color: #F44004; }
+  border-bottom-color: #53AAF2; }
 
 .bg-img {
   background-position: center center;
@@ -350,14 +350,14 @@ img {
     font-size: 18px;
     display: block; }
   #scrollUp:hover {
-    background-color: #F44004;
+    background-color: #53AAF2;
     color: #ffffff; }
 
 /* :: 3.7.0 Credit Button */
 .credit-btn {
   -webkit-transition-duration: 500ms;
   transition-duration: 500ms;
-  background-color: #F44004;
+  background-color: #53AAF2;
   position: relative;
   z-index: 1;
   display: inline-block;
@@ -379,7 +379,7 @@ img {
     background-color: #212529;
     color: #ffffff; }
     .credit-btn.btn-2:hover, .credit-btn.btn-2:focus {
-      background-color: #F44004;
+      background-color: #53AAF2;
       color: #ffffff; }
   .credit-btn.btn-3 {
     background-color: transparent;
@@ -434,7 +434,7 @@ img {
     position: relative;
     width: 100%;
     z-index: 1;
-    background-color: #F44004; }
+    background-color: #53AAF2; }
     .header-area .credit-main-menu::after {
       width: 50%;
       height: 100%;
@@ -460,7 +460,7 @@ img {
         padding: 0 15px;
         color: #ffffff; }
         .header-area .credit-main-menu .classy-navbar .classynav ul li a:hover, .header-area .credit-main-menu .classy-navbar .classynav ul li a:focus {
-          color: #F44004; }
+          color: #53AAF2; }
         @media only screen and (min-width: 992px) and (max-width: 1199px) {
           .header-area .credit-main-menu .classy-navbar .classynav ul li a {
             font-size: 14px; } }
@@ -507,7 +507,7 @@ img {
           top: 42%;
           left: 0;
           z-index: -1;
-          background-color: #F44004;
+          background-color: #53AAF2;
           -webkit-transform: rotate(30deg);
           transform: rotate(30deg); }
         .header-area .credit-main-menu .classy-navbar .contact::after {
@@ -518,7 +518,7 @@ img {
           top: 0;
           left: 62px;
           z-index: -1;
-          background-color: #F44004; }
+          background-color: #53AAF2; }
         .header-area .credit-main-menu .classy-navbar .contact a {
           display: inline-block;
           font-size: 24px;
@@ -564,7 +564,7 @@ img {
       border-radius: 50%;
       margin: 0 6px; }
       .hero-area .owl-dots .owl-dot.active {
-        background-color: #F44004; }
+        background-color: #53AAF2; }
   .hero-area .owl-prev,
   .hero-area .owl-next {
     position: absolute;
@@ -589,7 +589,7 @@ img {
         left: 10px; } }
     .hero-area .owl-prev:hover,
     .hero-area .owl-next:hover {
-      background-color: #F44004;
+      background-color: #53AAF2;
       color: #ffffff; }
   .hero-area .owl-next {
     left: auto;
@@ -634,7 +634,7 @@ img {
     z-index: 10;
     width: 0;
     height: 2px;
-    background-color: #F44004;
+    background-color: #53AAF2;
     left: 0;
     bottom: 0;
     -webkit-animation: slide-du-indicator linear 10000ms infinite;
@@ -654,7 +654,7 @@ img {
       margin-bottom: 10px;
       text-transform: uppercase; }
       .single-slide .welcome-text h2 span {
-        color: #F44004; }
+        color: #53AAF2; }
       @media only screen and (min-width: 992px) and (max-width: 1199px) {
         .single-slide .welcome-text h2 {
           font-size: 48px; } }
@@ -714,7 +714,7 @@ img {
       .single-features-area h5 {
         font-size: 15px; } }
   .single-features-area:hover h5 {
-    color: #F44004; }
+    color: #53AAF2; }
 
 /* :: 7.0 Special Feature CSS */
 .special-feature-area {
@@ -726,7 +726,7 @@ img {
     flex: 0 0 50%;
     max-width: 50%;
     width: 50%;
-    background-color: #F44004; }
+    background-color: #53AAF2; }
     @media only screen and (max-width: 767px) {
       .special-feature-area .special-feature-content {
         -webkit-box-flex: 0;
@@ -831,7 +831,7 @@ img {
     flex: 0 0 50%;
     max-width: 50%;
     width: 50%;
-    background-color: #F44004; }
+    background-color: #53AAF2; }
     @media only screen and (min-width: 768px) and (max-width: 991px) {
       .cta-area .cta-content {
         -webkit-box-flex: 0;
@@ -932,7 +932,7 @@ img {
     .single-news-area .news-content span {
       font-size: 10px;
       color: #ffffff;
-      background-color: #F44004;
+      background-color: #53AAF2;
       padding: 3px 15px;
       border-radius: 30px;
       display: inline-block;
@@ -943,7 +943,7 @@ img {
       font-size: 16px;
       margin-bottom: 0; }
       .single-news-area .news-content a:hover, .single-news-area .news-content a:focus {
-        color: #F44004; }
+        color: #53AAF2; }
     .single-news-area .news-content .news-meta a {
       position: relative;
       z-index: 1;
@@ -964,7 +964,7 @@ img {
           left: -20px;
           z-index: 1; }
       .single-news-area .news-content .news-meta a:hover, .single-news-area .news-content .news-meta a:focus {
-        color: #F44004; }
+        color: #53AAF2; }
       @media only screen and (min-width: 992px) and (max-width: 1199px) {
         .single-news-area .news-content .news-meta a {
           font-size: 10px; } }
@@ -1002,7 +1002,7 @@ img {
         color: #ffffff;
         text-align: center;
         margin-right: 15px;
-        background-color: #F44004; }
+        background-color: #53AAF2; }
       .contact--area .contact-content .single-contact-content .text p {
         font-weight: 600;
         color: #212121;
@@ -1076,7 +1076,7 @@ img {
         position: absolute;
         width: 130px;
         height: 45px;
-        background-color: #F44004;
+        background-color: #53AAF2;
         border: none;
         border-radius: 0 30px 30px 0;
         top: 0;
@@ -1136,7 +1136,7 @@ img {
       width: 62px;
       height: 62px;
       border-radius: 15px;
-      background-color: #F44004;
+      background-color: #53AAF2;
       text-align: center;
       bottom: -10px;
       right: 0;
@@ -1165,7 +1165,7 @@ img {
       margin-bottom: 0;
       color: #6e6e6e; }
   .single-team-member-area:hover .team-info h5 {
-    color: #F44004; }
+    color: #53AAF2; }
 
 /* :: 11.0 Footer Area CSS */
 .footer-area {
@@ -1177,7 +1177,7 @@ img {
     z-index: 1; }
     .footer-area .single-footer-widget .widget-title {
       font-size: 18px;
-      color: #F44004;
+      color: #53AAF2;
       margin-bottom: 40px;
       font-weight: 400; }
     .footer-area .single-footer-widget ul li a {
@@ -1196,11 +1196,11 @@ img {
         top: 7px;
         left: 0;
         border-radius: 50%;
-        background-color: #F44004;
+        background-color: #53AAF2;
         position: absolute;
         z-index: 1; }
       .footer-area .single-footer-widget ul li a:hover, .footer-area .single-footer-widget ul li a:focus {
-        color: #F44004; }
+        color: #53AAF2; }
     .footer-area .single-footer-widget ul li:last-child a {
       margin-bottom: 0; }
   .footer-area .copywrite-area {
@@ -1224,7 +1224,7 @@ img {
         font-size: 14px;
         font-weight: 400; }
         .footer-area .copywrite-area .copywrite-text a:hover, .footer-area .copywrite-area .copywrite-text a:focus {
-          color: #F44004; }
+          color: #53AAF2; }
 
 /* :: 12.0 Blog Area CSS */
 .breadcrumb-area {
@@ -1250,7 +1250,7 @@ img {
     .breadcrumb-area .breadcrumb-content .breadcrumb .breadcrumb-item::before {
       color: #ffffff; }
     .breadcrumb-area .breadcrumb-content .breadcrumb .breadcrumb-item.active {
-      color: #F44004;
+      color: #53AAF2;
       font-size: 16px;
       font-weight: 600; }
     .breadcrumb-area .breadcrumb-content .breadcrumb .breadcrumb-item a {
@@ -1258,7 +1258,7 @@ img {
       color: #ffffff;
       font-weight: 600; }
       .breadcrumb-area .breadcrumb-content .breadcrumb .breadcrumb-item a:hover {
-        color: #F44004; }
+        color: #53AAF2; }
 
 .single-latest-news-area {
   position: relative;
@@ -1286,7 +1286,7 @@ img {
       margin-bottom: 0;
       color: #ffffff; }
       .single-latest-news-area .news-content a:hover, .single-latest-news-area .news-content a:focus {
-        color: #F44004; }
+        color: #53AAF2; }
     .single-latest-news-area .news-content .news-meta a {
       position: relative;
       z-index: 1;
@@ -1309,7 +1309,7 @@ img {
           left: -15px;
           z-index: 1; }
       .single-latest-news-area .news-content .news-meta a:hover, .single-latest-news-area .news-content .news-meta a:focus {
-        color: #F44004; }
+        color: #53AAF2; }
 
 .single-blog-area {
   position: relative;
@@ -1328,7 +1328,7 @@ img {
     .single-blog-area .blog-content span {
       font-size: 10px;
       color: #ffffff;
-      background-color: #F44004;
+      background-color: #53AAF2;
       padding: 3px 15px;
       border-radius: 30px;
       display: inline-block;
@@ -1340,7 +1340,7 @@ img {
       margin-bottom: 0;
       color: #212121; }
       .single-blog-area .blog-content .post-title:hover, .single-blog-area .blog-content .post-title:focus {
-        color: #F44004; }
+        color: #53AAF2; }
     .single-blog-area .blog-content .blog-meta {
       margin-bottom: 30px; }
       .single-blog-area .blog-content .blog-meta a {
@@ -1365,7 +1365,7 @@ img {
             left: -15px;
             z-index: 1; }
         .single-blog-area .blog-content .blog-meta a:hover, .single-blog-area .blog-content .blog-meta a:focus {
-          color: #F44004; }
+          color: #53AAF2; }
     .single-blog-area .blog-content p {
       margin-bottom: 0; }
 
@@ -1396,10 +1396,10 @@ img {
     margin-right: 2px; }
     .pagination .page-item .page-link:hover, .pagination .page-item .page-link:focus {
       color: #ffffff;
-      background-color: #F44004; }
+      background-color: #53AAF2; }
   .pagination .page-item.active .page-link {
     color: #ffffff;
-    background-color: #F44004; }
+    background-color: #53AAF2; }
 
 .sidebar-area {
   position: relative;
@@ -1424,7 +1424,7 @@ img {
     .single-widget-area .widget-heading .line {
       width: 30px;
       height: 8px;
-      background-color: #F44004;
+      background-color: #53AAF2;
       border-radius: 5px;
       display: block;
       margin-bottom: 15px; }
@@ -1454,14 +1454,14 @@ img {
         right: 0;
         z-index: 99;
         background-color: #212529;
-        color: #F44004;
+        color: #53AAF2;
         font-weight: 600;
         font-size: 14px;
         text-transform: uppercase;
         border-radius: 5px;
         cursor: pointer; }
         .single-widget-area.search-widget form button:hover {
-          background-color: #F44004;
+          background-color: #53AAF2;
           color: #212529; }
   .single-widget-area.cata-widget ul {
     padding-left: 35px; }
@@ -1472,7 +1472,7 @@ img {
       font-weight: 600;
       color: #212529; }
       .single-widget-area.cata-widget ul li a:hover, .single-widget-area.cata-widget ul li a:focus {
-        color: #F44004; }
+        color: #53AAF2; }
 
 .comment_area {
   border-bottom: 1px solid #eaeaea;
@@ -1546,7 +1546,7 @@ img {
 .contact-advisor {
   position: relative;
   z-index: 1;
-  background-color: #F44004;
+  background-color: #53AAF2;
   padding: 35px; }
   .contact-advisor h5 {
     font-size: 18px;
@@ -1642,7 +1642,7 @@ img {
   .elements-title .line {
     width: 30px;
     height: 8px;
-    background-color: #F44004;
+    background-color: #53AAF2;
     border-radius: 5px;
     display: block;
     margin-bottom: 15px; }
@@ -1676,9 +1676,9 @@ img {
   .single-service-area .text p {
     margin-bottom: 0; }
   .single-service-area:hover .icon, .single-service-area:focus .icon {
-    background-color: #F44004; }
+    background-color: #53AAF2; }
   .single-service-area:hover .text h5, .single-service-area:focus .text h5 {
-    color: #F44004; }
+    color: #53AAF2; }
 
 .single-cool-fact {
   position: relative;
@@ -1692,7 +1692,7 @@ img {
     max-width: 70px;
     width: 70px; }
     .single-cool-fact .scf-icon i {
-      color: #F44004;
+      color: #53AAF2;
       font-size: 65px; }
     @media only screen and (min-width: 992px) and (max-width: 1199px) {
       .single-cool-fact .scf-icon {
@@ -1769,7 +1769,7 @@ img {
     .single-accordion h6 a.collapsed {
       -webkit-transition-duration: 500ms;
       transition-duration: 500ms;
-      background-color: #F44004;
+      background-color: #53AAF2;
       color: #ffffff; }
 .single-accordion .accordion-content {
   border-top: 0 solid transparent;

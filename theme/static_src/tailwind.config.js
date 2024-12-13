@@ -62,16 +62,16 @@ module.exports = {
         extend: {
             colors: {
                 primary: {
-                    "50": "#f3e8f7",
-                    "100": "#e0c7eb",
-                    "200": "#c8a4dc",
-                    "300": "#b082cc",
-                    "400": "#985fbd",
-                    "500": "#803cae", // Main purple
-                    "600": "#643091",
-                    "700": "#4c2474",
-                    "800": "#351957",
-                    "900": "#1e0d3b"
+                    "50": "#e7f4fc",   // Lightest blue
+                    "100": "#c2e4fa",  // Very light blue
+                    "200": "#99d2f7",  // Light blue
+                    "300": "#70c0f5",  // Soft blue
+                    "400": "#4cb0f3",  // Bright blue
+                    "500": "#53AAF2",  // Main blue
+                    "600": "#4187c2",  // Darker blue
+                    "700": "#316692",  // Medium-dark blue
+                    "800": "#214562",  // Dark blue
+                    "900": "#112333"   // Darkest blue
                 },
                 secondary: {
                     "50": "#fff8e1",

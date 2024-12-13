@@ -53,7 +53,7 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 if not DEBUG:
     print("""
 ==========================
-=== Production server ===
+=== Production server ====
 ==========================
 """)
     # Split the ALLOWED_HOSTS environment variable into a list

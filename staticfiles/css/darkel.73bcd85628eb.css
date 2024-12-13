@@ -1,0 +1,354 @@
+label>sup {
+  color: red;
+  font-weight: bold;
+}
+
+.account-wrapper {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login-page {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.custom-file-label::after {
+  display: none;
+}
+
+.btn-dark:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+button:disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.link-active {
+  color: #53AAF2 !important;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+  color: #fff;
+  background-color: #53AAF2;
+  border-color: #53AAF2;
+  opacity: 0.8;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active {
+  color: #fff;
+  background-color: #53AAF2;
+  border-color: #53AAF2;
+  opacity: 0.8;
+}
+
+button.swal2-confirm.swal2-styled {
+  border-left-color: #53AAF2 !important;
+  border-right-color: #53AAF2 !important;
+}
+
+.swal2-popup.swal2-toast {
+  padding: 0.625em;
+  overflow-y: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 0 #000 !important;
+}
+
+.callout.callout-primary {
+  border-left-color: #53AAF2;
+}
+
+.register-box {
+  width: 40vw;
+}
+
+.tour-backdrop {
+  position: fixed !important;
+}
+
+.tour-highlight {
+  /* opacity: 0.5 !important; */
+  background-color: #f1764d38 !important;
+}
+
+.select2-container--bootstrap4 .select2-results__option--highlighted,
+.select2-container--bootstrap4 .select2-results__option--highlighted.select2-results__option[aria-selected="true"] {
+  background-color: #53AAF2;
+  color: #f8f9fa;
+}
+
+.beneficiary_card .lead {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.beneficiary_card {
+  cursor: pointer;
+}
+
+.beneficiary_card:hover {
+  background-color: whitesmoke;
+}
+
+.app-icons:hover {
+  background-color: rgb(248, 248, 248);
+}
+
+#statement_logo {
+  width: 100px;
+}
+
+#site-title {
+  font-size: 14px;
+  font-weight: lighter;
+}
+
+.account-details {
+  font-weight: bold;
+  padding: 2px 5px;
+  margin: 0 5px;
+  border: 1px solid #e4e4e4;
+}
+
+#user-name {
+  color: #53AAF2;
+  font-size: 20px;
+}
+
+#user-name-div {
+  margin-top: 5px;
+}
+
+#print table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#print thead {
+  background: black;
+  color: white;
+}
+
+#print tbody td,
+#print th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  width: 360px;
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.box {
+  position: relative;
+}
+
+.card-logo {
+  position: absolute;
+  z-index: 50;
+  margin: 0 auto;
+  left: 0;
+  right: 20px;
+  top: 10px;
+  /* Adjust this value to move the positioned div up and down */
+  text-align: right;
+}
+
+.card-logo>img {
+  width: 70px;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.number-text {
+  position: absolute;
+  z-index: 50;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 140px;
+  /* Adjust this value to move the positioned div up and down */
+  text-align: center;
+  color: #e6e6e6 !important;
+  font-size: 22px;
+  word-spacing: 20px;
+}
+
+.name-text {
+  position: absolute;
+  z-index: 50;
+  margin: 0 auto;
+  left: 0;
+  right: 180px;
+  top: 190px;
+  /* Adjust this value to move the positioned div up and down */
+  text-align: center;
+  color: #e6e6e6;
+  font-size: 16px;
+}
+
+.expiry-text {
+  position: absolute;
+  z-index: 50;
+  margin: 0 auto;
+  left: 0;
+  right: -40px;
+  top: 190px;
+  /* Adjust this value to move the positioned div up and down */
+  text-align: center;
+  color: #e6e6e6;
+  font-size: 16px;
+}
+
+.cvv-text {
+  position: absolute;
+  z-index: 50;
+  margin: 0 auto;
+  left: 0;
+  right: -40px;
+  top: 135px;
+  /* Adjust this value to move the positioned div up and down */
+  text-align: center;
+  color: #1b1b1b;
+  font-size: 16px;
+}
+
+/* #chat-link{
+  width: 40px;
+  bottom: 10rem;
+  position: fixed;
+  right: 0px;
+  z-index: 200;
+} */
+
+
+@media (max-width: 992px) {
+  .register-box {
+    width: 50vw;
+  }
+
+  .swiper-slide {
+    width: 300px;
+  }
+
+  .card-logo {
+    left: 0;
+    right: 15px;
+    top: 8px;
+    /* Adjust this value to move the positioned div up and down */
+  }
+
+  .card-logo>img {
+    width: 60px;
+    padding: 3px;
+    border-radius: 8px;
+  }
+
+  .number-text {
+    top: 120px;
+    /* Adjust this value to move the positioned div up and down */
+    font-size: 18px;
+    word-spacing: 15px;
+  }
+
+  .name-text {
+    right: 140px;
+    top: 160px;
+    /* Adjust this value to move the positioned div up and down */
+    font-size: 14px;
+  }
+
+  .expiry-text {
+    right: -60px;
+    top: 160px;
+    /* Adjust this value to move the positioned div up and down */
+    font-size: 14px;
+  }
+
+  .cvv-text {
+    top: 110px;
+    /* Adjust this value to move the positioned div up and down */
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .register-box {
+    width: 70vw;
+  }
+
+  .swiper-slide {
+    width: 250px;
+  }
+
+  .card-logo {
+    left: 0;
+    right: 10px;
+    top: 6px;
+    /* Adjust this value to move the positioned div up and down */
+  }
+
+  .card-logo>img {
+    width: 50px;
+    padding: 2px;
+    border-radius: 4px;
+  }
+
+  .number-text {
+    top: 90px;
+    /* Adjust this value to move the positioned div up and down */
+    font-size: 16px;
+    word-spacing: 10px;
+  }
+
+  .name-text {
+    right: 115px;
+    top: 130px;
+    /* Adjust this value to move the positioned div up and down */
+    font-size: 12px;
+  }
+
+  .expiry-text {
+    right: -60px;
+    top: 130px;
+    /* Adjust this value to move the positioned div up and down */
+    font-size: 12px;
+  }
+
+  .cvv-text {
+    top: 90px;
+    /* Adjust this value to move the positioned div up and down */
+    font-size: 12px;
+  }
+
+}
