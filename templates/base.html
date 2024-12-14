@@ -41,6 +41,8 @@
     {% tailwind_css %}
 		
     {% block extra_head %} {% endblock %} 
+    {% comment %} 
+    <!-- Dark theme toggler -->
     <script>
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
       if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -48,9 +50,9 @@
       } else {
          document.documentElement.classList.remove('dark')
       }
-   </script>
+   </script> {% endcomment %}
 </head>
-<body class="leading-normal tracking-normal bg-green-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+<body class="leading-normal tracking-normal bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
     {% include 'partials/messages-dashboard.html' %}
 
    <!--[if lt IE 7]>
@@ -60,12 +62,15 @@
 			</p>
 		<![endif]-->
 
-    <!-- Loading Screen -->
-   <div id="loadingScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-    <div class="text-center" style="animation: myAnim 3s ease-in-out infinite;">
-        <img src="{% static 'images/logo/logo.png' %}" alt="Logo" class="h-32 w-auto mb-4" />
+       <!-- Loading Screen -->
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <div id="loadingScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div class="flex flex-col items-center justify-center animate-pulse">
+            {% comment %} <img src="{% static 'img/logo.png' %}" alt="Logo" 
+            class="h-16 w-auto sm:h-12 md:h-10 lg:h-8 xl:h-6 max-w-full" /> {% endcomment %}
+            <dotlottie-player src="{% static 'json\lottieAnimation.lottie' %}" background="transparent" speed="1" style="width: 300px; height: 300px" loop autoplay></dotlottie-player>
+        </div>
     </div>
-</div>
 
 
     <!-- Main Content -->

@@ -6,14 +6,14 @@
     {% trans "Sign In" %}
 {% endblock head_title %}
 {% block content %}
-{% include 'partials/theme-toggler.html' %}
-<div class="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900">
+{% comment %} {% include 'partials/theme-toggler.html' %} {% endcomment %}
+<div class="flex flex-col items-center justify-center xl:px-6 px-1 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900">
      <a href="" class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
         <img src="{% static 'img/logo.png' %}" class="mr-4 h-11" alt="Logo">
         <span></span>  
     </a>
      <!-- Main Content with Box Shadow -->
-    <div class="w-full max-w-xl p-6 space-y-8 sm:p-8  rounded-lg shadow  dark:bg-gray-800">
+    <div class="w-full max-w-xl p-6 space-y-8 sm:p-4  rounded-lg shadow  dark:bg-gray-800">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
         {% trans "Welcome Back" %}
     </h2>
