@@ -15,8 +15,12 @@ import locale
 @login_required
 def dashboard(request):
     # Set the locale for formatting
-    # Use the user's default locale (or specify, e.g., 'en_US.UTF-8')
-    locale.setlocale(locale.LC_ALL, '')
+    try:
+        # Set the locale to en_US.UTF-8
+        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+    except locale.Error:
+        # Fallback to default system locale if en_US.UTF-8 fails
+        locale.setlocale(locale.LC_ALL, '')
 
     # assuming AccountNumber model has user field
     account, created = AccountNumber.objects.get_or_create(user=request.user)
@@ -26,7 +30,7 @@ def dashboard(request):
         account_balance = locale.currency(
             account.account_balance, grouping=True, symbol=False)
     except locale.Error:
-        # Fallback to manual formatting
+        # Fallback to manual currency formatting
         account_balance = f"{account.account_balance:,.2f}"
 
     # Filter transactions by logged-in user's wallet
