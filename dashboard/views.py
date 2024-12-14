@@ -22,8 +22,12 @@ def dashboard(request):
     account, created = AccountNumber.objects.get_or_create(user=request.user)
 
     # Format the account balance in currency format
-    account_balance = locale.currency(
-        account.account_balance, grouping=True, symbol=False)
+    try:
+        account_balance = locale.currency(
+            account.account_balance, grouping=True, symbol=False)
+    except locale.Error:
+        # Fallback to manual formatting
+        account_balance = f"{account.account_balance:,.2f}"
 
     # Filter transactions by logged-in user's wallet
     transactions = Transaction.objects.filter(wallet__user=request.user)
