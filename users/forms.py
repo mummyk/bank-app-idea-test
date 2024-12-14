@@ -191,7 +191,10 @@ class ProfileFormLite(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['first_name', 'last_name', "gender", 'country', 'city', 'address',
+        # fields = ['first_name', 'last_name', "gender", 'country', 'city', 'address',
+        #           'phone_number', 'birthday', 'zip_code']
+
+        fields = ["gender", 'country', 'city', 'address',
                   'phone_number', 'birthday', 'zip_code']
 
     def __init__(self, *args, **kwargs):
