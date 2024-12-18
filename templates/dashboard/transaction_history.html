@@ -1,6 +1,7 @@
 <!-- templates/inventory/add_inventory_item.html -->
 {% extends "dashboard/dashboard-base.html" %}
 {% load widget_tweaks %}
+{% load humanize %}
 
 {% block content %}
 {% include 'partials/appbar.html' %}
@@ -154,10 +155,10 @@
                       <span class="font-semibold">{{transaction.to_user}}</span>
                     </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      {{transaction.updated|date:"Y-m-d" }}
+                      {{transaction.updated|date:"Y-m-d H:i" }}
                     </td>
                     <td class="p-4 text-sm font-semibold text-gray-900 whitespace-nowrap dark:text-white">
-                      {{transaction.amount}}
+                      $ {{transaction.amount|floatformat:2|intcomma}}
                     </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                      {{transaction.wallet.account_number}}
