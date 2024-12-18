@@ -50,27 +50,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
 
-if not DEBUG:
-    print("""
-==========================
-=== Production server ====
-==========================
-""")
-    # Split the ALLOWED_HOSTS environment variable into a list
-    allowed_hosts_env = os.environ.get('ALLOWED_HOSTS')
-    if allowed_hosts_env:
-        ALLOWED_HOSTS = allowed_hosts_env.split(',')
-    else:
-        ALLOWED_HOSTS = ['51.24.26.102', '127.0.0.1',
-                         'primevaultbank.com', 'www.primevaultbank.com']
-else:
-    print("""
-==========================
-=== Development server ===
-==========================
-""")
-    ALLOWED_HOSTS = ['51.24.26.102', '127.0.0.1',
-                     'primevaultbank.com', 'www.primevaultbank.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
