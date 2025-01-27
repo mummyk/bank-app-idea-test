@@ -1,0 +1,276 @@
+{% load humanize %}
+<div class="flex flex-col w-full md:w-1/2">
+   <div class="text-center">
+      <h1 class="text-4xl font-bold text-gray-900"><span class="text-primary-600">{{company_name}}</span> Secure Transfer Gateway</h1>
+      <p class="text-sm text-gray-500">Please fill out the following steps to complete your transfer.</p>
+   </div>
+
+   <!-- Form -->
+   <form id="multi-step-form">
+      <!-- Step 1 -->
+      <div class="step" id="step-1">
+         <div class="flex flex-col w-full pt-4 space-y-8">
+            <div class="flex flex-col">
+               <h2 class="text-md font-bold mb-2">Select Account</h2>
+               <div class="flex justify-between border rounded-md border-black hover:bg-gray-200 translate-x-1">
+                  <div class="flex">
+                     <i class="fas fa-dollar-sign text-green-500 text-xl p-6"></i>
+                     <div class="flex flex-col text-gray-500 justify-center">
+                        <p class="text-xl">Current Account (USD)</p>
+                        <p class="text-sm">Your current account balance is <span class="text-green-500">${{ account_balance|intcomma }}</span></p>
+                     </div>
+                  </div>
+                  <i class="fas fa-arrow-down text-green-500 text-xl p-6"></i>
+               </div>
+            </div>
+
+            <div class="flex flex-col">
+               <h2 class="text-md font-bold mb-2">Amount to transfer</h2>
+               <div class="flex justify-between">
+                  <h3 class="text-sm font-medium mb-2">Daily transfer limit:</h3>
+                  <h3 class="text-sm font-medium mb-2">Unlimited</h3>
+               </div>
+
+               <div class="flex w-full border rounded-md border-black p-6 mb-2">
+                  <div class="flex flex-col w-full">
+                     <input
+                        type="number"
+                        id="account_number"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-4"
+                        placeholder="Account Number"
+                        required
+                     />
+                     <p id="account_success" class="pt-1 pb-1 text-green-500 hidden"></p>
+                     <p id="account_error" class="pt-1 pb-1 text-red-500 hidden"></p>
+                  </div>
+               </div>
+
+               
+
+               <div class="flex w-full border rounded-md border-black p-6 mb-2">
+                  <input
+                        type="text"
+                        id="description"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-4"
+                        placeholder="Description"
+                        required
+                     />
+               </div>
+               <div class="flex w-full border rounded-md border-black p-6">
+                  <i class="fas fa-dollar-sign text-green-500 text-xl self-center"></i>
+                  <input
+                     type="number"
+                     id="amount"
+                     class="bg-gray-50 border-none text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:outline-none w-full p-4"
+                     placeholder="Amount"
+                     min="10"
+                     required
+                  />
+               </div>
+               <div class="flex justify-between mt-2">
+                  <h3 class="text-sm font-medium">Minimum transfer amount:</h3>
+                  <h3 class="text-sm font-medium">$10</h3>
+               </div>
+            </div>
+
+            <div class="flex justify-end">
+               <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" id="next-1">
+                  Next
+               </button>
+            </div>
+         </div>
+      </div>
+
+      <!-- Step 2 (Summary) -->
+      <div class="step hidden" id="step-2">
+         <div class="flex flex-col w-full pt-4 space-y-8">
+            <div>
+               <h2 class="text-md font-bold mb-2 text-center">Review Transaction for <span id="confirm-amount" class="text-green-500"></span></h2>
+               <h2 class="text-md font-medium mb-2 text-center text-primary-500">Kindly review the transaction details below:</h2>
+            </div>
+            <div class="flex flex-col border rounded-md border-gray-500">
+               <div class="flex justify-between p-4">
+                  <h3 class="text-sm font-medium">Amount:</h3>
+                  <p id="summary-amount" class="text-sm text-gray-500"></p>
+               </div>
+               <div class="flex justify-between p-4">
+                  <h3 class="text-sm font-medium">Account Number:</h3>
+                  <p id="summary-account-number" class="text-sm text-gray-500"></p>
+               </div>
+               <div class="flex justify-between p-4">
+                  <h3 class="text-sm font-medium">Account Name:</h3>
+                  <p id="summary-account-name" class="text-sm text-gray-500"></p>
+               </div>
+               <div class="flex justify-between p-4">
+                  <h3 class="text-sm font-medium">Description:</h3>
+                  <p id="summary-description" class="text-sm text-gray-500"></p>
+               </div>
+            </div>
+
+            <div class="flex flex-col pt-4">
+               <h2 class="text-md font-bold mb-2">Selected Account</h2>
+               <div class="flex justify-between border rounded-md border-black hover:bg-gray-200 translate-x-1">
+                  <div class="flex">
+                     <i class="fas fa-dollar-sign text-green-500 text-xl p-6"></i>
+                     <div class="flex flex-col text-gray-500 justify-center">
+                        <p class="text-xl">Current Account (USD)</p>
+                        <p class="text-sm">Your current account balance is <span class="text-green-500">${{ account_balance|intcomma }}</span></p>
+                     </div>
+                  </div>
+                  <i class="fas fa-arrow-down text-green-500 text-xl p-6"></i>
+               </div>
+            </div>
+
+            <div class="flex justify-between pb-4">
+               <button type="button" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" id="prev-2">
+                  Previous
+               </button>
+               <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" id="next-2">
+                  Confirm transaction
+               </button>
+               {% comment %} <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                  Confirm & Submit
+               </button> {% endcomment %}
+            </div>
+         </div>
+      </div>
+
+      <!-- Step 4 (PIN) -->
+      {% include 'dashboard/partials/local_transfer/pin_input.html' %}
+   </form>
+</div>
+
+
+<script>
+   // Multi-Step Form Logic
+   const steps = document.querySelectorAll(".step");
+   let currentStep = 0;
+   let formData = {}; // Temporary in-memory storage for form data
+   let amounts = 0;
+   let accountName = "";
+
+   const showStep = (stepIndex) => {
+      steps.forEach((step, index) => {
+         step.classList.toggle("hidden", index !== stepIndex);
+      });
+   };
+
+   document.getElementById("next-1").addEventListener("click", () => {
+      const amount = document.getElementById("amount").value;
+      const accountNumber = document.getElementById("account_number").value;
+      const description = document.getElementById("description").value;
+
+      if (amount && amount > 9) {
+         document.getElementById("confirm-amount").innerText = `$${amount}`;
+         amounts = amount;
+
+         if (accountNumber && description) {
+            formData = {
+               ...formData,
+               accountNumber,
+               accountName, // Add account name here
+               description,
+               amount: amounts,
+            };
+
+            // Update the summary section
+            document.getElementById("summary-amount").innerText = `$${formData.amount}`;
+            document.getElementById("summary-account-number").innerText =
+               formData.accountNumber;
+            document.getElementById("summary-account-name").innerText =
+               formData.accountName || "Unavailable"; // Fallback if accountName is empty
+            document.getElementById("summary-description").innerText =
+               formData.description;
+
+            console.log("Form Data (Step 1):", formData);
+            showStep(1);
+            currentStep = 1;
+         } else {
+            alert("Please fill out all fields.");
+         }
+      } else {
+         alert("Please enter a valid amount.");
+      }
+   });
+
+   document.getElementById("prev-2").addEventListener("click", () => {
+      showStep(0);
+      currentStep = 0;
+   });
+
+   document.getElementById("next-2").addEventListener("click", () => {
+      const accountNumber = document.getElementById("account_number").value;
+      const description = document.getElementById("description").value;
+
+      if (accountNumber && description) {
+         formData = {
+            ...formData,
+            accountNumber,
+            accountName, // Include account name in formData
+            description,
+            amount: amounts,
+         };
+
+         console.log("Form Data (Step 2):", formData);
+
+         showStep(2);
+         currentStep = 2;
+      } else {
+         alert("Please fill out all fields.");
+      }
+   });
+
+   // Account Name Fetching Logic
+   const accountNumberInput = document.getElementById("account_number");
+   const errorElement = document.getElementById("account_error");
+   const successElement = document.getElementById("account_success");
+   const baseCheckAccountURL = "{% url 'check_account' account_number='dummy' %}".replace(
+      "/dummy/",
+      ""
+   );
+
+   accountNumberInput.addEventListener("input", () => {
+      const accountNumber = accountNumberInput.value.trim();
+
+      // Clear previous messages
+      errorElement.classList.add("hidden");
+      errorElement.textContent = "";
+
+      successElement.classList.add("hidden");
+      successElement.textContent = "";
+
+      if (accountNumber.length === 10) {
+         const checkAccountURL = `${baseCheckAccountURL}/${accountNumber}/`;
+
+         fetch(checkAccountURL, {
+            method: "GET",
+            headers: {
+               "X-Requested-With": "XMLHttpRequest",
+            },
+         })
+            .then((response) => response.json())
+            .then((data) => {
+               if (data.error) {
+                  errorElement.textContent = data.error;
+                  errorElement.classList.remove("hidden");
+               } else if (data.message) {
+                  successElement.textContent = data.message;
+                  accountName = data.message; // Set accountName here
+                  successElement.classList.remove("hidden");
+               }
+            })
+            .catch((error) => {
+               errorElement.textContent =
+                  "An unexpected error occurred. Please try again.";
+               errorElement.classList.remove("hidden");
+            });
+      } else if (accountNumber.length !== 10) {
+         errorElement.textContent = "Account number must be exactly 10 digits.";
+         errorElement.classList.remove("hidden");
+      }
+   });
+
+   // Initialize
+   showStep(0);
+</script>
+

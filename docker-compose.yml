@@ -1,0 +1,22 @@
+version: '3.8'  # Specify the Docker Compose version
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgresbank-db
+    environment:
+      POSTGRES_USER: postgresbank  # Replace with your username
+      POSTGRES_PASSWORD: postgresbank  # Replace with your password
+      POSTGRES_DB: postgresbank  # Replace with your database name
+    volumes:
+      - postgres_bank_data:/var/lib/postgresql/data  # Separate volume for this service
+    ports:
+      - "5434:5432"  # Expose Postgres service on host's port 5432
+    networks:
+      - db-network
+
+volumes:
+  postgres_data:  # Volume for the first Postgres service
+ 
+networks:
+  db-network:

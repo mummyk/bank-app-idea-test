@@ -1,16 +1,28 @@
-from .filters import TransactionFilter
+from django.db import transaction as db_transaction
+import locale
 import logging
+import json
 from decimal import Decimal
-from django.utils.timezone import now
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
-from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.core.exceptions import ValidationError
+
 from django.contrib import messages
+
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.db import transaction as db_transaction  # Ensure atomic transactions
-from .models import Transaction, DomesticTransfer, AccountNumber, LocalTransfer, InternationalTransfer, Profile
-from .forms import DomesticTransferForm, LocalTransferForm, InternationalTransferForm
-from .forms import ProfileForm, Profile_pictureForm, ProfileFormLite
+from django.db import \
+    transaction as db_transaction  # Ensure atomic transactions
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+from django.utils.timezone import now
+
+from .filters import TransactionFilter
+from .forms import (DomesticTransferForm, InternationalTransferForm,
+                    LocalTransferForm, Profile_pictureForm, ProfileForm,
+                    ProfileFormLite)
+from .models import (AccountNumber, DomesticTransfer, InternationalTransfer,
+                     LocalTransfer, Profile, Transaction)
 from .utils import check_account_locked
 
 # Initialize a logger for error tracking
@@ -144,87 +156,104 @@ def user_profile(request):
 
 
 @login_required
-# @check_account_locked()  # Apply the account lock check decorator
 def domesticTransaction(request):
     try:
-        # Retrieve the user's account
-        account = AccountNumber.objects.get(user=request.user)
+        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+    except locale.Error:
+        locale.setlocale(locale.LC_ALL, '')
 
-        # Check if the user has set a password
+    account, created = AccountNumber.objects.get_or_create(user=request.user)
+
+    try:
+        account_balance = locale.currency(
+            account.account_balance, grouping=True, symbol=False)
+    except locale.Error:
+        account_balance = f"{account.account_balance:,.2f}"
+
+    company_name = settings.COMPANY_NAME
+
+    if account.locked:
+        messages.error(
+            request, "Account is locked. Contact support.")
+        return redirect('dashboard')
+
+    try:
+        account_balance = get_account_balance(request)
         if not account.password:
-            messages.warning(
-                request, "You need to set a password before proceeding with transactions."
-            )
-            # Redirect to the password setup page
-            return redirect(reverse('set_password'))
+            messages.error(
+                request, 'You need to set a password before proceeding with transactions.')
+            # Redirect to a suitable page
+            return redirect('set_password')
 
     except AccountNumber.DoesNotExist:
         messages.error(
-            request, "Your account could not be found. Please contact customer support."
-        )
-        return redirect('home')  # Redirect to a home or error page
+            request, "Your account could not be found. Please contact customer support.")
+        return redirect('dashboard')
 
     if request.method == 'POST':
-        form = DomesticTransferForm(request.POST)
-        if form.is_valid():
-            try:
-                with db_transaction.atomic():
-                    # Perform the transfer operation
-                    transfer_data = form.cleaned_data
-                    amount = transfer_data['amount']
-                    beneficiary = transfer_data['beneficiary']
-                    password = request.POST.get('password')
+        data = json.loads(request.body)
+        bank_name = data.get('bankName')
+        amount = data.get('amount')
+        password = data.get('password')
+        bank_account = data.get('accountNumber')
+        beneficiary = data.get('accountName')
+        description = data.get('description')
 
-                    if account.locked:
-                        messages.warning(
-                            request, """your account has been locked, please contact customer support or use the live chat below."""
-                        )
-                        # Redirect to the password setup page
-                        return redirect(reverse('domestic_transaction'))
+        if not all([amount, beneficiary, password, bank_name, bank_account, description]):
+            return JsonResponse({'error': 'Missing required fields.'}, status=400)
 
-                    # Ensure the transfer is valid
-                    if not account.check_password(password):
-                        messages.error(request, "Incorrect password.")
-                        return render(request, 'dashboard/domestic-transfer.html', {'form': form})
+        try:
+            with db_transaction.atomic():
+                amount_decimal = Decimal(amount)
 
-                    # Create a DomesticTransfer instance
-                    domestic_transfer = DomesticTransfer.objects.create(
-                        user=request.user,
-                        beneficiary=beneficiary,
-                        amount=Decimal(amount),
-                        updated=now()  # Set the current datetime for `updated`
-                    )
-
-                    # Deduct the amount from the user's account balance
-                    domestic_transfer.transfer(amount, password)
-
-                    # Log the transaction in the Transaction model
-                    Transaction.objects.create(
-                        wallet=account,
-                        transaction_type='domestic_transfer',
-                        to_user=beneficiary,  # Adjust if the beneficiary is also a user
-                        incoming='Debit',
-                        amount=Decimal(amount),
-                        updated=now()  # Set the current datetime for `updated`
-                    )
-
-                    messages.success(
-                        request, 'Transaction created successfully.')
+                if account.locked:
+                    messages.error(
+                        request, "Account is locked. Contact support.")
                     return redirect('dashboard')
 
-            except Exception as e:
-                logger.error(f"Error saving transaction: {e}")
-                messages.error(
-                    request, f'An unexpected error occurred, {e}')
+                if not account.check_password(password):
+                    return JsonResponse({'error': 'Incorrect password'}, status=400)
 
-        else:
-            # Collect and log form errors for debugging
-            logger.error(f"Form submission errors: {form.errors.as_json()}")
-            messages.error(request, 'Please correct the errors below.')
-    else:
-        form = DomesticTransferForm()
+                domestic_transfer = DomesticTransfer.objects.create(
+                    user=request.user,
+                    beneficiary=bank_name,
+                    bank_account=int(bank_account),
+                    description=description,
+                    amount=amount_decimal,
+                    updated=now(),
+                )
 
-    return render(request, 'dashboard/domestic-transfer.html', {'form': form})
+                # Deduct the amount from the user's account balance
+                domestic_transfer.transfer(amount, password)
+
+                Transaction.objects.create(
+                    wallet=account,
+                    transaction_type='domestic_transfer',
+                    to_user=beneficiary,
+                    incoming='Debit',
+                    amount=amount_decimal,
+                    updated=now()
+                )
+
+                messages.success(request, f'''Transaction to {
+                                 beneficiary} successful''')
+                return JsonResponse({'message': f'Transaction to {beneficiary} successful'}, status=200)
+
+        except ValidationError as e:
+            logger.error(f"Validation Error: {e}")
+            error_message = e.messages[0] if hasattr(
+                e, 'messages') and e.messages else str(e)
+            return JsonResponse({'error': error_message}, status=400)
+
+        except Exception as e:
+            logger.error(f"Error saving transaction: {e}")
+            return JsonResponse({'error': 'An unexpected error occurred. Please try again.'}, status=500)
+
+    return render(request, 'dashboard/domestic-transfer.html', {
+        'account_balance': account_balance,
+        'account_balance_noformat': account.account_balance,
+        "company_name": company_name,
+    })
 
 
 @login_required
@@ -248,192 +277,266 @@ def set_password(request):
 
 @login_required
 def localTransaction(request):
+    # Set locale for currency formatting
     try:
-        # Retrieve the user's account
-        account = AccountNumber.objects.get(user=request.user)
+        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+    except locale.Error:
+        locale.setlocale(locale.LC_ALL, '')
 
-        # Check if the user has set a password
-        if not account.password:
-            messages.warning(
-                request, "You need to set a password before proceeding with transactions."
-            )
-            return redirect(reverse('set_password'))
+    # Retrieve or create the user's account
+    account, created = AccountNumber.objects.get_or_create(user=request.user)
 
-    except AccountNumber.DoesNotExist:
+    # Handle account balance formatting
+    try:
+        account_balance = locale.currency(
+            account.account_balance, grouping=True, symbol=False)
+    except locale.Error:
+        account_balance = f"{account.account_balance:,.2f}"
+
+    # Check if the account is locked
+    if account.locked:
         messages.error(
-            request, "Your account could not be found. Please contact customer support."
-        )
-        return redirect('home')
+            request, "Your account is locked. Please contact support.")
+        return redirect('dashboard')
 
+    # Ensure the account has a password
+    if not account.password:
+        messages.error(
+            request, "Please set a password before proceeding with transactions.")
+        return redirect('set_password')
+
+    # Handle POST request for transaction
     if request.method == 'POST':
-        form = LocalTransferForm(request.POST)
-        if form.is_valid():
-            try:
-                with db_transaction.atomic():
-                    # Perform the transfer operation
-                    transfer_data = form.cleaned_data
-                    amount = transfer_data['amount']
-                    beneficiary_bank = transfer_data['beneficiary_bank']
-                    account_number = transfer_data['beneficiary_account_number']
-                    transaction_type = transfer_data['transaction_type']
-                    password = request.POST.get('password')
+        try:
+            data = json.loads(request.body)
+            account_number = data.get('accountNumber')
+            amount = data.get('amount')
+            password = data.get('password')
+            description = data.get('description')
 
-                    # Check if the account is locked
-                    if account.locked:
-                        messages.warning(
-                            request, "Your account is locked. Please contact customer support."
-                        )
-                        return redirect(reverse('local_transaction'))
+            # Validate required fields
+            if not all([account_number, amount, password, description]):
+                return JsonResponse({'error': 'All fields are required.'}, status=400)
 
-                    # Validate the password
-                    if not account.check_password(password):
-                        messages.error(request, "Incorrect password.")
-                        return render(request, 'dashboard/local-transfer.html', {'form': form})
+            # Fetch receiver details
+            receiver = get_object_or_404(
+                AccountNumber, account_number=int(account_number))
 
-                    # Create the LocalTransfer instance
-                    local_transfer = LocalTransfer.objects.create(
-                        user=request.user,
-                        beneficiary_bank=beneficiary_bank,
-                        beneficiary_account_number=account_number,
-                        transaction_type=transaction_type,
-                        amount=Decimal(amount),
-                        updated=now()
-                    )
+            # Prevent transferring to self
+            if receiver.user == request.user:
+                return JsonResponse({'error': 'You cannot transfer to your own account.'}, status=400)
 
-                    # Deduct the amount and perform the transfer
-                    local_transfer.transfer(amount, password)
+            # Perform the transaction
+            with db_transaction.atomic():
+                # Check account lock again (race condition prevention)
+                if account.locked:
+                    return JsonResponse({'error': 'Your account is locked. Please contact support.'}, status=403)
 
-                    # Log the transaction in the Transaction model
-                    Transaction.objects.create(
-                        wallet=account,
-                        transaction_type='local_transfer',
-                        to_user=beneficiary_bank,  # Adjust if beneficiary is a user
-                        incoming='Debit',
-                        amount=Decimal(amount),
-                        updated=now()
-                    )
+                # Verify password
+                if not account.check_password(password):
+                    return JsonResponse({'error': 'Incorrect password.'}, status=400)
 
-                    messages.success(
-                        request, "Transaction processed successfully."
-                    )
-                    return redirect('dashboard')
+                # Deduct amount and create LocalTransfer instance
+                local_transfer = LocalTransfer.objects.create(
+                    user=request.user,
+                    account=receiver,
+                    description=description,
+                    amount=Decimal(amount),
+                    updated=now()
+                )
+                local_transfer.transfer(amount, password)
 
-            except Exception as e:
-                logger.error(f"Error during local transaction: {e}")
-                messages.error(
-                    request, f"An unexpected error occurred: {e}"
+                # Log the transaction
+                Transaction.objects.create(
+                    wallet=account,
+                    transaction_type='local_transfer',
+                    to_user=receiver.user,
+                    incoming='Debit',
+                    amount=Decimal(amount),
+                    updated=now()
                 )
 
-        else:
-            # Log form errors
-            logger.error(f"Form errors: {form.errors.as_json()}")
-            messages.error(request, "Please correct the errors below.")
-    else:
-        form = LocalTransferForm()
+                messages.success(
+                    request, "Transaction processed successfully.")
+                return JsonResponse({'message': 'Transaction completed successfully.'}, status=200)
 
-    return render(request, 'dashboard/local-transfer.html', {'form': form})
+        except AccountNumber.DoesNotExist:
+            logger.error("Receiver account not found.")
+            return JsonResponse({'error': 'Receiver account not found.'}, status=404)
+
+        except ValidationError as e:
+            logger.error(f"Validation Error: {e}")
+            return JsonResponse({'error': str(e)}, status=400)
+
+        except Exception as e:
+            logger.error(f"Unexpected error during transaction: {e}")
+            return JsonResponse({'error': 'An unexpected error occurred. Please try again.'}, status=500)
+
+    return render(request, 'dashboard/local-transfer.html', {
+        'account_balance': account_balance,
+        'account_balance_noformat': account.account_balance,
+        'company_name': settings.COMPANY_NAME,
+    })
+
+
+def get_receiver_details(account_number):
+    """Fetch receiver details by account number."""
+    return get_object_or_404(AccountNumber, account_number=account_number)
+
+
+@login_required
+def check_receiver(request, account_number):
+    """Check if the receiver exists and is valid."""
+    try:
+        print("Checking")
+        print("Account number is ", account_number)
+        print("Account number is type", type(int(account_number)))
+
+        # Attempt to retrieve the receiver's account
+        receiver = AccountNumber.objects.get(account_number=account_number)
+
+        # Prevent transferring to self
+        if receiver.user == request.user:
+            return JsonResponse({'error': 'You cannot transfer to your own account.'}, status=400)
+
+        # If everything is valid, return success response
+        return JsonResponse({'message': f'{receiver.user.first_name} {receiver.user.last_name}'}, status=200)
+
+    except AccountNumber.DoesNotExist:
+        # Handle the case where the account does not exist
+        return JsonResponse({'error': 'Receiver account not found.'}, status=404)
+
+    except ValueError:
+        # Handle invalid account number format (e.g., non-integer input)
+        return JsonResponse({'error': 'Invalid account number format.'}, status=400)
+
+
+logger = logging.getLogger(__name__)
 
 
 @login_required
 def internationalTransaction(request):
+    # Set locale for currency formatting
     try:
-        # Retrieve the user's account
-        account = AccountNumber.objects.get(user=request.user)
+        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+    except locale.Error:
+        locale.setlocale(locale.LC_ALL, '')
 
-        # Check if the user has set a password
-        if not account.password:
-            messages.warning(
-                request, "You need to set a password before proceeding with transactions."
-            )
-            return redirect(reverse('set_password'))
+    # Retrieve or create the user's account
+    account, created = AccountNumber.objects.get_or_create(user=request.user)
 
-    except AccountNumber.DoesNotExist:
-        messages.error(
-            request, "Your account could not be found. Please contact customer support."
-        )
-        return redirect('home')
+    # Handle account balance formatting
+    try:
+        account_balance = locale.currency(
+            account.account_balance, grouping=True, symbol=False)
+    except locale.Error:
+        account_balance = f"{account.account_balance:,.2f}"
 
+    # Check if the account is locked
+    if account.locked:
+        return JsonResponse({'error': 'Your account is locked. Please contact support.'}, status=403)
+
+    # Ensure the account has a password
+    if not account.password:
+        return JsonResponse({'error': 'Please set a password before proceeding with transactions.'}, status=403)
+
+    # Handle POST request for transaction
     if request.method == 'POST':
-        form = InternationalTransferForm(request.POST)
-        if form.is_valid():
-            try:
-                with db_transaction.atomic():
-                    # Perform the transfer operation
-                    transfer_data = form.cleaned_data
-                    amount = transfer_data['amount']
-                    beneficiary_bank = transfer_data['beneficiary_bank']
-                    beneficiary_name = transfer_data['beneficiary_name']
-                    beneficiary_address = transfer_data['beneficiary_address']
-                    beneficiary_account_number = transfer_data['beneficiary_account_number']
-                    routing_number = transfer_data['routing_number']
-                    reason = transfer_data['reason']
-                    country = transfer_data['country']
-                    transaction_type = transfer_data['transaction_type']
-                    password = request.POST.get('password')
+        try:
+            data = json.loads(request.body)
+            account_number = data.get('accountNumber')
+            amount = data.get('amount')
+            password = data.get('password')
+            beneficiary_name = data.get('accountName')
+            beneficiary_address = data.get('beneficiaryAddress')
+            beneficiary_bank = data.get('beneficiaryBank')
+            routing_number = data.get('routingNumber')
+            reason = data.get('reason')
+            country = data.get('country')
+            transaction_type = data.get('transactionType')
 
-                    # Check if the account is locked
-                    if account.locked:
-                        messages.warning(
-                            request, "Your account is locked. Please contact customer support."
-                        )
-                        return redirect(reverse('international_transaction'))
+            # Validate required fields
+            required_fields = [beneficiary_name, beneficiary_address, account_number,
+                               beneficiary_bank, routing_number, reason, country, transaction_type]
 
-                    # Validate the password
-                    if not account.check_password(password):
-                        messages.error(request, "Incorrect password.")
-                        return render(request, 'dashboard/international-transfer.html', {'form': form})
+            if not all(required_fields):
+                return JsonResponse({'error': 'All required fields must be provided.'}, status=400)
 
-                    # Create the internationalTransfer instance
-                    international_transfer = InternationalTransfer.objects.create(
-                        beneficiary_name=beneficiary_name,
-                        beneficiary_address=beneficiary_address,
-                        beneficiary_account_number=beneficiary_account_number,
-                        beneficiary_bank=beneficiary_bank,
-                        routing_number=routing_number,
-                        reason=reason,
-                        country=country,
-                        transaction_type=transaction_type,
-                        user=request.user,
-                        amount=Decimal(amount),
-                        updated=now()
-                    )
+            # Perform the transaction within an atomic block
+            with db_transaction.atomic():
+                # Check account lock again (race condition prevention)
+                if account.locked:
+                    return JsonResponse({'error': 'Your account is locked. Please contact support.'}, status=403)
 
-                    # Deduct the amount and perform the transfer
-                    international_transfer.transfer(amount, password)
+                # Verify password
+                if not account.check_password(password):
+                    return JsonResponse({'error': 'Incorrect password.'}, status=400)
 
-                    # Log the transaction in the Transaction model
-                    Transaction.objects.create(
-                        wallet=account,
-                        transaction_type='international_transfer',
-                        to_user=beneficiary_bank,  # Adjust if beneficiary is a user
-                        incoming='Debit',
-                        amount=Decimal(amount),
-                        updated=now()
-                    )
-
-                    messages.success(
-                        request, "Transaction processed successfully."
-                    )
-                    return redirect('dashboard')
-
-            except Exception as e:
-                logger.error(f"Error during international transaction: {e}")
-                messages.error(
-                    request, f"An unexpected error occurred: {e}"
+                # Create InternationalTransfer instance and perform transfer
+                international_transfer = InternationalTransfer.objects.create(
+                    beneficiary_name=beneficiary_name,  # Use the correct variable
+                    beneficiary_address=beneficiary_address,
+                    beneficiary_account_number=account_number,
+                    beneficiary_bank=beneficiary_bank,
+                    routing_number=routing_number,
+                    reason=reason,
+                    country=country,
+                    transaction_type=transaction_type,
+                    user=request.user,
+                    amount=Decimal(amount),
+                    updated=now()
                 )
 
-        else:
-            # Log form errors
-            logger.error(f"Form errors: {form.errors.as_json()}")
-            messages.error(request, "Please correct the errors below.")
-    else:
-        form = InternationalTransferForm()
+                international_transfer.transfer(amount, password)
 
-    return render(request, 'dashboard/international-transfer.html', {'form': form})
+                # Log the transaction in the Transaction model
+                Transaction.objects.create(
+                    wallet=account,
+                    transaction_type='international_transfer',
+                    to_user=beneficiary_name,
+                    incoming='Debit',
+                    amount=Decimal(amount),
+                    updated=now()
+                )
+
+                return JsonResponse({'message': 'Transaction processed successfully.'}, status=200)
+
+        except AccountNumber.DoesNotExist:
+            logger.error("Receiver account not found.")
+            return JsonResponse({'error': 'Receiver account not found.'}, status=404)
+
+        except ValidationError as e:
+            logger.error(f"Validation Error: {e}")
+            return JsonResponse({'error': str(e)}, status=400)
+
+        except Exception as e:
+            logger.error(f"Unexpected error during transaction: {e}")
+            return JsonResponse({'error': 'An unexpected error occurred. Please try again.'}, status=500)
+
+    # If not a POST request, return the current balance as JSON (or handle as needed)
+    return render(request, 'dashboard/international-transfer.html', {'account_balance': account_balance,
+                  'account_balance_noformat': account.account_balance,
+                                                                     'company_name': settings.COMPANY_NAME},)
 
 
-@login_required
+@ login_required
 def transaction_history(request):
+    # Set locale for currency formatting
+    try:
+        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+    except locale.Error:
+        locale.setlocale(locale.LC_ALL, '')
+
+    # Retrieve or create the user's account
+    account, created = AccountNumber.objects.get_or_create(user=request.user)
+
+    # Handle account balance formatting
+    try:
+        account_balance = locale.currency(
+            account.account_balance, grouping=True, symbol=False)
+    except locale.Error:
+        account_balance = f"{account.account_balance:,.2f}"
+
     # Filter transactions by logged-in user's wallet
     transactions = Transaction.objects.filter(wallet__user=request.user)
 
@@ -451,13 +554,31 @@ def transaction_history(request):
     context = {
         'filter': transaction_filter,
         'transactions': page_obj,  # Paginated and filtered transactions
+        'account_balance': account_balance,
+        'account_balance_noformat': account.account_balance,
+        'company_name': settings.COMPANY_NAME
     }
 
     return render(request, 'dashboard/transaction_history.html', context)
 
 
-@login_required
+@ login_required
 def account_statement(request):
+    # Set locale for currency formatting
+    try:
+        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+    except locale.Error:
+        locale.setlocale(locale.LC_ALL, '')
+
+    # Retrieve or create the user's account
+    account, created = AccountNumber.objects.get_or_create(user=request.user)
+
+    # Handle account balance formatting
+    try:
+        account_balance = locale.currency(
+            account.account_balance, grouping=True, symbol=False)
+    except locale.Error:
+        account_balance = f"{account.account_balance:,.2f}"
     # Filter transactions by logged-in user's wallet
     transactions = Transaction.objects.filter(wallet__user=request.user)
 
@@ -475,6 +596,126 @@ def account_statement(request):
     context = {
         'filter': transaction_filter,
         'transactions': page_obj,  # Paginated and filtered transactions
+        'account_balance': account_balance,
+        'account_balance_noformat': account.account_balance,
+        'company_name': settings.COMPANY_NAME
     }
 
     return render(request, 'dashboard/account_statement.html', context)
+
+
+def get_account_balance(request):
+    try:
+        # Set the locale to en_US.UTF-8
+        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+    except locale.Error:
+        # Fallback to default system locale if en_US.UTF-8 fails
+        locale.setlocale(locale.LC_ALL, '')
+
+    # assuming AccountNumber model has user field
+    account, created = AccountNumber.objects.get_or_create(user=request.user)
+
+    # Format the account balance in currency format
+    try:
+        account_balance = locale.currency(
+            account.account_balance, grouping=True, symbol=False)
+
+        return account_balance
+    except locale.Error:
+        # Fallback to manual currency formatting
+        account_balance = f"{account.account_balance:,.2f}"
+        return account_balance
+
+
+@login_required
+def kyc(request):
+    # Set locale for currency formatting
+    try:
+        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+    except locale.Error:
+        locale.setlocale(locale.LC_ALL, '')
+
+    # Retrieve or create the user's account
+    account, created = AccountNumber.objects.get_or_create(user=request.user)
+
+    # Handle account balance formatting
+    try:
+        account_balance = locale.currency(
+            account.account_balance, grouping=True, symbol=False)
+    except locale.Error:
+        account_balance = f"{account.account_balance:,.2f}"
+
+    # Check if the account is locked
+    if account.locked:
+        return JsonResponse({'error': 'Your account is locked. Please contact support.'}, status=403)
+
+    return render(request, 'dashboard/kyc.html', {'account_balance': account_balance,
+                  'account_balance_noformat': account.account_balance, "page_name": "KYC", "page_message": "Your KYC has been verified.",
+                                                  'company_name': settings.COMPANY_NAME},)
+
+
+@login_required
+def crypto(request):
+    # Set locale for currency formatting
+    try:
+        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+    except locale.Error:
+        locale.setlocale(locale.LC_ALL, '')
+
+    # Retrieve or create the user's account
+    account, created = AccountNumber.objects.get_or_create(user=request.user)
+
+    # Handle account balance formatting
+    try:
+        account_balance = locale.currency(
+            account.account_balance, grouping=True, symbol=False)
+    except locale.Error:
+        account_balance = f"{account.account_balance:,.2f}"
+
+    # Check if the account is locked
+    if account.locked:
+        return JsonResponse({'error': 'Your account is locked. Please contact support.'}, status=403)
+
+    return render(request, 'dashboard/kyc.html', {'account_balance': account_balance,
+                  'account_balance_noformat': account.account_balance, "page_name": "Crypto", "page_message": "You have no Funded or linked Crypto assets.",
+                                                  'company_name': settings.COMPANY_NAME},)
+
+
+@login_required
+def pay_bills(request):
+    # Set locale for currency formatting
+    try:
+        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+    except locale.Error:
+        locale.setlocale(locale.LC_ALL, '')
+
+    # Retrieve or create the user's account
+    account, created = AccountNumber.objects.get_or_create(user=request.user)
+
+    # Handle account balance formatting
+    try:
+        account_balance = locale.currency(
+            account.account_balance, grouping=True, symbol=False)
+    except locale.Error:
+        account_balance = f"{account.account_balance:,.2f}"
+
+    # Check if the account is locked
+    if account.locked:
+        return JsonResponse({'error': 'Your account is locked. Please contact support.'}, status=403)
+
+    return render(request, 'dashboard/kyc.html', {'account_balance': account_balance,
+                  'account_balance_noformat': account.account_balance, "page_name": "Pay Bills", "page_message": "You have no linked bills.",
+                                                  'company_name': settings.COMPANY_NAME},)
+
+
+@login_required
+def get_transaction_details(request, transaction_id):
+    transaction = get_object_or_404(Transaction, id=transaction_id)
+    data = {
+        'to_user': transaction.to_user,
+        'date': transaction.updated.strftime('%Y-%m-%d %H:%M'),
+        'amount': float(transaction.amount),
+        'account_number': transaction.wallet.account_number,
+        'status': transaction.status,
+    }
+    return JsonResponse(data)

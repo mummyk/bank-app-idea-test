@@ -1,7 +1,16 @@
 {% if messages %}
   {% for message in messages %}
-    <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show message-alert" role="alert">
+    <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show message-alert" role="alert" id="message-container">
       {{ message }}
     </div>
   {% endfor %}
+<script>
+  // Automatically hide the message after 5 seconds
+  setTimeout(() => {
+    const container = document.getElementById('message-container');
+    if (container) {
+      container.style.display = 'none';
+    }
+  }, 10000); // 5000ms = 5 seconds
+</script>
 {% endif %}

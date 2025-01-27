@@ -1,0 +1,669 @@
+{% load humanize %}
+<div class="flex flex-col w-full md:w-1/2">
+   <div class="text-center">
+      <h1 class="text-4xl font-bold text-gray-900"><span class="text-primary-600">{{company_name}}</span> Secure Transfer Gateway</h1>
+      <p class="text-sm text-gray-500">Please fill out the following steps to complete your transfer.</p>
+   </div>
+
+   <!-- Form -->
+   <form id="multi-step-form">
+      <!-- Step 1 -->
+      <div class="step" id="step-1">
+         <div class="flex flex-col w-full pt-4 space-y-8">
+            <div class="flex flex-col">
+               <h2 class="text-md font-bold mb-2">Select Account</h2>
+               <div class="flex justify-between border rounded-md border-black hover:bg-gray-200 translate-x-1">
+                  <div class="flex">
+                     <i class="fas fa-dollar-sign text-green-500 text-xl p-6"></i>
+                     <div class="flex flex-col text-gray-500 justify-center">
+                        <p class="text-xl">Current Account (USD)</p>
+                        <p class="text-sm">Your current account balance is <span class="text-green-500">${{ account_balance|intcomma }}</span></p>
+                     </div>
+                  </div>
+                  <i class="fas fa-arrow-down text-green-500 text-xl p-6"></i>
+               </div>
+            </div>
+
+            <div class="flex flex-col">
+               <h2 class="text-md font-bold mb-2">Amount to transfer</h2>
+               <div class="flex justify-between">
+                  <h3 class="text-sm font-medium mb-2">Daily transfer limit:</h3>
+                  <h3 class="text-sm font-medium mb-2">Unlimited</h3>
+               </div>
+               <!-- Beneficiary Name -->
+               <div class="flex w-full border rounded-md border-black p-6 mb-2">
+                  <input
+                     type="text"
+                     id="beneficiary_name"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-4"
+                     placeholder="Beneficiary Name"
+                     required
+                  />
+               </div>
+
+               <!-- Beneficiary Account Number -->
+               <div class="flex w-full border rounded-md border-black p-6 mb-2">
+                  <input
+                     type="number"
+                     id="beneficiary_account_number"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-4"
+                     placeholder="Beneficiary Account Number"
+                  />
+               </div>
+
+               <!-- Transaction Type -->
+               <div class="flex w-full border rounded-md border-black p-6 mb-2">
+                  <select
+                     id="transaction_type"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-4"
+                     required
+                  >
+                     <option value="" disabled selected>Transaction Type</option>
+                     <option value="current">Current Account</option>
+                     <option value="saving">Saving Account</option>
+                     <option value="checking">Checking Account</option>
+                  </select>
+               </div>
+
+               <!-- Beneficiary Bank -->
+               <div class="flex w-full border rounded-md border-black p-6 mb-2">
+                  <input
+                     type="text"
+                     id="beneficiary_bank"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-4"
+                     placeholder="Beneficiary Bank"
+                     required
+                  />
+               </div>
+
+               
+               
+               <!-- Amount -->
+               <div class="flex w-full border rounded-md border-black p-6">
+                  <i class="fas fa-dollar-sign text-green-500 text-xl self-center"></i>
+                  <input
+                     type="number"
+                     id="amount"
+                     class="bg-gray-50 border-none text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:outline-none w-full p-4"
+                     placeholder="Amount"
+                     min="10"
+                     required
+                  />
+               </div>
+               <div class="flex justify-between mt-2">
+                  <h3 class="text-sm font-medium">Minimum transfer amount:</h3>
+                  <h3 class="text-sm font-medium">$10</h3>
+               </div>
+            </div>
+
+            <div class="flex justify-end">
+               <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" id="next-1">
+                  Next
+               </button>
+            </div>
+         </div>
+      </div>
+      <!-- Step 2 -->
+      <div class="step hidden" id="step-2">
+         <div class="flex flex-col w-full pt-4 space-y-8">
+            <div class="flex flex-col">
+               <h2 class="text-md font-bold mb-2">Amount to transfer: <span id="confirm-amount" class="text-green-500"></span></h2>
+               <div class="flex flex-col space-y-2 w-full">
+                  <!-- Beneficiary Address -->
+               <div class="flex w-full border rounded-md border-black p-6 mb-2">
+                  <input
+                     type="text"
+                     id="beneficiary_address"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-4"
+                     placeholder="Beneficiary Address"
+                     required
+                  />
+               </div>
+
+               <!-- Country -->
+               <div class="flex w-full border rounded-md border-black p-6 mb-2">
+                  <select
+                     id="country"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-4"
+                     required
+                  >
+                     <option value="" disabled selected>Select Country</option>
+                     <option value="AF">Afghanistan</option>
+                     <option value="AL">Albania</option>
+                     <option value="DZ">Algeria</option>
+                     <option value="AS">American Samoa</option>
+                     <option value="AD">Andorra</option>
+                     <option value="AO">Angola</option>
+                     <option value="AI">Anguilla</option>
+                     <option value="AG">Antigua and Barbuda</option>
+                     <option value="AR">Argentina</option>
+                     <option value="AM">Armenia</option>
+                     <option value="AW">Aruba</option>
+                     <option value="AU">Australia</option>
+                     <option value="AT">Austria</option>
+                     <option value="AZ">Azerbaijan</option>
+                     <option value="BS">Bahamas</option>
+                     <option value="BH">Bahrain</option>
+                     <option value="BD">Bangladesh</option>
+                     <option value="BB">Barbados</option>
+                     <option value="BY">Belarus</option>
+                     <option value="BE">Belgium</option>
+                     <option value="BZ">Belize</option>
+                     <option value="BJ">Benin</option>
+                     <option value="BM">Bermuda</option>
+                     <option value="BT">Bhutan</option>
+                     <option value="BO">Bolivia</option>
+                     <option value="BA">Bosnia and Herzegovina</option>
+                     <option value="BW">Botswana</option>
+                     <option value="BR">Brazil</option>
+                     <option value="BN">Brunei</option>
+                     <option value="BG">Bulgaria</option>
+                     <option value="BF">Burkina Faso</option>
+                     <option value="BI">Burundi</option>
+                     <option value="KH">Cambodia</option>
+                     <option value="CM">Cameroon</option>
+                     <option value="CA">Canada</option>
+                     <option value="CV">Cape Verde</option>
+                     <option value="KY">Cayman Islands</option>
+                     <option value="CF">Central African Republic</option>
+                     <option value="TD">Chad</option>
+                     <option value="CL">Chile</option>
+                     <option value="CN">China</option>
+                     <option value="CO">Colombia</option>
+                     <option value="KM">Comoros</option>
+                     <option value="CG">Congo (Brazzaville)</option>
+                     <option value="CD">Congo (Kinshasa)</option>
+                     <option value="CR">Costa Rica</option>
+                     <option value="CI">Côte d'Ivoire</option>
+                     <option value="HR">Croatia</option>
+                     <option value="CU">Cuba</option>
+                     <option value="CY">Cyprus</option>
+                     <option value="CZ">Czech Republic</option>
+                     <option value="DK">Denmark</option>
+                     <option value="DJ">Djibouti</option>
+                     <option value="DM">Dominica</option>
+                     <option value="DO">Dominican Republic</option>
+                     <option value="EC">Ecuador</option>
+                     <option value="EG">Egypt</option>
+                     <option value="SV">El Salvador</option>
+                     <option value="GQ">Equatorial Guinea</option>
+                     <option value="ER">Eritrea</option>
+                     <option value="EE">Estonia</option>
+                     <option value="ET">Ethiopia</option>
+                     <option value="FJ">Fiji</option>
+                     <option value="FI">Finland</option>
+                     <option value="FR">France</option>
+                     <option value="GA">Gabon</option>
+                     <option value="GM">Gambia</option>
+                     <option value="GE">Georgia</option>
+                     <option value="DE">Germany</option>
+                     <option value="GH">Ghana</option>
+                     <option value="GR">Greece</option>
+                     <option value="GD">Grenada</option>
+                     <option value="GU">Guam</option>
+                     <option value="GT">Guatemala</option>
+                     <option value="GN">Guinea</option>
+                     <option value="GW">Guinea-Bissau</option>
+                     <option value="GY">Guyana</option>
+                     <option value="HT">Haiti</option>
+                     <option value="HN">Honduras</option>
+                     <option value="HK">Hong Kong</option>
+                     <option value="HU">Hungary</option>
+                     <option value="IS">Iceland</option>
+                     <option value="IN">India</option>
+                     <option value="ID">Indonesia</option>
+                     <option value="IR">Iran</option>
+                     <option value="IQ">Iraq</option>
+                     <option value="IE">Ireland</option>
+                     <option value="IL">Israel</option>
+                     <option value="IT">Italy</option>
+                     <option value="JM">Jamaica</option>
+                     <option value="JP">Japan</option>
+                     <option value="JO">Jordan</option>
+                     <option value="KZ">Kazakhstan</option>
+                     <option value="KE">Kenya</option>
+                     <option value="KI">Kiribati</option>
+                     <option value="KW">Kuwait</option>
+                     <option value="KG">Kyrgyzstan</option>
+                     <option value="LA">Laos</option>
+                     <option value="LV">Latvia</option>
+                     <option value="LB">Lebanon</option>
+                     <option value="LS">Lesotho</option>
+                     <option value="LR">Liberia</option>
+                     <option value="LY">Libya</option>
+                     <option value="LI">Liechtenstein</option>
+                     <option value="LT">Lithuania</option>
+                     <option value="LU">Luxembourg</option>
+                     <option value="MG">Madagascar</option>
+                     <option value="MW">Malawi</option>
+                     <option value="MY">Malaysia</option>
+                     <option value="MV">Maldives</option>
+                     <option value="ML">Mali</option>
+                     <option value="MT">Malta</option>
+                     <option value="MH">Marshall Islands</option>
+                     <option value="MR">Mauritania</option>
+                     <option value="MU">Mauritius</option>
+                     <option value="MX">Mexico</option>
+                     <option value="FM">Micronesia</option>
+                     <option value="MD">Moldova</option>
+                     <option value="MC">Monaco</option>
+                     <option value="MN">Mongolia</option>
+                     <option value="ME">Montenegro</option>
+                     <option value="MA">Morocco</option>
+                     <option value="MZ">Mozambique</option>
+                     <option value="MM">Myanmar</option>
+                     <option value="NA">Namibia</option>
+                     <option value="NR">Nauru</option>
+                     <option value="NP">Nepal</option>
+                     <option value="NL">Netherlands</option>
+                     <option value="NZ">New Zealand</option>
+                     <option value="NI">Nicaragua</option>
+                     <option value="NE">Niger</option>
+                     <option value="NG">Nigeria</option>
+                     <option value="NO">Norway</option>
+                     <option value="OM">Oman</option>
+                     <option value="PK">Pakistan</option>
+                     <option value="PW">Palau</option>
+                     <option value="PA">Panama</option>
+                     <option value="PG">Papua New Guinea</option>
+                     <option value="PY">Paraguay</option>
+                     <option value="PE">Peru</option>
+                     <option value="PH">Philippines</option>
+                     <option value="PL">Poland</option>
+                     <option value="PT">Portugal</option>
+                     <option value="QA">Qatar</option>
+                     <option value="RO">Romania</option>
+                     <option value="RU">Russia</option>
+                     <option value="RW">Rwanda</option>
+                     <option value="KN">Saint Kitts and Nevis</option>
+                     <option value="LC">Saint Lucia</option>
+                     <option value="VC">Saint Vincent and the Grenadines</option>
+                     <option value="WS">Samoa</option>
+                     <option value="SM">San Marino</option>
+                     <option value="ST">São Tomé and Príncipe</option>
+                     <option value="SA">Saudi Arabia</option>
+                     <option value="SN">Senegal</option>
+                     <option value="RS">Serbia</option>
+                     <option value="SC">Seychelles</option>
+                     <option value="SL">Sierra Leone</option>
+                     <option value="SG">Singapore</option>
+                     <option value="SK">Slovakia</option>
+                     <option value="SI">Slovenia</option>
+                     <option value="SB">Solomon Islands</option>
+                     <option value="SO">Somalia</option>
+                     <option value="ZA">South Africa</option>
+                     <option value="KR">South Korea</option>
+                     <option value="ES">Spain</option>
+                     <option value="LK">Sri Lanka</option>
+                     <option value="SD">Sudan</option>
+                     <option value="SR">Suriname</option>
+                     <option value="SZ">Swaziland</option>
+                     <option value="SE">Sweden</option>
+                     <option value="CH">Switzerland</option>
+                     <option value="SY">Syria</option>
+                     <option value="TW">Taiwan</option>
+                     <option value="TJ">Tajikistan</option>
+                     <option value="TZ">Tanzania</option>
+                     <option value="TH">Thailand</option>
+                     <option value="TL">Timor-Leste</option>
+                     <option value="TG">Togo</option>
+                     <option value="TO">Tonga</option>
+                     <option value="TT">Trinidad and Tobago</option>
+                     <option value="TN">Tunisia</option>
+                     <option value="TR">Turkey</option>
+                     <option value="TM">Turkmenistan</option>
+                     <option value="TV">Tuvalu</option>
+                     <option value="UG">Uganda</option>
+                     <option value="UA">Ukraine</option>
+                     <option value="AE">United Arab Emirates</option>
+                     <option value="GB">United Kingdom</option>
+                     <option value="US">United States</option>
+                     <option value="UY">Uruguay</option>
+                     <option value="UZ">Uzbekistan</option>
+                     <option value="VU">Vanuatu</option>
+                     <option value="VE">Venezuela</option>
+                     <option value="VN">Vietnam</option>
+                     <option value="YE">Yemen</option>
+                     <option value="ZM">Zambia</option>
+                     <option value="ZW">Zimbabwe</option>
+                  </select>
+               </div>
+
+
+               <!-- Routing Number -->
+               <div class="flex w-full border rounded-md border-black p-6 mb-2">
+                  <input
+                     type="text"
+                     id="routing_number"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-4"
+                     placeholder="Routing Number (IBAN)"
+                     required
+                  />
+               </div>
+               
+               <!-- Reason -->
+               <div class="flex w-full border rounded-md border-black p-6 mb-2">
+                  <textarea
+                  id="reason"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-4"
+                  placeholder="Reason for Transfer"
+                  maxlength="1500"
+                  required
+                  ></textarea>
+               </div>
+               </div>
+            </div>
+
+            <div class="flex justify-between">
+               <button type="button" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" id="prev-2">
+                  Previous
+               </button>
+               <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" id="next-2">
+                  Next
+               </button>
+            </div>
+         </div>
+      </div>
+
+
+     
+
+      <!-- Step 3 (Summary) -->
+      <div class="step hidden" id="step-3">
+         <div class="flex flex-col w-full pt-4 space-y-8">
+            <div>
+               <h2 class="text-md font-bold mb-2 text-center">Review Transaction for <span id="confirm-amount" class="text-green-500"></span></h2>
+               <h2 class="text-md font-medium mb-2 text-center text-primary-500">Kindly review the transaction details below:</h2>
+            </div>
+           <!-- Summary Fields in Step 3 -->
+            <div class="flex flex-col border rounded-md border-gray-500">
+               <div class="flex justify-between p-4">
+                  <h3 class="text-sm font-medium">Amount:</h3>
+                  <p id="summary-amount" class="text-sm text-gray-500"></p>
+               </div>
+               <div class="flex justify-between p-4">
+                  <h3 class="text-sm font-medium">Account Number:</h3>
+                  <p id="summary-account-number" class="text-sm text-gray-500"></p>
+               </div>
+               <div class="flex justify-between p-4">
+                  <h3 class="text-sm font-medium">Beneficiary Name:</h3>
+                  <p id="summary-beneficiary-name" class="text-sm text-gray-500"></p>
+               </div>
+               <div class="flex justify-between p-4">
+                  <h3 class="text-sm font-medium">Beneficiary Address:</h3>
+                  <p id="summary-address" class="text-sm text-gray-500"></p>
+               </div>
+               <div class="flex justify-between p-4">
+                  <h3 class="text-sm font-medium">Beneficiary Bank:</h3>
+                  <p id="summary-beneficiary-bank" class="text-sm text-gray-500"></p>
+               </div>
+               <div class="flex justify-between p-4">
+                  <h3 class="text-sm font-medium">Routing Number:</h3>
+                  <p id="summary-routing_number" class="text-sm text-gray-500"></p>
+               </div>
+               <div class="flex justify-between p-4">
+                  <h3 class="text-sm font-medium">Transaction Type:</h3>
+                  <p id="summary-transaction_type" class="text-sm text-gray-500"></p>
+               </div>
+               <div class="flex justify-between p-4">
+                  <h3 class="text-sm font-medium">Country:</h3>
+                  <p id="summary-country" class="text-sm text-gray-500"></p>
+               </div>
+               <div class="flex justify-between p-4">
+                  <h3 class="text-sm font-medium">Reason:</h3>
+                  <p id="summary-reason" class="text-sm text-gray-500"></p>
+               </div>
+            </div>
+
+            <div class="flex flex-col pt-4">
+               <h2 class="text-md font-bold mb-2">Selected Account</h2>
+               <div class="flex justify-between border rounded-md border-black hover:bg-gray-200 translate-x-1">
+                  <div class="flex">
+                     <i class="fas fa-dollar-sign text-green-500 text-xl p-6"></i>
+                     <div class="flex flex-col text-gray-500 justify-center">
+                        <p class="text-xl">Current Account (USD)</p>
+                        <p class="text-sm">Your current account balance is <span class="text-green-500">${{ account_balance|intcomma }}</span></p>
+                     </div>
+                  </div>
+                  <i class="fas fa-arrow-down text-green-500 text-xl p-6"></i>
+               </div>
+            </div>
+
+            <div class="flex justify-between pb-4">
+               <button type="button" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" id="prev-3">
+                  Previous
+               </button>
+               <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" id="next-3">
+                  Confirm transaction
+               </button>
+               {% comment %} <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                  Confirm & Submit
+               </button> {% endcomment %}
+            </div>
+         </div>
+      </div>
+
+      <!-- Step 4 (PIN) -->
+      {% include 'dashboard/partials/international_transfer/pin_input.html' %}
+   </form>
+</div>
+
+
+<script>
+   document.addEventListener("DOMContentLoaded", () => {
+      const steps = document.querySelectorAll(".step");
+      let currentStep = 0;
+      let formData = {};
+
+      // Buttons
+      const next1 = document.getElementById("next-1");
+      const next2 = document.getElementById("next-2");
+      const prev2 = document.getElementById("prev-2");
+      const next3 = document.getElementById("next-3");
+      const prev3 = document.getElementById("prev-3");
+
+      // Input Fields
+      const accountNumber = document.getElementById("beneficiary_account_number");
+      const accountName = document.getElementById("beneficiary_name");
+      const transactionType = document.getElementById("transaction_type");
+      const beneficiaryBank = document.getElementById("beneficiary_bank");
+      const amount = document.getElementById("amount");
+      const beneficiaryAddress = document.getElementById("beneficiary_address");
+      const country = document.getElementById("country");
+      const routingNumber = document.getElementById("routing_number");
+      const reason = document.getElementById("reason");
+
+      function collectStep1Data() {
+         formData.accountNumber = accountNumber.value.trim();
+         formData.accountName = accountName.value.trim();
+         formData.transactionType = transactionType.value.trim();
+         formData.beneficiaryBank = beneficiaryBank.value.trim();
+         formData.amount = amount.value.trim();
+
+         // Update confirmation step with amount
+         document.getElementById("confirm-amount").innerText = `$${formData.amount}`;
+      }
+
+      function collectStep2Data() {
+         formData.beneficiaryAddress = beneficiaryAddress.value.trim();
+         formData.country = country.value.trim();
+         formData.routingNumber = routingNumber.value.trim();
+         formData.reason = reason.value.trim();
+      }
+
+      // Summary fields
+      function populateSummary() {
+         document.getElementById("summary-amount").innerText = `$${formData.amount}`;
+         document.getElementById("summary-account-number").innerText = formData.accountNumber;
+         document.getElementById("summary-beneficiary-name").innerText = formData.accountName;
+         document.getElementById("summary-transaction_type").innerText = formData.transactionType;
+         document.getElementById("summary-beneficiary-bank").innerText = formData.beneficiaryBank;
+         document.getElementById("summary-address").innerText = formData.beneficiaryAddress;
+         document.getElementById("summary-country").innerText = formData.country;
+         document.getElementById("summary-routing_number").innerText = formData.routingNumber;
+         document.getElementById("summary-reason").innerText = formData.reason;
+
+      }
+
+      // Function to show the current step
+      const showStep = () => {
+         steps.forEach((step, index) => {
+            step.classList.toggle("hidden", index !== currentStep);
+         });
+      };
+
+      // Validate Step 1
+      const validateStep1 = () => {
+         if (
+            !accountName.value.trim() ||
+            !accountNumber.value.trim() ||
+            !amount.value.trim() ||
+            !transactionType.value.trim() ||
+            !beneficiaryBank.value.trim()
+         ) {
+            alert("Please fill in all the required fields in Step 1.");
+            return false;
+         }
+         return true;
+      };
+
+      // Validate Step 2
+      const validateStep2 = () => {
+         if (
+            !beneficiaryAddress.value.trim() ||
+            !routingNumber.value.trim() ||
+            !reason.value.trim()
+         ) {
+            alert("Please fill in all the required fields in Step 2.");
+            return false;
+         }
+         return true;
+      };
+
+      // Event listeners
+      next1.addEventListener("click", () => {
+         if (validateStep1()) {
+            collectStep1Data();
+            currentStep++;
+            showStep();
+         }
+      });
+
+      next2.addEventListener("click", () => {
+         if (validateStep2()) {
+            collectStep2Data();
+            currentStep++;
+            populateSummary();
+            showStep();
+         }
+      });
+
+      next3.addEventListener("click", () => {
+          formData={...formData}
+          currentStep++;
+          showStep();
+       });
+
+       prev2.addEventListener("click", () => {
+          currentStep--;
+          showStep();
+       });
+
+       prev3.addEventListener("click", () => {
+          currentStep--;
+          showStep();
+       });
+
+       // Initial step display
+       showStep();
+
+          // Handle OTP input auto-focus
+   const inputs = document.querySelectorAll(".otp-input");
+   inputs.forEach((input, index) => {
+      input.addEventListener("input", (e) => {
+         if (e.target.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+         }
+      });
+
+      input.addEventListener("keydown", (e) => {
+         if (e.key === "Backspace" && index > 0 && !e.target.value) {
+            inputs[index - 1].focus();
+         }
+      });
+   });
+
+   // Handle Cancel button reset
+   const cancelButton = document.getElementById("cancel-btn");
+   cancelButton.addEventListener("click", () => {
+      inputs.forEach((input) => {
+         input.value = "";
+      });
+      inputs[0].focus();
+   });
+
+   
+
+   // Form submission (final step)
+document.getElementById('multi-step-form').addEventListener('submit', (e) => {
+   e.preventDefault();
+
+   const otpInputs = document.querySelectorAll('.otp-input');
+   const otpValue = Array.from(otpInputs).map(input => input.value).join('');
+
+   if (otpValue.length === otpInputs.length) {
+      formData.password = otpValue;
+
+      fetch('{% url "international_transaction" %}', {
+         method: 'POST',
+         body: JSON.stringify(formData),
+         headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'),
+         },
+      })
+         .then(response => response.json()
+            .then(data => ({ status: response.status, body: data })))
+         .then(({ status, body }) => {
+            if (status === 200) {
+               alert(body.message); // Success message
+               window.location.href = '{% url "dashboard" %}'; // Navigate to the dashboard
+            } else if (status === 400 || status === 403 || status === 404) {
+               alert(body.error); // Display specific error
+               location.reload();
+            } else {
+               alert('An unexpected error occurred. Please try again later.');
+               location.reload();
+            }
+         })
+         .catch(() => {
+            alert('Failed to connect to the server. Please check your connection.');
+            location.reload();
+         });
+
+      // Function to get CSRF token from cookies
+      function getCookie(name) {
+         let cookieValue = null;
+         if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+               const cookie = cookies[i].trim();
+               if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+               }
+            }
+         }
+         return cookieValue;
+      }
+
+      formData = {}; // Clear form data
+   } else {
+      alert('Please enter a valid PIN.');
+   }
+});
+
+   });
+</script>
+
+

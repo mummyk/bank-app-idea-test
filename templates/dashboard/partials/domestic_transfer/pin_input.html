@@ -1,0 +1,157 @@
+<div class="step hidden" id="step-4">
+   <div class="flex flex-col w-full pt-4 space-y-8">
+      <div>
+         <h2 class="text-md font-bold mb-2 text-center">Enter Your Pin</h2>
+         <h2 class="text-md font-medium mb-2 text-center text-primary-500">Kindly keep your pin safe</h2>
+      </div>
+
+      <!-- OTP Input Fields -->
+      <div class="flex space-x-3 justify-center">
+         <input
+            type="number"
+            maxlength="1"
+            class="otp-input w-16 h-16 text-center text-2xl border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+         />
+         <input
+            type="number"
+            maxlength="1"
+            class="otp-input w-16 h-16 text-center text-2xl border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+         />
+         <input
+            type="number"
+            maxlength="1"
+            class="otp-input w-16 h-16 text-center text-2xl border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+         />
+         <input
+            type="number"
+            maxlength="1"
+            class="otp-input w-16 h-16 text-center text-2xl border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+         />
+      </div>
+
+      <!-- Submit and Cancel Buttons -->
+      <button
+         type="submit"
+         class="w-full mt-6 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      >
+         Verify Pin & Submit
+      </button>
+      <button
+         type="button"
+         id="cancel-btn"
+         class="w-full mt-6 bg-yellow-500 text-white py-2 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+      >
+         Reset
+      </button>
+
+      <a
+         href="{% url 'domestic_transaction' %}"
+      >
+         <button
+            type="button"
+            class="w-full mt-6 bg-red-500 text-white py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+         >
+            Cancel
+         </button>
+      </a>
+
+      <!-- Fees Information -->
+      <p class="mt-4 text-sm text-center text-gray-600">
+         Our fees will be appended to your transaction 
+         <a href="#" class="text-blue-500 hover:underline">Read more...</a>
+      </p>
+   </div>
+</div>
+
+<script>
+   // Handle OTP input auto-focus
+   const inputs = document.querySelectorAll(".otp-input");
+   inputs.forEach((input, index) => {
+      input.addEventListener("input", (e) => {
+         if (e.target.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+         }
+      });
+
+      input.addEventListener("keydown", (e) => {
+         if (e.key === "Backspace" && index > 0 && !e.target.value) {
+            inputs[index - 1].focus();
+         }
+      });
+   });
+
+   // Handle Cancel button reset
+   const cancelButton = document.getElementById("cancel-btn");
+   cancelButton.addEventListener("click", () => {
+      inputs.forEach((input) => {
+         input.value = "";
+      });
+      inputs[0].focus();
+   });
+
+   
+
+   // Form submission (final step)
+document.getElementById('multi-step-form').addEventListener('submit', (e) => {
+   e.preventDefault();
+
+   const otpInputs = document.querySelectorAll('.otp-input');
+   const otpValue = Array.from(otpInputs).map(input => input.value).join('');
+
+   if (otpValue.length === otpInputs.length) {
+      formData.password = otpValue;
+
+      fetch('{% url "domestic_transaction" %}', {
+         method: 'POST',
+         body: JSON.stringify(formData),
+         headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'),
+         },
+      })
+         .then(response => response.json()
+            .then(data => ({ status: response.status, body: data })))
+         .then(({ status, body }) => {
+            if (status === 200) {
+               alert(body.message); // Success message
+               window.location.href = '{% url "dashboard" %}'; // Navigate to the dashboard
+            } else if (status === 400 || status === 403 || status === 404) {
+               alert(body.error); // Display specific error
+               location.reload();
+            } else {
+               alert('An unexpected error occurred. Please try again later.');
+               location.reload();
+            }
+         })
+         .catch(() => {
+            alert('Failed to connect to the server. Please check your connection.');
+            location.reload();
+         });
+
+      // Function to get CSRF token from cookies
+      function getCookie(name) {
+         let cookieValue = null;
+         if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+               const cookie = cookies[i].trim();
+               if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+               }
+            }
+         }
+         return cookieValue;
+      }
+
+      formData = {}; // Clear form data
+   } else {
+      alert('Please enter a valid PIN.');
+   }
+});
+
+</script>

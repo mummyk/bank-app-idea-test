@@ -5,6 +5,7 @@ from users.models import AccountNumber
 from users.filters import TransactionFilter
 from django.core.paginator import Paginator
 from users.models import Transaction
+from django.http import HttpResponse
 
 # Create your views here.
 
@@ -12,10 +13,50 @@ from users.models import Transaction
 import locale
 
 
+from ipware import get_client_ip
+
+
+def clientIp(request):
+    # Returns a tuple with IP and routability status
+    client_ip, is_routable = get_client_ip(request)
+    print(f"Your IP address is: {client_ip}")
+
+
+def get_user_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        # The header can contain multiple IPs; take the first one
+        user_ip = x_forwarded_for.split(',')[0].strip()
+    else:
+        user_ip = request.META.get('REMOTE_ADDR')
+    return user_ip
+
+
+def view_request_info(request):
+    # Gather information from the request
+    request_info = {
+        "method": request.method,
+        "path": request.path,
+        "scheme": request.scheme,
+        "body": request.body.decode('utf-8'),  # Decode body if necessary
+        "GET": dict(request.GET),
+        "POST": dict(request.POST),
+        "FILES": {key: file.name for key, file in request.FILES.items()},
+        "COOKIES": dict(request.COOKIES),
+        "HEADERS": {key: value for key, value in request.META.items() if key.startswith('HTTP_')},
+        "user": str(request.user),  # Convert user to string for representation
+        # Convert session to dictionary if needed
+        "session": dict(request.session),
+    }
+
+    return request_info
+
+
 @login_required
 def dashboard(request):
     # Set the locale for formatting
     try:
+        clientIp(request)
         # Set the locale to en_US.UTF-8
         locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
     except locale.Error:
@@ -51,6 +92,7 @@ def dashboard(request):
         'account_type': account.account_type,
         'account_currency': account.account_currency,
         'account_balance': account_balance,
+        'account_balance_noformat': account.account_balance,
         'filter': transaction_filter,
         'transactions': page_obj,
     }

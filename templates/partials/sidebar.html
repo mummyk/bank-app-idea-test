@@ -1,61 +1,98 @@
 {% load static %}
 {% load i18n %}
-<aside id="sidebar" class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 hidden w-64 h-full pt-16 font-normal duration-75 lg:flex transition-width" aria-label="Sidebar">
+<aside id="sidebar" class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 hidden h-full pt-16 font-normal duration-75 lg:flex transition-width" style="width:265px;" aria-label="Sidebar">
   <div class="relative flex flex-col flex-1 min-h-0 pt-0  border-r border-gray-200 bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
     <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
       <div class="flex-1 px-3 space-y-1  divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+        {% include 'partials/quick_use.html' %}
+
+        <div class="pt-3 pb-2 font-bold">Menu</div>
         <ul class="pb-2 space-y-2">
          
           <li>
-            <a href="{% url 'dashboard' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/dashboard/' %} bg-gray-300 dark:bg-gray-700 {% endif %}">
-                <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
-                <span class="ml-3" sidebar-toggle-item>Dashboard</span>
+            <a href="{% url 'dashboard' %}" class="flex items-center p-2 text-base text-gray-500 hover:text-primary-500 rounded-lg hover:bg-white group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/dashboard/' %} text-primary-500 bg-white dark:bg-gray-700 {% endif %}">
+                <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-primary-500  dark:text-gray-400 dark:group-hover:text-white {% if request.path == '/dashboard/' %} text-primary-500 dark:bg-gray-700 {% endif %}" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
+                <span class="ml-2 font-medium" sidebar-toggle-item>Dashboard</span>
             </a>
           </li>
            
            <li>
-            <a href="{% url 'domestic_transaction' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/domestic/transfer/' %} bg-gray-300 dark:bg-gray-700 {% endif %}">
-          <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <a href="{% url 'domestic_transaction' %}" class="flex items-center p-2 text-base text-gray-500 hover:text-primary-500 rounded-lg hover:bg-white group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/domestic/transfer/' %}text-primary-500 bg-white dark:bg-gray-700 {% endif %}">
+          <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-primary-500  dark:text-gray-400 dark:group-hover:text-white {% if request.path == '/domestic/transfer/' %} text-primary-500 dark:bg-gray-700 {% endif %}" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M4.293 9.293a1 1 0 011.414 0L10 13.586l4.293-4.293a1 1 0 011.414 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414z" clip-rule="evenodd"></path>
             <path fill-rule="evenodd" d="M10 2a7 7 0 00-6.985 6.39 1 1 0 11-1.992-.218A9 9 0 1119 10a1 1 0 01-2 0A7 7 0 0010 2z" clip-rule="evenodd"></path>
           </svg>
 
-                <span class="ml-3" sidebar-toggle-item>Domestic Transfer</span>
+                <span class="ml-2 font-medium" sidebar-toggle-item>Domestic Transfer</span>
             </a>
           </li>
           <li>
-            <a href="{% url 'local_transaction' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/local/transfer/' %} bg-gray-300 dark:bg-gray-700 {% endif %}">
-          <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <a href="{% url 'local_transaction' %}" class="flex items-center p-2 text-base text-gray-500 hover:text-primary-500 rounded-lg hover:bg-white group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/local/transfer/' %}text-primary-500 bg-white dark:bg-gray-700 {% endif %}">
+          <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-primary-500  dark:text-gray-400 dark:group-hover:text-white {% if request.path == '/local/transfer/' %} text-primary-500 dark:bg-gray-700 {% endif %}" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zm-1.707 8.707a1 1 0 010-1.414l2-2a1 1 0 011.414 1.414L10.414 9H13a1 1 0 110 2h-2.586l1.293 1.293a1 1 0 01-1.414 1.414l-2-2zm3.414 0l2 2a1 1 0 001.414-1.414L13.414 11H11a1 1 0 110-2h2.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2z" clip-rule="evenodd"></path>
           </svg>
 
-                <span class="ml-3" sidebar-toggle-item>Local Transfer</span>
+                <span class="ml-2 font-medium" sidebar-toggle-item>Local Transfer</span>
             </a>
           </li>
           <li>
-            <a href="{% url 'international_transaction' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/international/transfer/' %} bg-gray-300 dark:bg-gray-700 {% endif %}">
-          <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <a href="{% url 'international_transaction' %}" class="flex items-center p-2 text-base text-gray-500 hover:text-primary-500 rounded-lg hover:bg-white group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/international/transfer/' %}text-primary-500 bg-white dark:bg-gray-700 {% endif %}">
+          <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-primary-500  dark:text-gray-400 dark:group-hover:text-white {% if request.path == '/international/transfer/' %} text-primary-500 dark:bg-gray-700 {% endif %}" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M12 2a10 10 0 100 20 10 10 0 000-20zm1.5 3.25c.9.32 1.64.78 2.2 1.35-.33.46-.8.93-1.35 1.35-1.42-.6-2.53-.6-3.95 0-.55-.42-1.02-.89-1.35-1.35.56-.57 1.3-1.03 2.2-1.35.45-.16.9-.25 1.45-.25.55 0 1 .09 1.45.25zm-.5 12.15c-.9-.32-1.64-.78-2.2-1.35.33-.46.8-.93 1.35-1.35 1.42.6 2.53.6 3.95 0 .55.42 1.02.89 1.35 1.35-.56.57-1.3 1.03-2.2 1.35-.45.16-.9.25-1.45.25-.55 0-1-.09-1.45-.25zM6.25 12a5.99 5.99 0 011.25-3.95c.43.53.9 1 1.35 1.35-1.03.8-1.56 1.65-1.9 2.6h-1.6zm11.5 0h1.6c-.34.95-.87 1.8-1.9 2.6-.45-.35-.92-.82-1.35-1.35A5.99 5.99 0 0117.75 12zM12 7.75c-.66 0-1.25.26-1.75.75s-.75 1.09-.75 1.75.26 1.25.75 1.75c.5.5 1.09.75 1.75.75s1.25-.26 1.75-.75c.5-.5.75-1.09.75-1.75s-.26-1.25-.75-1.75c-.5-.5-1.09-.75-1.75-.75z" clip-rule="evenodd"></path>
             <path d="M16.95 6.05c.3.3.58.6.85.95-.3.3-.58.6-.85.95-.6-.4-1.1-.9-1.6-1.35.3-.35.7-.7 1.6-1.55zM6.05 16.95c-.3-.3-.58-.6-.85-.95.3-.3.58-.6.85-.95.6.4 1.1.9 1.6 1.35-.3.35-.7.7-1.6 1.55z"></path>
           </svg>
 
-                <span class="ml-3" sidebar-toggle-item>International Transfer</span>
+                <span class="ml-2 font-medium" sidebar-toggle-item>International Transfer</span>
             </a>
           </li>
           <li>
-            <a href="{% url 'transaction_history' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/transaction/history/' %} bg-gray-300 dark:bg-gray-700 {% endif %}">
+            <a href="{% url 'pay_bills' %}" class="flex items-center p-2 text-base text-gray-500 hover:text-primary-500 rounded-lg hover:bg-white group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/pay_bills/' %}text-primary-500 bg-white dark:bg-gray-700 {% endif %}">
+              <!-- Pay Bills Icon -->
+              <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 6H20V8H4V6Z" />
+                <path d="M4 10H20V12H4V10Z" />
+                <path d="M4 14H20V16H4V14Z" />
+              </svg>
+              <span class="ml-2 font-medium" sidebar-toggle-item>Pay Bills</span>
+            </a>
+          </li>
+          
+          <li>
+            <a href="{% url 'crypto' %}" class="flex items-center p-2 text-base text-gray-500 hover:text-primary-500 rounded-lg hover:bg-white group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/crypto/' %}text-primary-500 bg-white dark:bg-gray-700 {% endif %}">
+              <!-- Crypto Icon -->
+              <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 3H15L20 12L15 21H9L4 12L9 3ZM12 16.5C13.3807 16.5 14.5 15.3807 14.5 14C14.5 12.6193 13.3807 11.5 12 11.5C10.6193 11.5 9.5 12.6193 9.5 14C9.5 15.3807 10.6193 16.5 12 16.5Z" />
+              </svg>
+              <span class="ml-2 font-medium" sidebar-toggle-item>Crypto</span>
+            </a>
+          </li>
+          
+          <li>
+            <a href="{% url 'kyc' %}" class="flex items-center p-2 text-base text-gray-500 hover:text-primary-500 rounded-lg hover:bg-white group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/kyc/' %}text-primary-500 bg-white dark:bg-gray-700 {% endif %}">
+              <!-- KYC Icon -->
+              <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 5C13.66 5 15 6.34 15 8C15 9.66 13.66 11 12 11C10.34 11 9 9.66 9 8C9 6.34 10.34 5 12 5ZM12 20C9.33 20 6.67 18.99 5 17.27C5.03 14.97 10 13.5 12 13.5C14 13.5 18.97 14.97 19 17.27C17.33 18.99 14.67 20 12 20Z" clip-rule="evenodd" />
+              </svg>
+              <span class="ml-2 font-medium" sidebar-toggle-item>KYC</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'transaction_history' %}" class="flex items-center p-2 text-base text-gray-500 hover:text-primary-500 rounded-lg hover:bg-white group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/transaction/history/' %}text-primary-500 bg-white dark:bg-gray-700 {% endif %}">
            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M12 4a8 8 0 100 16 8 8 0 000-16zm1 11a1 1 0 11-2 0V10a1 1 0 011-1h3a1 1 0 110 2h-2v4z" clip-rule="evenodd"></path>
           </svg>
-                <span class="ml-3" sidebar-toggle-item>Transaction History</span>
+                <span class="ml-2 font-medium" sidebar-toggle-item>Transaction History</span>
+            </a>
+          </li>
+
             </a>
           </li>
           <li>
-            <a href="{% url 'account_statement' %}" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/transaction/statement/' %} bg-gray-300 dark:bg-gray-700 {% endif %}">
+            <a href="{% url 'account_statement' %}" class="flex items-center p-2 text-base text-gray-500 hover:text-primary-500 rounded-lg hover:bg-white group dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/transaction/statement/' %}text-primary-500 bg-white dark:bg-gray-700 {% endif %}">
           <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm4 4h10a1 1 0 100-2H7a1 1 0 100 2zm0 4h10a1 1 0 100-2H7a1 1 0 100 2zm0 4h6a1 1 0 100-2H7a1 1 0 100 2z"></path>
           </svg>
-                <span class="ml-3" sidebar-toggle-item>Account Statement</span>
+                <span class="ml-2 font-medium" sidebar-toggle-item>Account Statement</span>
             </a>
           </li>
 
@@ -63,12 +100,12 @@
          
           <a href="#" target="_blank" class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
             <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.997 3.997 0 00.078-2.183l1.562-1.562C15.802 8.249 16 9.1 16 10zm-5.165 3.913l1.58 1.58A5.98 5.98 0 0110 16a5.976 5.976 0 01-2.516-.552l1.562-1.562a4.006 4.006 0 001.789.027zm-4.677-2.796a4.002 4.002 0 01-.041-2.08l-.08.08-1.53-1.533A5.98 5.98 0 004 10c0 .954.223 1.856.619 2.657l1.54-1.54zm1.088-6.45A5.974 5.974 0 0110 4c.954 0 1.856.223 2.657.619l-1.54 1.54a4.002 4.002 0 00-2.346.033L7.246 4.668zM12 10a2 2 0 11-4 0 2 2 0 014 0z" clip-rule="evenodd"></path></svg>
-            <span class="ml-3" sidebar-toggle-item>Support</span>
+            <span class="ml-2 font-medium" sidebar-toggle-item>Support</span>
           </a>
         </div>
       </div>
     </div>
-    <div class="absolute bottom-0 left-0 justify-center hidden w-full p-4 space-x-4  lg:flex dark:bg-gray-800" sidebar-bottom-menu>
+    {% comment %} <div class="absolute bottom-0 left-0 justify-center hidden w-full p-4 space-x-4  lg:flex dark:bg-gray-800" sidebar-bottom-menu>
       <a href="#" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"></path></svg>
       </a>
@@ -81,7 +118,7 @@
       </div>
      
       
-    </div>
+    </div> {% endcomment %}
   </div>
 </aside>
 

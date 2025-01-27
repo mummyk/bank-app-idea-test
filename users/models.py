@@ -79,6 +79,7 @@ class AccountNumber(models.Model):
     def save(self, *args, **kwargs):
         if not self.account_number:
             self.account_number = generate_unique_account_number()
+
         super().save(*args, **kwargs)
 
     def set_password(self, raw_password):
@@ -88,6 +89,7 @@ class AccountNumber(models.Model):
 
     def check_password(self, raw_password):
         """Check the wallet's password"""
+        print('Checking password')
         return check_password(raw_password, self.password)
 
     def lock_account(self):
@@ -180,7 +182,7 @@ class Transaction(models.Model):
         "beneficiary", max_length=50, default='0000000000')
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     status = models.CharField(
-        max_length=50, choices=STATUS, default='in_process')
+        max_length=50, choices=STATUS, default='completed')
     updated = models.DateTimeField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -196,6 +198,11 @@ class Transaction(models.Model):
 class DomesticTransfer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     beneficiary = models.CharField("beneficiary", max_length=50)
+    bank_name = models.CharField(
+        "bank_name", max_length=50, blank=True, null=True)
+    bank_account = models.IntegerField("Account Number")
+    description = models.TextField(
+        "Description", max_length=200, blank=True, null=True)
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     updated = models.DateTimeField()
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -206,6 +213,7 @@ class DomesticTransfer(models.Model):
     def transfer(self, amount, password):
         # Access the user's account through the correct related name
         user_account = self.user.account_number
+        print('Passwords: ', password)
 
         if user_account.locked:
             raise ValidationError(
@@ -248,16 +256,20 @@ class LocalTransfer(models.Model):
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    beneficiary_bank = models.CharField("beneficiary bank", max_length=50)
-    beneficiary_account_number = models.BigIntegerField(blank=True, null=True)
+    # TODO: Remove the nul and blank
+    account = models.ForeignKey(
+        AccountNumber, on_delete=models.DO_NOTHING, null=True, blank=True)
+    # beneficiary_account_number = models.BigIntegerField(blank=True, null=True)
     transaction_type = models.CharField(
-        max_length=50, choices=TRANSACTION_TYPE)
+        max_length=50, choices=TRANSACTION_TYPE, default='saving')
     amount = models.DecimalField(max_digits=12, decimal_places=2)
+    description = models.TextField(
+        "Description", max_length=200, blank=True, null=True)
     updated = models.DateTimeField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.beneficiary_bank} of {self.amount} on {self.timestamp}"
+        return f"{self.account} of {self.amount} on {self.timestamp}"
 
     def transfer(self, amount, password):
         # Access the user's account through the correct related name
