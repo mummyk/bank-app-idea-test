@@ -162,6 +162,9 @@
                       <th scope="col" class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
                         Status
                       </th>
+                      <th scope="col" class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
+                      Action
+                    </th>
                     </tr>
                   </thead>
                   <tbody class=" dark:bg-gray-800">
@@ -203,6 +206,18 @@
                           class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-red-100 dark:border-red-400 dark:bg-gray-700 dark:text-red-400">Canceled</span>
                       {% endif %}
                         </td>
+                        <td class="p-4 whitespace-nowrap">
+                        <button 
+                            type="button"
+                            id="openModal-s"
+                            class="flex items-center bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-md hover:bg-blue-700"
+                            data-transaction-id="{{ transaction.id }}">
+                            <!-- Plus icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                            </svg>
+                          </button>
+                      </td>
                     </tr>
                     {% empty %}
                           <tr>
@@ -262,4 +277,67 @@
   </div>
 <div>
 
+
+<!-- Modal -->
+<div id="detailModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-4 rounded-lg shadow-lg">
+        <h2 class="text-lg font-semibold">Transaction Details</h2>
+        <p><strong>To User:</strong> <span id="modal-to-user"></span></p>
+        <p><strong>Date:</strong> <span id="modal-date"></span></p>
+        <p><strong>Amount:</strong> <span id="modal-amount"></span></p>
+        <p><strong>Account Number:</strong> <span id="modal-account-number"></span></p>
+        <p><strong>Status:</strong> <span id="modal-status"></span></p>
+        <button onclick="closeModal()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Close</button>
+    </div>
+</div>
+
+<script>
+    function closeModal() {
+        document.querySelector('#detailModal').classList.add('hidden');
+    }
+</script>
+
+<!-- JavaScript to handle modal -->
+<script>
+  document.getElementById('openModal-s').addEventListener('click', function() {
+        document.getElementById('detailModal').classList.remove('hidden');
+    });
+
+    document.getElementById('closeModal-s').addEventListener('click', function() {
+        document.getElementById('detailModal').classList.add('hidden');
+    });
+</script>
+
+<script>
+  document.querySelectorAll('#openModal-s').forEach(button => {
+    button.addEventListener('click', function() {
+        const transactionId = this.getAttribute('data-transaction-id');
+        fetchTransactionDetails(transactionId);
+    });
+});
+
+function fetchTransactionDetails(transactionId) {
+    // Fetch the transaction details from the server
+    fetch(`/get-transaction-details/${transactionId}/`)
+        .then(response => response.json())
+        .then(data => {
+            // Populate the modal with transaction data
+            populateModal(data);
+        })
+        .catch(error => console.error('Error fetching transaction details:', error));
+}
+
+function populateModal(data) {
+    // Assuming you have modal fields to populate
+    document.querySelector('#modal-to-user').innerText = data.to_user;
+    document.querySelector('#modal-date').innerText = data.date;
+    document.querySelector('#modal-amount').innerText = `$${data.amount.toFixed(2)}`;
+    document.querySelector('#modal-account-number').innerText = data.account_number;
+    document.querySelector('#modal-status').innerText = data.status;
+
+    // Show the modal
+    document.querySelector('#detailModal').classList.remove('hidden');
+}
+
+</script>
 {% endblock %}
