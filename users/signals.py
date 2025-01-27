@@ -27,8 +27,8 @@ def assign_user_to_member_group(request, user, **kwargs):
             )
             if created:
                 logger.info(
-                    f"Account number {account_number_obj.account_number} created for user {
-                        user.username}"
+                    f"""Account number {account_number_obj.account_number} created for user {
+                        user.username}"""
                 )
 
             # Create or get the 'Member' group
@@ -51,12 +51,12 @@ def assign_user_to_member_group(request, user, **kwargs):
             user.groups.add(member_group)
 
             logger.info(
-                f"User {user.username} added to 'Member' group with account number {
-                    account_number_obj.account_number}"
+                f"""User {user.username} added to 'Member' group with account number {
+                    account_number_obj.account_number}"""
             )
 
     except Exception as e:
         logger.error(
-            f"Error in assign_user_to_member_group for user {
-                user.username}: {str(e)}"
+            f"""Error in assign_user_to_member_group for user {
+                user.username}: {str(e)}"""
         )
