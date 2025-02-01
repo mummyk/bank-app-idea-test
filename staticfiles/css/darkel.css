@@ -30,28 +30,28 @@ button:disabled {
 }
 
 .link-active {
-  color: #53AAF2 !important;
+  color: #F34321 !important;
 }
 
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:focus {
   color: #fff;
-  background-color: #53AAF2;
-  border-color: #53AAF2;
+  background-color: #F34321;
+  border-color: #F34321;
   opacity: 0.8;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active {
   color: #fff;
-  background-color: #53AAF2;
-  border-color: #53AAF2;
+  background-color: #F34321;
+  border-color: #F34321;
   opacity: 0.8;
 }
 
 button.swal2-confirm.swal2-styled {
-  border-left-color: #53AAF2 !important;
-  border-right-color: #53AAF2 !important;
+  border-left-color: #F34321 !important;
+  border-right-color: #F34321 !important;
 }
 
 .swal2-popup.swal2-toast {
@@ -62,7 +62,7 @@ button.swal2-confirm.swal2-styled {
 }
 
 .callout.callout-primary {
-  border-left-color: #53AAF2;
+  border-left-color: #F34321;
 }
 
 .register-box {
@@ -80,7 +80,7 @@ button.swal2-confirm.swal2-styled {
 
 .select2-container--bootstrap4 .select2-results__option--highlighted,
 .select2-container--bootstrap4 .select2-results__option--highlighted.select2-results__option[aria-selected="true"] {
-  background-color: #53AAF2;
+  background-color: #F34321;
   color: #f8f9fa;
 }
 
@@ -118,7 +118,7 @@ button.swal2-confirm.swal2-styled {
 }
 
 #user-name {
-  color: #53AAF2;
+  color: #F34321;
   font-size: 20px;
 }
 

@@ -62,28 +62,28 @@ module.exports = {
         extend: {
             colors: {
                 primary: {
-                    "50": "#e7f4fc",   // Lightest blue
-                    "100": "#c2e4fa",  // Very light blue
-                    "200": "#99d2f7",  // Light blue
-                    "300": "#70c0f5",  // Soft blue
-                    "400": "#4cb0f3",  // Bright blue
-                    "500": "#53AAF2",  // Main blue
-                    "600": "#4187c2",  // Darker blue
-                    "700": "#316692",  // Medium-dark blue
-                    "800": "#214562",  // Dark blue
-                    "900": "#112333"   // Darkest blue
+                    "50": "#fee8e7",   // Lightest red-orange
+                    "100": "#fcc7c2",  // Very light red-orange
+                    "200": "#faa399",  // Light red-orange
+                    "300": "#f87f70",  // Soft red-orange
+                    "400": "#f6634c",  // Bright red-orange
+                    "500": "#F44321",  // Main red-orange
+                    "600": "#c3361a",  // Darker red-orange
+                    "700": "#922814",  // Medium-dark red-orange
+                    "800": "#621b0d",  // Dark red-orange
+                    "900": "#310d06"   // Darkest red-orange
                 },
                 secondary: {
-                    "50": "#fff8e1",
-                    "100": "#ffecb3",
-                    "200": "#ffe082",
-                    "300": "#ffd54f",
-                    "400": "#ffca28",
-                    "500": "#ffc107", // Main gold
-                    "600": "#ffb300",
-                    "700": "#ffa000",
-                    "800": "#ff8f00",
-                    "900": "#ff6f00"
+                    "50": "#e7f9fe",   // Lightest cyan
+                    "100": "#c2f0fc",  // Very light cyan
+                    "200": "#99e6fa",  // Light cyan
+                    "300": "#70dcf8",  // Soft cyan
+                    "400": "#4cd4f6",  // Bright cyan
+                    "500": "#21D2F4",  // Main cyan
+                    "600": "#1aa8c3",  // Darker cyan
+                    "700": "#147e92",  // Medium-dark cyan
+                    "800": "#0d5462",  // Dark cyan
+                    "900": "#062a31"   // Darkest cyan
                 }
             },
             fontFamily: {
