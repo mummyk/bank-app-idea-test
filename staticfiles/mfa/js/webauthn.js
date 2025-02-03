@@ -1,6 +1,5 @@
 (function () {
   const allauth = window.allauth = window.allauth || {}
-  const webauthnJSON = window.webauthnJSON
 
   function dispatchError (exception) {
     const event = new CustomEvent('allauth.error', { detail: { tags: ['mfa', 'webauthn'], exception }, cancelable: true })
@@ -13,31 +12,19 @@
   async function createCredentials (credentials, passwordless) {
     credentials = JSON.parse(JSON.stringify(credentials))
     const sel = credentials.publicKey.authenticatorSelection
-    if (passwordless != null) {
-      sel.residentKey = passwordless ? 'required' : 'discouraged'
-      sel.requireResidentKey = passwordless
-      sel.userVerification = passwordless ? 'required' : 'discouraged'
-    }
+    sel.residentKey = passwordless ? 'required' : 'discouraged'
+    sel.requireResidentKey = passwordless
+    sel.userVerification = passwordless ? 'required' : 'discouraged'
     return await webauthnJSON.create(credentials)
-  }
-
-  function signupForm (o) {
-    const signupBtn = document.getElementById(o.ids.signup)
-    return addOrSignupForm(o, signupBtn, null)
   }
 
   function addForm (o) {
     const addBtn = document.getElementById(o.ids.add)
     const passwordlessCb = o.ids.passwordless ? document.getElementById(o.ids.passwordless) : null
-    const passwordlessFn = () => passwordlessCb ? passwordlessCb.checked : false
-    return addOrSignupForm(o, addBtn, passwordlessFn)
-  }
-
-  function addOrSignupForm (o, actionBtn, passwordlessFn) {
     const credentialInput = document.getElementById(o.ids.credential)
     const form = credentialInput.closest('form')
-    actionBtn.addEventListener('click', async function () {
-      const passwordless = passwordlessFn ? passwordlessFn() : undefined
+    addBtn.addEventListener('click', async function () {
+      const passwordless = passwordlessCb ? passwordlessCb.checked : false
       try {
         const credential = await createCredentials(o.data.creation_options, passwordless)
         credentialInput.value = JSON.stringify(credential)
@@ -94,8 +81,7 @@
     forms: {
       addForm,
       authenticateForm,
-      loginForm,
-      signupForm
+      loginForm
     }
   }
 })()

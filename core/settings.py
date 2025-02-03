@@ -49,7 +49,7 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['unionwealthbank.com', 'www.unionwealthbank.com', '127.0.0.1']
 
 
 # Application definition
@@ -120,9 +120,15 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        # set database name
+        'NAME': POSTGRES_NAME,
+        # set your user details
+        'USER': POSTGRES_USER,
+        'PASSWORD': POSTGRES_PASSWORD,
+        'HOST': POSTGRES_HOST,
+        'POST': POSTGRES_PORT
+    },
 }
 
 
@@ -169,7 +175,8 @@ STATICFILES_DIRS = [
     # os.path.join(BASE_DIR, 'theme/static'),
 ]
 # Enable WhiteNoise for serving compressed and cached static files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
