@@ -51,6 +51,11 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
 ALLOWED_HOSTS = ['unionwealthbank.com', 'www.unionwealthbank.com', '127.0.0.1']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://unionwealthbank.com',
+    'https://www.unionwealthbank.com'
+]
+
 
 # Application definition
 
