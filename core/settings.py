@@ -87,6 +87,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'core.middlewares.user_activity_middleware.LogUserIPMiddleware',
+    'core.middlewares.bot_blocker.BlockScannersMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
