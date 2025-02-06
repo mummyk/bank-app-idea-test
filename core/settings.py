@@ -135,7 +135,7 @@ DATABASES = {
         'USER': POSTGRES_USER,
         'PASSWORD': POSTGRES_PASSWORD,
         'HOST': POSTGRES_HOST,
-        'POST': POSTGRES_PORT
+        'POST': "5434"  # POSTGRES_PORT
     },
 }
 
