@@ -55,7 +55,7 @@ ALLOWED_HOSTS = ['unionwealthbank.com', 'www.unionwealthbank.com',
 CSRF_TRUSTED_ORIGINS = [
     'https://unionwealthbank.com',
     'https://www.unionwealthbank.com',
-    'guarded-beyond-00794-524fc926f7f4.herokuapp.com',
+    'https://guarded-beyond-00794-524fc926f7f4.herokuapp.com',
 ]
 
 
