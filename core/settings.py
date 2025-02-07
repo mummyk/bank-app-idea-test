@@ -129,13 +129,13 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        # set database name
-        'NAME': POSTGRES_NAME,
-        # set your user details
-        'USER': POSTGRES_USER,
-        'PASSWORD': POSTGRES_PASSWORD,
-        'HOST': POSTGRES_HOST,
-        'PORT': POSTGRES_PORT
+        'NAME': os.getenv('POSTGRES_NAME', 'postgres_test'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres_test'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres_test'),
+        # Change to your Heroku host
+        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
+        # Ensure port 5434 is used
+        'PORT': int(os.getenv('POSTGRES_PORT', 5434)),
     },
 }
 
