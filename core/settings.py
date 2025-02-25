@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from shutil import which
 from pathlib import Path
 import os
-# import dj_database_url
+import dj_database_url
 from dotenv import load_dotenv
 # from core.jazzmin_settings import JAZZMIN_SETTINGS
 
@@ -126,17 +126,21 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('POSTGRES_NAME', 'postgres_test'),
+#         'USER': os.getenv('POSTGRES_USER', 'postgres_test'),
+#         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres_test'),
+#         # Change to your Heroku host
+#         'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
+#         # Ensure port 5434 is used
+#         'PORT': int(os.getenv('POSTGRES_PORT', 5434)),
+#     },
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_NAME', 'postgres_test'),
-        'USER': os.getenv('POSTGRES_USER', 'postgres_test'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres_test'),
-        # Change to your Heroku host
-        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
-        # Ensure port 5434 is used
-        'PORT': int(os.getenv('POSTGRES_PORT', 5434)),
-    },
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
 
 
