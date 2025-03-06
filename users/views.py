@@ -1,11 +1,13 @@
-from django.db import transaction as db_transaction
 import locale
 import logging
 import json
+import os
+import uuid
 from storages.backends.s3boto3 import S3Boto3Storage
 from botocore.exceptions import ClientError
 from decimal import Decimal
 from django.http import JsonResponse
+from django.db import transaction as db_transaction
 from django.core.exceptions import ValidationError
 
 from django.contrib import messages
@@ -30,10 +32,10 @@ from .utils import check_account_locked
 # Initialize a logger for error tracking
 logger = logging.getLogger(__name__)
 
+
 class MediaStorage(S3Boto3Storage):
     location = "media"
     file_overwrite = False
-
 
 
 @login_required
@@ -101,7 +103,8 @@ def manage_profile_image(request):
     # Get the user's profile or create one if it doesn't exist
     profile, created = Profile.objects.get_or_create(user=request.user)
     profile_picture_url = ''
-    
+    print("Generating URL from Start", profile_picture_url)
+
     # Generate a presigned URL for the profile picture if it exists
     if profile.profile_picture:
         try:
@@ -115,24 +118,35 @@ def manage_profile_image(request):
                 },
                 ExpiresIn=3600,  # URL valid for 1 hour
             )
-            profile_picture_url = presigned_url  # Set the presigned URL to be used in the template
+            # Set the presigned URL to be used in the template
+            profile_picture_url = presigned_url
+            print("Generating URL from get inside function", presigned_url)
         except ClientError as e:
             messages.error(request, f"Failed to generate URL: {str(e)}")
             presigned_url = ""
     else:
         presigned_url = ""  # No profile picture
 
+    print("Generating URL from get", presigned_url)
+
     if request.method == 'POST':
-        form = Profile_pictureForm(request.POST, request.FILES, instance=profile)
-        
+        form = Profile_pictureForm(
+            request.POST, request.FILES, instance=profile)
+
         if form.is_valid():
             # Handle file upload
-            file = request.FILES.get('profile_picture')  # Assuming 'profile_picture' is the form field name
+            # Assuming 'profile_picture' is the form field name
+            file = request.FILES.get('profile_picture')
+            print("File is ", file)
+            if not file:
+                messages.error(request, 'Please select a file')
 
             # Validate file type and size
-            allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
+            allowed_types = ['image/jpeg',
+                             'image/png', 'image/gif', 'image/webp']
             if file.content_type not in allowed_types:
-                messages.error(request, f"Invalid file type. Allowed types: {', '.join(allowed_types)}")
+                messages.error(
+                    request, f"Invalid file type. Allowed types: {', '.join(allowed_types)}")
                 return redirect('profile')
 
             max_file_size = 5 * 1024 * 1024  # 5MB
@@ -142,7 +156,8 @@ def manage_profile_image(request):
 
             try:
                 # Create a unique file key to avoid collisions
-                file_extension = os.path.splitext(file.name)[1].lower()  # Get file extension
+                file_extension = os.path.splitext(
+                    file.name)[1].lower()  # Get file extension
                 unique_filename = f"test/{uuid.uuid4().hex}{file_extension}"
 
                 # Upload file to AWS S3
@@ -173,14 +188,19 @@ def manage_profile_image(request):
                         ExpiresIn=3600,  # URL valid for 1 hour
                     )
                 except ClientError as e:
-                    messages.error(request, f"Failed to generate presigned URL: {str(e)}")
+                    messages.error(
+                        request, f"Failed to generate presigned URL: {str(e)}")
+
+                print("Generating URL from post", presigned_url)
 
                 # Success message
-                messages.success(request, 'Your profile picture has been updated successfully!')
+                messages.success(
+                    request, 'Your profile picture has been updated successfully!')
                 return redirect('profile')
 
             except Exception as e:
-                messages.error(request, f"Error uploading the profile picture: {str(e)}")
+                messages.error(
+                    request, f"Error uploading the profile picture: {str(e)}")
                 return redirect('profile')
         else:
             messages.error(request, 'Invalid form data.')
@@ -240,8 +260,33 @@ def user_profile(request):
         form = ProfileFormLite(instance=profile)
         # messages.error(request, "Profile updated unsuccessfully!")
 
-    profile_picture_url = request.build_absolute_uri(
-        profile.profile_picture.url) if profile.profile_picture else ""
+    profile_picture_url = ''
+
+    # Generate a presigned URL for the profile picture if it exists
+    if profile.profile_picture:
+        try:
+            # Use MediaStorage location to correctly generate the S3 key
+            s3_key = f"{profile.profile_picture.name}"
+            presigned_url = settings.S3_CLIENT.generate_presigned_url(
+                'get_object',
+                Params={
+                    'Bucket': settings.AWS_STORAGE_BUCKET_NAME,
+                    'Key': s3_key,
+                },
+                ExpiresIn=3600,  # URL valid for 1 hour
+            )
+            # Set the presigned URL to be used in the template
+            profile_picture_url = presigned_url
+        except ClientError as e:
+            messages.error(request, f"Failed to generate URL: {str(e)}")
+            presigned_url = ""
+    else:
+        presigned_url = ""  # No profile picture
+
+    profile_picture_url = presigned_url
+
+    # profile_picture_url = request.build_absolute_uri(
+    #     profile.profile_picture.url) if profile.profile_picture else ""
 
     if request.method == 'GET':
         pass
@@ -621,7 +666,7 @@ def internationalTransaction(request):
                                                                      'company_name': settings.COMPANY_NAME},)
 
 
-@ login_required
+@login_required
 def transaction_history(request):
     # Set locale for currency formatting
     try:
@@ -664,7 +709,7 @@ def transaction_history(request):
     return render(request, 'dashboard/transaction_history.html', context)
 
 
-@ login_required
+@login_required
 def account_statement(request):
     # Set locale for currency formatting
     try:

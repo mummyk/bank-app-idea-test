@@ -50,7 +50,7 @@
                                 <div class="flex justify-center mb-4">
                                     <img id="profile-picture-preview" 
                                         src="{% if form.instance.profile_picture %}
-                                        {{ form.instance.profile_picture.url }}
+                                        {{ iurl }}
                                         {% elif iurl %}
                                         {{iurl}}
                                         {% else %}
