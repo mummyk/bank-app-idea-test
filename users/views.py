@@ -63,41 +63,6 @@ def manage_profile(request):
     return render(request, 'profiles/manage_profile.html', context)
 
 
-# Update or add Profile Picture
-# @login_required
-# def manage_profile_image(request):
-#     # Get the user's profile or create one if it doesn't exist
-#     profile, created = Profile.objects.get_or_create(user=request.user)
-#     profile_picture_url = ''
-#     if profile.profile_picture:
-#         profile_picture_url = request.build_absolute_uri(
-#             profile.profile_picture.url)
-
-#     if request.method == 'POST':
-#         form = Profile_pictureForm(
-#             request.POST, request.FILES, instance=profile)
-#         if form.is_valid():
-#             # Update user first name and last name
-#             form.save()  # Save profile data
-#             messages.success(
-#                 request, 'Your profile picture has been updated successfully!')
-#             # log_action(request.user, ADDITION, f"Added profile_picture for {
-#             #     request.user.username}", profile)
-
-#             # Redirect to a profile view or another page
-#             return redirect('profile')
-#     else:
-#         messages.error(
-#             request, 'Can not update your profile picture!')
-
-#         # log_action(request.user, ADDITION, f"Try adding profile_picture for {
-#         #     request.user.username}", profile)
-#         form = ProfileForm(instance=profile)
-
-#     context = {'form': form, 'created': created, 'iurl': profile_picture_url}
-
-#     return render(request, 'profiles/profile.html', context)
-
 @login_required
 def manage_profile_image(request):
     # Get the user's profile or create one if it doesn't exist
@@ -556,9 +521,6 @@ def check_receiver(request, account_number):
     except ValueError:
         # Handle invalid account number format (e.g., non-integer input)
         return JsonResponse({'error': 'Invalid account number format.'}, status=400)
-
-
-logger = logging.getLogger(__name__)
 
 
 @login_required
