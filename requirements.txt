@@ -32,3 +32,5 @@ django-ipware
 # speed up installation and avoid errors from missing libraries/headers.
 psycopg[c]; sys_platform == "linux"
 psycopg[binary]; sys_platform != "linux"
+boto3
+django-storages[s3]
