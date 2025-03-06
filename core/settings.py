@@ -15,6 +15,8 @@ from pathlib import Path
 import os
 import dj_database_url
 from dotenv import load_dotenv
+import boto3
+from botocore.config import Config
 # from core.jazzmin_settings import JAZZMIN_SETTINGS
 
 # Load environment variables from .env file
@@ -39,7 +41,7 @@ POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
 POSTGRES_DB = os.environ.get('POSTGRES_DB')
 POSTGRES_PORT = os.environ.get('POSTGREs_PORT')
 POSTGRES_HOST = os.environ.get('POSTGRES_HOST')
-DATABASES_URL = os.environ.get('DATABASES_URL')
+DATABASE_URL = os.environ.get('DATABASE_URL')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG') == 'True'
 
@@ -48,6 +50,25 @@ SMTP_PORT = os.environ.get('SMTP_PORT')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+
+# Replace with your actual key or load from environment variables
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+# Replace with your actual secret or load from environment variables
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+# Replace with your S3 bucket name
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+# Replace with your region (e.g., "us-west-1")
+AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME")
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+
+# Use Signature Version 4
+S3_CLIENT = boto3.client(
+    's3',
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    region_name=AWS_S3_REGION_NAME,
+    config=Config(signature_version='s3v4')
+)
 
 ALLOWED_HOSTS = ['unionwealthbank.com', 'www.unionwealthbank.com',
                  '127.0.0.1', 'guarded-beyond-00794-524fc926f7f4.herokuapp.com',]
@@ -140,7 +161,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # }
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    # 'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default': dj_database_url.config(default=DATABASE_URL)
 }
 
 

@@ -24,7 +24,7 @@ class Profile(models.Model):
     """User profile fields"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_picture = models.ImageField(
-        upload_to='profile_pictures/', blank=True, null=True)
+        upload_to='test/', blank=True, null=True)
     country = CountryField()
     city = models.CharField(max_length=100)
     address = models.CharField(max_length=500)

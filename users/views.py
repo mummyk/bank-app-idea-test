@@ -2,6 +2,8 @@ from django.db import transaction as db_transaction
 import locale
 import logging
 import json
+from storages.backends.s3boto3 import S3Boto3Storage
+from botocore.exceptions import ClientError
 from decimal import Decimal
 from django.http import JsonResponse
 from django.core.exceptions import ValidationError
@@ -27,6 +29,11 @@ from .utils import check_account_locked
 
 # Initialize a logger for error tracking
 logger = logging.getLogger(__name__)
+
+class MediaStorage(S3Boto3Storage):
+    location = "media"
+    file_overwrite = False
+
 
 
 @login_required
@@ -55,38 +62,133 @@ def manage_profile(request):
 
 
 # Update or add Profile Picture
+# @login_required
+# def manage_profile_image(request):
+#     # Get the user's profile or create one if it doesn't exist
+#     profile, created = Profile.objects.get_or_create(user=request.user)
+#     profile_picture_url = ''
+#     if profile.profile_picture:
+#         profile_picture_url = request.build_absolute_uri(
+#             profile.profile_picture.url)
+
+#     if request.method == 'POST':
+#         form = Profile_pictureForm(
+#             request.POST, request.FILES, instance=profile)
+#         if form.is_valid():
+#             # Update user first name and last name
+#             form.save()  # Save profile data
+#             messages.success(
+#                 request, 'Your profile picture has been updated successfully!')
+#             # log_action(request.user, ADDITION, f"Added profile_picture for {
+#             #     request.user.username}", profile)
+
+#             # Redirect to a profile view or another page
+#             return redirect('profile')
+#     else:
+#         messages.error(
+#             request, 'Can not update your profile picture!')
+
+#         # log_action(request.user, ADDITION, f"Try adding profile_picture for {
+#         #     request.user.username}", profile)
+#         form = ProfileForm(instance=profile)
+
+#     context = {'form': form, 'created': created, 'iurl': profile_picture_url}
+
+#     return render(request, 'profiles/profile.html', context)
+
 @login_required
 def manage_profile_image(request):
     # Get the user's profile or create one if it doesn't exist
     profile, created = Profile.objects.get_or_create(user=request.user)
     profile_picture_url = ''
+    
+    # Generate a presigned URL for the profile picture if it exists
     if profile.profile_picture:
-        profile_picture_url = request.build_absolute_uri(
-            profile.profile_picture.url)
+        try:
+            # Use MediaStorage location to correctly generate the S3 key
+            s3_key = f"{profile.profile_picture.name}"
+            presigned_url = settings.S3_CLIENT.generate_presigned_url(
+                'get_object',
+                Params={
+                    'Bucket': settings.AWS_STORAGE_BUCKET_NAME,
+                    'Key': s3_key,
+                },
+                ExpiresIn=3600,  # URL valid for 1 hour
+            )
+            profile_picture_url = presigned_url  # Set the presigned URL to be used in the template
+        except ClientError as e:
+            messages.error(request, f"Failed to generate URL: {str(e)}")
+            presigned_url = ""
+    else:
+        presigned_url = ""  # No profile picture
 
     if request.method == 'POST':
-        form = Profile_pictureForm(
-            request.POST, request.FILES, instance=profile)
+        form = Profile_pictureForm(request.POST, request.FILES, instance=profile)
+        
         if form.is_valid():
-            # Update user first name and last name
-            form.save()  # Save profile data
-            messages.success(
-                request, 'Your profile picture has been updated successfully!')
-            # log_action(request.user, ADDITION, f"Added profile_picture for {
-            #     request.user.username}", profile)
+            # Handle file upload
+            file = request.FILES.get('profile_picture')  # Assuming 'profile_picture' is the form field name
 
-            # Redirect to a profile view or another page
-            return redirect('profile')
+            # Validate file type and size
+            allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
+            if file.content_type not in allowed_types:
+                messages.error(request, f"Invalid file type. Allowed types: {', '.join(allowed_types)}")
+                return redirect('profile')
+
+            max_file_size = 5 * 1024 * 1024  # 5MB
+            if file.size > max_file_size:
+                messages.error(request, "File size exceeds the 5MB limit.")
+                return redirect('profile')
+
+            try:
+                # Create a unique file key to avoid collisions
+                file_extension = os.path.splitext(file.name)[1].lower()  # Get file extension
+                unique_filename = f"test/{uuid.uuid4().hex}{file_extension}"
+
+                # Upload file to AWS S3
+                try:
+                    settings.S3_CLIENT.upload_fileobj(
+                        file,
+                        settings.AWS_STORAGE_BUCKET_NAME,
+                        f"{MediaStorage.location}/{unique_filename}",
+                        ExtraArgs={'ContentType': file.content_type},
+                    )
+                except ClientError as e:
+                    messages.error(request, f"Failed to upload file: {str(e)}")
+                    return redirect('profile')
+
+                # Save the S3 file key to the profile
+                profile.profile_picture = f"{MediaStorage.location}/{unique_filename}"
+                profile.save()
+
+                # Generate the presigned URL for the updated profile picture
+                s3_key = f"{MediaStorage.location}/{unique_filename}"
+                try:
+                    presigned_url = settings.S3_CLIENT.generate_presigned_url(
+                        'get_object',
+                        Params={
+                            'Bucket': settings.AWS_STORAGE_BUCKET_NAME,
+                            'Key': s3_key,
+                        },
+                        ExpiresIn=3600,  # URL valid for 1 hour
+                    )
+                except ClientError as e:
+                    messages.error(request, f"Failed to generate presigned URL: {str(e)}")
+
+                # Success message
+                messages.success(request, 'Your profile picture has been updated successfully!')
+                return redirect('profile')
+
+            except Exception as e:
+                messages.error(request, f"Error uploading the profile picture: {str(e)}")
+                return redirect('profile')
+        else:
+            messages.error(request, 'Invalid form data.')
     else:
-        messages.error(
-            request, 'Can not update your profile picture!')
+        messages.error(request, 'Unable to update your profile picture!')
 
-        # log_action(request.user, ADDITION, f"Try adding profile_picture for {
-        #     request.user.username}", profile)
-        form = ProfileForm(instance=profile)
-
+    # Context includes the presigned URL if available
     context = {'form': form, 'created': created, 'iurl': profile_picture_url}
-
     return render(request, 'profiles/profile.html', context)
 
 # Delete Profile Picture
